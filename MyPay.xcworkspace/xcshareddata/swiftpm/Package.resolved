@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MySQL",
+        "repositoryURL": "https://github.com/aroblast/mysql-swift",
+        "state": {
+          "branch": "master",
+          "revision": "58a5f2bf7a01174d0b7e262dc0467e002b730337",
+          "version": null
+        }
+      },
+      {
+        "package": "Socket",
+        "repositoryURL": "https://github.com/aroblast/socket-swift.git",
+        "state": {
+          "branch": "master",
+          "revision": "818f196f5c93f229c7ce0b6f87036d6c7d9c3bde",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

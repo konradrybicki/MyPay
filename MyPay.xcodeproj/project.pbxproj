@@ -3,27 +3,51 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7803165526C073FD004844C0 /* MySQL in Frameworks */ = {isa = PBXBuildFile; productRef = 7803165426C073FD004844C0 /* MySQL */; };
+		78313C8926A5C71500342D85 /* RegistrationFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */; };
+		783CAE7726B74D530093611D /* RegistrationEndScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CAE7626B74D530093611D /* RegistrationEndScreenViewController.swift */; };
+		784B9F3626C55FFE00C740C0 /* MySQLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B9F3526C55FFE00C740C0 /* MySQLManager.swift */; };
 		78B136D4269F10740038FCD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B136D3269F10740038FCD2 /* AppDelegate.swift */; };
 		78B136D6269F10740038FCD2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B136D5269F10740038FCD2 /* SceneDelegate.swift */; };
-		78B136D8269F10740038FCD2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B136D7269F10740038FCD2 /* ViewController.swift */; };
+		78B136D8269F10740038FCD2 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B136D7269F10740038FCD2 /* WelcomeScreenViewController.swift */; };
 		78B136DB269F10740038FCD2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B136D9269F10740038FCD2 /* Main.storyboard */; };
 		78B136DD269F10760038FCD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78B136DC269F10760038FCD2 /* Assets.xcassets */; };
 		78B136E0269F10760038FCD2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B136DE269F10760038FCD2 /* LaunchScreen.storyboard */; };
+		78BC6F7C26C142F600706611 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F7B26C142F600706611 /* User.swift */; };
+		78BC6F7E26C1552D00706611 /* CryptoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F7D26C1552D00706611 /* CryptoService.swift */; };
+		78BC6F8226C1672400706611 /* SystemTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */; };
+		78BC6F8426C191CA00706611 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F8326C191CA00706611 /* Account.swift */; };
+		78D0886A26B1DC22008A7B5A /* SCConfigScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */; };
+		78FB539726C1D95500DACF8A /* VirtualCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB539626C1D95500DACF8A /* VirtualCard.swift */; };
+		9B1485C90E6A34023DB0D0DE /* libPods-MyPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 206B83DD29C29D280CDD4EF8 /* libPods-MyPay.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		206B83DD29C29D280CDD4EF8 /* libPods-MyPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		273DBBBE895170D5E615BA5F /* Pods-MyPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPay.debug.xcconfig"; path = "Target Support Files/Pods-MyPay/Pods-MyPay.debug.xcconfig"; sourceTree = "<group>"; };
+		78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationFormViewController.swift; path = MyPay/View/RegistrationFormViewController.swift; sourceTree = SOURCE_ROOT; };
+		783CAE7626B74D530093611D /* RegistrationEndScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationEndScreenViewController.swift; sourceTree = "<group>"; };
+		784B9F3526C55FFE00C740C0 /* MySQLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySQLManager.swift; sourceTree = "<group>"; };
 		78B136D0269F10740038FCD2 /* MyPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78B136D3269F10740038FCD2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78B136D5269F10740038FCD2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		78B136D7269F10740038FCD2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		78B136D7269F10740038FCD2 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
 		78B136DA269F10740038FCD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		78B136DC269F10760038FCD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78B136DF269F10760038FCD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78B136E1269F10760038FCD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78BC6F7B26C142F600706611 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		78BC6F7D26C1552D00706611 /* CryptoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoService.swift; sourceTree = "<group>"; };
+		78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemTypeExtensions.swift; sourceTree = "<group>"; };
+		78BC6F8326C191CA00706611 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SCConfigScreenViewController.swift; path = MyPay/View/SCConfigScreenViewController.swift; sourceTree = SOURCE_ROOT; };
+		78E6C6B926C06FDD005D94EB /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		78FB539626C1D95500DACF8A /* VirtualCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualCard.swift; sourceTree = "<group>"; };
+		D2CAD71FB39361D78205C4EF /* Pods-MyPay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPay.release.xcconfig"; path = "Target Support Files/Pods-MyPay/Pods-MyPay.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +55,52 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B1485C90E6A34023DB0D0DE /* libPods-MyPay.a in Frameworks */,
+				7803165526C073FD004844C0 /* MySQL in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		78313C8426A5BFAA00342D85 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				78BC6F7B26C142F600706611 /* User.swift */,
+				78BC6F7D26C1552D00706611 /* CryptoService.swift */,
+				78BC6F8326C191CA00706611 /* Account.swift */,
+				78FB539626C1D95500DACF8A /* VirtualCard.swift */,
+				784B9F3526C55FFE00C740C0 /* MySQLManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		78313C8526A5BFAF00342D85 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				78B136D9269F10740038FCD2 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		78313C8726A5BFBE00342D85 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */,
+				783CAE7626B74D530093611D /* RegistrationEndScreenViewController.swift */,
+				78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */,
+				78B136D7269F10740038FCD2 /* WelcomeScreenViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		78B136C7269F10740038FCD2 = {
 			isa = PBXGroup;
 			children = (
 				78B136D2269F10740038FCD2 /* MyPay */,
 				78B136D1269F10740038FCD2 /* Products */,
+				D539F706DE2F8F89FCFFF01B /* Pods */,
+				FED2F1625E6F98A096EFAC4C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +115,35 @@
 		78B136D2269F10740038FCD2 /* MyPay */ = {
 			isa = PBXGroup;
 			children = (
+				78313C8726A5BFBE00342D85 /* Controller */,
+				78313C8526A5BFAF00342D85 /* View */,
+				78313C8426A5BFAA00342D85 /* Model */,
 				78B136D3269F10740038FCD2 /* AppDelegate.swift */,
 				78B136D5269F10740038FCD2 /* SceneDelegate.swift */,
-				78B136D7269F10740038FCD2 /* ViewController.swift */,
-				78B136D9269F10740038FCD2 /* Main.storyboard */,
 				78B136DC269F10760038FCD2 /* Assets.xcassets */,
 				78B136DE269F10760038FCD2 /* LaunchScreen.storyboard */,
 				78B136E1269F10760038FCD2 /* Info.plist */,
+				78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */,
 			);
 			path = MyPay;
+			sourceTree = "<group>";
+		};
+		D539F706DE2F8F89FCFFF01B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				273DBBBE895170D5E615BA5F /* Pods-MyPay.debug.xcconfig */,
+				D2CAD71FB39361D78205C4EF /* Pods-MyPay.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FED2F1625E6F98A096EFAC4C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				78E6C6B926C06FDD005D94EB /* CoreServices.framework */,
+				206B83DD29C29D280CDD4EF8 /* libPods-MyPay.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,6 +153,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 78B136E4269F10760038FCD2 /* Build configuration list for PBXNativeTarget "MyPay" */;
 			buildPhases = (
+				DA48978F7ED5BC9D55F60826 /* [CP] Check Pods Manifest.lock */,
 				78B136CC269F10740038FCD2 /* Sources */,
 				78B136CD269F10740038FCD2 /* Frameworks */,
 				78B136CE269F10740038FCD2 /* Resources */,
@@ -83,6 +163,9 @@
 			dependencies = (
 			);
 			name = MyPay;
+			packageProductDependencies = (
+				7803165426C073FD004844C0 /* MySQL */,
+			);
 			productName = MyPay;
 			productReference = 78B136D0269F10740038FCD2 /* MyPay.app */;
 			productType = "com.apple.product-type.application";
@@ -110,6 +193,9 @@
 				Base,
 			);
 			mainGroup = 78B136C7269F10740038FCD2;
+			packageReferences = (
+				784A3C8926BF127C00CDF533 /* XCRemoteSwiftPackageReference "mysql-swift" */,
+			);
 			productRefGroup = 78B136D1269F10740038FCD2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -132,14 +218,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DA48978F7ED5BC9D55F60826 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MyPay-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		78B136CC269F10740038FCD2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78B136D8269F10740038FCD2 /* ViewController.swift in Sources */,
+				78BC6F7E26C1552D00706611 /* CryptoService.swift in Sources */,
+				784B9F3626C55FFE00C740C0 /* MySQLManager.swift in Sources */,
+				78D0886A26B1DC22008A7B5A /* SCConfigScreenViewController.swift in Sources */,
+				78B136D8269F10740038FCD2 /* WelcomeScreenViewController.swift in Sources */,
+				78BC6F8226C1672400706611 /* SystemTypeExtensions.swift in Sources */,
+				78FB539726C1D95500DACF8A /* VirtualCard.swift in Sources */,
+				78313C8926A5C71500342D85 /* RegistrationFormViewController.swift in Sources */,
+				78BC6F8426C191CA00706611 /* Account.swift in Sources */,
+				783CAE7726B74D530093611D /* RegistrationEndScreenViewController.swift in Sources */,
 				78B136D4269F10740038FCD2 /* AppDelegate.swift in Sources */,
 				78B136D6269F10740038FCD2 /* SceneDelegate.swift in Sources */,
+				78BC6F7C26C142F600706611 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +340,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -274,6 +395,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -283,29 +405,42 @@
 		};
 		78B136E5269F10760038FCD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 273DBBBE895170D5E615BA5F /* Pods-MyPay.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VGB9GF6S5Y;
 				INFOPLIST_FILE = MyPay/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"CryptoSwift\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.konradrybicki.MyPay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		78B136E6269F10760038FCD2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2CAD71FB39361D78205C4EF /* Pods-MyPay.release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VGB9GF6S5Y;
 				INFOPLIST_FILE = MyPay/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -313,7 +448,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.konradrybicki.MyPay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -339,6 +474,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		784A3C8926BF127C00CDF533 /* XCRemoteSwiftPackageReference "mysql-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aroblast/mysql-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7803165426C073FD004844C0 /* MySQL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 784A3C8926BF127C00CDF533 /* XCRemoteSwiftPackageReference "mysql-swift" */;
+			productName = MySQL;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 78B136C8269F10740038FCD2 /* Project object */;
 }

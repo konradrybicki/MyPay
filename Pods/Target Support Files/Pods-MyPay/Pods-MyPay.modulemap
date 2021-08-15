@@ -1,0 +1,6 @@
+module Pods_MyPay {
+  umbrella header "Pods-MyPay-umbrella.h"
+
+  export *
+  module * { export * }
+}
