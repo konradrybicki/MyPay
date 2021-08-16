@@ -50,9 +50,3 @@ public class CryptoService {
         return salt
     }
 }
-
-/// User-defined error type
-
-public enum DataGenerationError: Error {
-    case def
-}

@@ -5,25 +5,25 @@
 //  Created by Konrad Rybicki on 09/08/2021.
 //
 
+/// Defines a database-related bank account structure
+
 public class Account {
     
-    /// Defines a self-generating account database structure
+    private(set) var accountNumber: String = ""
+    private(set) var userId: Int = -1
+    public var balance: Double = 0
     
-    public var accountNumber: String
-    public var userId: Int
-    public var balance: Double
-    
-    public init(forUserWithId userId: Int) {
-        self.accountNumber = generateUniqueAccountNumber()
+    public init(forUserWithId userId: Int) throws {
+        self.accountNumber = try generateAccountNumber()
         self.userId = userId
-        self.balance = 0
     }
     
-    private func generateUniqueAccountNumber() -> String {
-        
-        /// Generates a 26 digit unique account number
+    /// Returns a 26 digit String, representing a database-unique account number
+    
+    private func generateAccountNumber() throws -> String {
         
         var accountNumber: String
+        var isAccountNumberUnique: Bool
         
         repeat {
             
@@ -34,7 +34,9 @@ public class Account {
                 accountNumber.append(String(randomDigit))
             }
             
-        } while isAccountNumberUnique(accountNumber) == false
+            isAccountNumberUnique = try MySQLManager.isAccountNumberUnique(accountNumber)
+            
+        } while isAccountNumberUnique == false
         
         return accountNumber
     }

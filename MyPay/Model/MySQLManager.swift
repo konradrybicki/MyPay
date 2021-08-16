@@ -7,15 +7,13 @@
 
 import MySQL
 
-//MARK: - MySQLManager
-
 /// Is responisble for all database operations (i.e. connection establishment, data insertion or uniqueness checking)
 
 public class MySQLManager {
     
-    /// Inserts all 'user' object's field values into the database
+    /// Inserts all 'user' object's field values into the database and, after the insertion is complete, retrieves user's id
     
-    public static func insert(user: User) throws {
+    public static func insert(user: User) throws -> Int {
         
         // connection establishment
         
@@ -31,9 +29,10 @@ public class MySQLManager {
         let scSalt = user.securityCodeSalt
         let birthDate = user.birthDate
         
-        // sql statement execution
+        // sql statement execution (user insertion)
         
         do {
+            
             let preparedStatement: MySQL.Statement = try connection.prepare("""
                 insert into Users(
                     FirstName,
@@ -54,9 +53,56 @@ public class MySQLManager {
             throw DatabaseError.dataSavingFailure
         }
         
+        // sql statement execution (id selection)
+        
+        let userId: Int
+        
+        do {
+            
+            let preparedStatement = try connection.prepare("select LAST_INSERT_ID();")
+            
+            // whole result
+            let result: Result = try preparedStatement.query([])
+            
+            // single row (MySQL.Row format)
+            let mysqlRow: MySQL.Row = try result.readRow()!
+            
+            // single row (Swift Dictionary)
+            let swiftRow: [String : Any] = mysqlRow.values
+            
+            // last inserted id (dict value)
+            
+            let key = "LAST_INSERT_ID()"
+            
+            guard let value = swiftRow[key] else {
+                print("Error inside MySQLManager.insert(user) - dict value access failure for key '\(key)'")
+                throw DatabaseError.interactionError
+            }
+            
+            // last inserted id (Any->Int downcasting)
+            guard let lastInsertId = value as? Int else {
+                print("Error inside MySQLManager.insert(user) - Any->Int downcasting failure")
+                throw DatabaseError.interactionError
+            }
+            
+            // final result
+            userId = lastInsertId
+        }
+        catch DatabaseError.interactionError {
+            throw DatabaseError.interactionError
+        }
+        catch {
+            print(error)
+            throw DatabaseError.interactionError
+        }
+
         // connection closing
         
         try closeConnection(connection)
+        
+        // user id return
+        
+        return userId
     }
     
     /// Inserts all 'account' object's field values into the database
@@ -124,16 +170,11 @@ extension MySQLManager {
                 where SecurityCodeSalt = ?;
             """)
             
-            // whole result
-            let result: Result = try preparedStatement.query([salt])
+            let result = try preparedStatement.query([salt])
             
-            // single row (MySQL.Row format)
-            let mysqlRow: MySQL.Row = try result.readRow()!
+            let mysqlRow = try result.readRow()!
             
-            // single row (Swift Dictionary)
-            let swiftRow: [String : Any] = mysqlRow.values
-            
-            // count (dict value)
+            let swiftRow = mysqlRow.values
             
             let key = "count(SecurityCodeSalt)"
             
@@ -142,13 +183,11 @@ extension MySQLManager {
                 throw DatabaseError.interactionError
             }
             
-            // count (Any->Int downcasting)
             guard let count = value as? Int else {
                 print("Error inside MySQLManager.isSecurityCodeSaltUnique() - Any->Int downcasting failure")
                 throw DatabaseError.interactionError
             }
             
-            // final result
             if count == 0 {
                 isSaltUnique = true
             }
@@ -317,14 +356,4 @@ extension MySQLManager {
             throw DatabaseError.connectionFailure
         }
     }
-}
-
-//MARK: - DatabaseError
-
-/// User-defined error type
-
-public enum DatabaseError: Error {
-    case connectionFailure
-    case dataSavingFailure
-    case interactionError
 }

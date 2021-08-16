@@ -7,29 +7,30 @@
 
 import Foundation
 
+/// Defines a database-related virtual card structure
+
 public class VirtualCard {
     
-    /// Defines a self-generating virtual card database structure
+    private(set) var cardNumber = ""
+    private(set) var accountNumber = ""
+    private(set) var expirationMonth = ""
+    private(set) var expirationYear = ""
+    private(set) var cvv = ""
     
-    public var cardNumber: String
-    public var accountNumber: String
-    public var expirationMonth: String
-    public var expirationYear: String
-    public var cvv: String
-    
-    public init(forAccountWithNumber accountNumber: String) {
-        self.cardNumber = generateUniqueCardNumber()
+    public init(forAccountWithNumber accountNumber: String) throws {
+        self.cardNumber = try generateCardNumber()
         self.accountNumber = accountNumber
         self.expirationMonth = getExpirationMonth()
-        self.expirationYear = getExpirationYear()
+        self.expirationYear = try getExpirationYear()
         self.cvv = generateCvv()
     }
     
-    private func generateUniqueCardNumber() -> String {
-        
-        /// Generates a 16 digit unique card number
+    /// Returns a 16 digit String, representing a database-unique virtual card number
+    
+    private func generateCardNumber() throws -> String {
         
         var cardNumber: String
+        var isCardNumberUnique: Bool
         
         repeat {
             
@@ -40,43 +41,63 @@ public class VirtualCard {
                 cardNumber.append(String(randomDigit))
             }
             
-        } while isCardNumberUnique(cardNumber) == false
+            isCardNumberUnique = try MySQLManager.isCardNumberUnique(cardNumber)
+            
+        } while isCardNumberUnique == false
         
         return cardNumber
     }
     
+    /// Returns a two-digit String, representing a virtual card's expiration month (current month) in a numeric format (i.e. January - '01')
+    
     private func getExpirationMonth() -> String {
         
-        /// Returns current month as a 2 digit string
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        let currentDate: String = dateFormatter.string(from: Date())
-        let currentMonth: Substring = currentDate[5...6]
+        // whole date
         
-        return String(currentMonth)
+        let currentDate: String = dateFormatter.string(from: Date())
+        
+        // month only
+        
+        let startIndex: String.Index = currentDate.index(currentDate.startIndex, offsetBy: 5)
+        let endIndex: String.Index = currentDate.index(currentDate.startIndex, offsetBy: 6)
+        
+        let expirationMonth = String(currentDate[startIndex...endIndex])
+        
+        return expirationMonth
     }
     
-    private func getExpirationYear() -> String {
-        
-        /// Returns current year incremented by 4 as a 4 digit string
+    /// Returns a four-digit String, representing a virtual card's expiration year (current year + 4)
+    
+    private func getExpirationYear() throws -> String {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        let currentDate: String = dateFormatter.string(from: Date())
-        let currentYear: Substring = currentDate[0...3]
+        let currentDate = dateFormatter.string(from: Date())
         
-        currentYear = Int!(String(currentYear))
-        currentYear += 4
+        // current year (string->int)
         
-        return String(currentYear)
+        let currentYear_str = String(currentDate.prefix(4))
+        
+        guard let currentYear_int = Int(currentYear_str) else {
+            print("Error inside VirtualCard->getexpirationYear() - String->Int parsing failure")
+            throw DataGenerationError.def
+        }
+        
+        // expiration year (int->string)
+        
+        let expirationYear_int = currentYear_int + 4
+        let expirationYear_str = String(expirationYear_int)
+        
+        return expirationYear_str
     }
+    
+    /// Returns a three-digit String, representing a virtual card's cvv code
     
     private func generateCvv() -> String {
-        
-        /// Generates a 3 digit non-unique cvv code
         
         var cvv: String = ""
         
