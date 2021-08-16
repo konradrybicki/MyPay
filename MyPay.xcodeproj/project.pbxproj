@@ -30,7 +30,7 @@
 /* Begin PBXFileReference section */
 		206B83DD29C29D280CDD4EF8 /* libPods-MyPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		273DBBBE895170D5E615BA5F /* Pods-MyPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPay.debug.xcconfig"; path = "Target Support Files/Pods-MyPay/Pods-MyPay.debug.xcconfig"; sourceTree = "<group>"; };
-		78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationFormViewController.swift; path = MyPay/View/RegistrationFormViewController.swift; sourceTree = SOURCE_ROOT; };
+		78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationFormViewController.swift; path = MyPay/Controller/RegistrationFormViewController.swift; sourceTree = SOURCE_ROOT; };
 		783CAE7626B74D530093611D /* RegistrationEndScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationEndScreenViewController.swift; sourceTree = "<group>"; };
 		784B9F3526C55FFE00C740C0 /* MySQLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySQLManager.swift; sourceTree = "<group>"; };
 		78B136D0269F10740038FCD2 /* MyPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,7 +45,7 @@
 		78BC6F7D26C1552D00706611 /* CryptoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoService.swift; sourceTree = "<group>"; };
 		78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemTypeExtensions.swift; sourceTree = "<group>"; };
 		78BC6F8326C191CA00706611 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
-		78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SCConfigScreenViewController.swift; path = MyPay/View/SCConfigScreenViewController.swift; sourceTree = SOURCE_ROOT; };
+		78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SCConfigScreenViewController.swift; path = MyPay/Controller/SCConfigScreenViewController.swift; sourceTree = SOURCE_ROOT; };
 		78E6C6B926C06FDD005D94EB /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		78E975E626C9A4CC00153A75 /* CustomErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
 		78FB539626C1D95500DACF8A /* VirtualCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualCard.swift; sourceTree = "<group>"; };
@@ -90,8 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */,
-				783CAE7626B74D530093611D /* RegistrationEndScreenViewController.swift */,
 				78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */,
+				783CAE7626B74D530093611D /* RegistrationEndScreenViewController.swift */,
 				78B136D7269F10740038FCD2 /* WelcomeScreenViewController.swift */,
 			);
 			path = Controller;
