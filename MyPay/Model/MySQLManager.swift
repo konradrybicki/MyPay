@@ -7,7 +7,7 @@
 
 import MySQL
 
-/// Is responisble for all database operations (i.e. connection establishment, data insertion or uniqueness checking)
+/// Is responisble for all database-related operations (i.e. connection establishment, data insertion or uniqueness checking)
 
 public class MySQLManager {
     
@@ -59,7 +59,7 @@ public class MySQLManager {
         
         do {
             
-            let preparedStatement = try connection.prepare("select LAST_INSERT_ID();")
+            let preparedStatement = try connection.prepare("select max(UserID) from Users;")
             
             // whole result
             let result: Result = try preparedStatement.query([])
@@ -70,23 +70,23 @@ public class MySQLManager {
             // single row (Swift Dictionary)
             let swiftRow: [String : Any] = mysqlRow.values
             
-            // last inserted id (dict value)
+            // last inserted user id (dict value)
             
-            let key = "LAST_INSERT_ID()"
+            let key = "max(UserID)"
             
             guard let value = swiftRow[key] else {
                 print("Error inside MySQLManager.insert(user) - dict value access failure for key '\(key)'")
                 throw DatabaseError.interactionError
             }
             
-            // last inserted id (Any->Int downcasting)
-            guard let lastInsertId = value as? Int else {
+            // last inserted user id (Any->Int downcasting)
+            guard let maxUserID = value as? Int else {
                 print("Error inside MySQLManager.insert(user) - Any->Int downcasting failure")
                 throw DatabaseError.interactionError
             }
             
             // final result
-            userId = lastInsertId
+            userId = maxUserID
         }
         catch DatabaseError.interactionError {
             throw DatabaseError.interactionError
