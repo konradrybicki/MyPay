@@ -357,17 +357,17 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proceed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DG9-OB-G3e" userLabel="Proceed button label">
                                                         <rect key="frame" x="148" y="14.5" width="78.5" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="21"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" red="0.74117647058823533" green="0.76470588235294112" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xde-2d-qdI" userLabel="Proceed button">
+                                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xde-2d-qdI" userLabel="Proceed button">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
                                                         <connections>
                                                             <action selector="proceedButtonPressed:" destination="Zte-2X-0nn" eventType="touchUpInside" id="5BC-GA-ziT"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.16078431372549018" green="0.50196078431372548" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="Xde-2d-qdI" firstAttribute="leading" secondItem="a6X-5e-NDY" secondAttribute="leading" id="D89-wM-4yO"/>
                                                     <constraint firstItem="Xde-2d-qdI" firstAttribute="trailing" secondItem="a6X-5e-NDY" secondAttribute="trailing" id="GUz-qQ-tgl"/>
@@ -410,6 +410,7 @@
                         <outlet property="birthDateTextField" destination="5zZ-l9-JgA" id="IhH-4W-tVj"/>
                         <outlet property="birthDateTextFieldUnderline" destination="CsU-sh-adJ" id="3lo-ee-Oaq"/>
                         <outlet property="firstNameArea" destination="Ysf-yo-f18" id="RII-qd-YQe"/>
+                        <outlet property="firstNameLabel" destination="Lem-Pl-7XZ" id="Ajp-oW-Y0j"/>
                         <outlet property="firstNameTextField" destination="Kxg-d8-M2B" id="WGm-pw-ZN5"/>
                         <outlet property="firstNameTextFieldUnderline" destination="26O-t9-8Sc" id="eqv-H5-xlc"/>
                         <outlet property="lastNameArea" destination="Qrz-iS-InF" id="NOm-lB-a0g"/>

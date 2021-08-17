@@ -6,13 +6,18 @@
 //
 
 /// User defined error type
+public enum DatabaseError: Error {
+    case connectionFailure
+    case dataSavingFailure
+    case interactionError
+}
+
+/// User defined error type
 public enum DataGenerationError: Error {
     case def
 }
 
 /// User defined error type
-public enum DatabaseError: Error {
-    case connectionFailure
-    case dataSavingFailure
-    case interactionError
+public enum DataValidationError: Error {
+    case def
 }

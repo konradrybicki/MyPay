@@ -315,6 +315,62 @@ extension MySQLManager {
         
         return isCardNumberUnique
     }
+    
+    /// Checks if there is any active account in the database, with the same area code and phone number as given
+    
+    public static func isTelephoneNumberUniqueForAnActiveAccount(_ areaCode: String, _ phoneNumber: String) throws -> Bool {
+        
+        let connection = try establishConnection()
+        
+        var isTelephoneNumberUnique: Bool
+        
+        do {
+            
+            let preparedStatement = try connection.prepare("""
+                select count(*)
+                from Users
+                where AreaCode = '?' and
+                      PhoneNumber = '?' and
+                      ProfileStatus = 'Active';
+            """)
+            
+            let result = try preparedStatement.query([areaCode, phoneNumber])
+            
+            let mysqlRow = try result.readRow()!
+            
+            let swiftRow = mysqlRow.values
+            
+            let key = "count(*)"
+            
+            guard let value = swiftRow[key] else {
+                print("Error inside MySQLManager.isTelephoneNumberUniqueForAnActiveAccount() - dict value access failure for key '\(key)'")
+                throw DatabaseError.interactionError
+            }
+            
+            guard let count = value as? Int else {
+                print("Error inside MySQLManager.isTelephoneNumberUniqueForAnActiveAccount() - Any->Int downcasting failure")
+                throw DatabaseError.interactionError
+            }
+            
+            if count == 0 {
+                isTelephoneNumberUnique = true
+            }
+            else {
+                isTelephoneNumberUnique = false
+            }
+        }
+        catch DatabaseError.interactionError {
+            throw DatabaseError.interactionError
+        }
+        catch {
+            print(error)
+            throw DatabaseError.interactionError
+        }
+        
+        try closeConnection(connection)
+        
+        return isTelephoneNumberUnique
+    }
 }
 
 extension MySQLManager {

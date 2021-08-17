@@ -10,8 +10,11 @@ import AudioToolbox // area code toolbar plus button press sound
 
 class RegistrationFormViewController: UIViewController {
     
+    // interface
+    
     @IBOutlet weak var firstNameArea: UIView!
     @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var firstNameTextFieldUnderline: UIView!
     
     @IBOutlet weak var lastNameArea: UIView!
@@ -35,6 +38,14 @@ class RegistrationFormViewController: UIViewController {
     var phoneNumberToolbar: UIToolbar!
     
     @IBOutlet weak var proceedButtonArea: UIView!
+    
+    // data validation
+    
+    var firstNameValid: Bool = false
+    var lastNameValid: Bool = false
+    var birthDateValid: Bool = false
+    var areaCodeValid: Bool = false
+    var phoneNumberValid: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,6 +228,136 @@ class RegistrationFormViewController: UIViewController {
     
     @objc func phoneNumberToolbar_doneButtonPressed() {
         phoneNumberTextField.endEditing(true)
+    }
+
+//MARK: - Name validation methods
+
+    func isNameValid(_ name: String) -> Bool {
+        
+        // submethods - length
+        
+        func isNameLengthValid() -> Bool {
+            (1...20).contains(name.count)
+        }
+        
+        // submethods - permitted characters
+        
+        func isSpace(_ character: Character) -> Bool {
+            character.asciiValue! == 32
+        }
+        
+        func isApostrophe(_ character: Character) -> Bool {
+            [39, 96].contains(character.asciiValue!)
+        }
+        
+        func isDash(_ character: Character) -> Bool {
+            character.asciiValue! == 45
+        }
+        
+        func isUpperCasedLetter(_ character: Character) -> Bool {
+            (65...90).contains(character.asciiValue!)
+        }
+        
+        func isLowerCasedLetter(_ character: Character) -> Bool {
+            (97...122).contains(character.asciiValue!)
+        }
+        
+        // submethods - character validation
+        
+        func isValid(_ character: Character) -> Bool {
+            
+            if character.isASCII == false {
+                return false
+            }
+            else {
+                if isSpace(character) == true ||
+                   isApostrophe(character) == true ||
+                   isDash(character) == true ||
+                   isUpperCasedLetter(character) == true ||
+                   isLowerCasedLetter(character) == true {
+                    
+                    return true
+                }
+                else {
+                    return false
+                }
+            }
+        }
+        
+        // actual validation
+        
+        if isNameLengthValid() == false {
+            return false
+        }
+        
+        for character in name {
+            if isValid(character) == false {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func removeMultipleSpaces(fromName name: inout String) {
+        name = name.replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression, range: nil)
+    }
+    
+//MARK: - Birth date validation methods
+    
+    func isBirthDateValid(birthDate: String) throws -> Bool {
+        
+        if birthDate == "" {
+            return false
+        }
+        
+        // birth year (int)
+        
+        let birthYear_str = String(birthDate.prefix(4))
+        
+        guard let birthYear_int = Int(birthYear_str) else {
+            print("Error inside RegistrationFormViewController->isBirthDateValid() - String->Int parsing failure (birth year)")
+            throw DataValidationError.def
+        }
+        
+        // current year (int)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let currentDate = dateFormatter.string(from: Date())
+        
+        let currentYear_str = String(currentDate.prefix(4))
+        
+        guard let currentYear_int = Int(currentYear_str) else {
+            print("Error inside RegistrationFormViewController->isBirthDateValid() - String->Int parsing failure (current year)")
+            throw DataValidationError.def
+        }
+        
+        // users age calculation (the user has to be at least 16 to register)
+        
+        let usersAge = currentYear_int - birthYear_int
+        
+        if usersAge >= 16 {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+//MARK: - Area code and phone number validation methods
+    
+    func isAreaCodeValid(areaCode: String) -> Bool {
+        (1...5).contains(areaCode.count)
+    }
+    
+    func isPhoneNumberValid(phoneNumber: String) -> Bool {
+        (1...10).contains(phoneNumber.count)
+    }
+    
+    func isTelephoneNumberUniqueForAnActiveAccount(_ areaCode: String, _ phoneNumber: String) throws -> Bool {
+        try MySQLManager.isTelephoneNumberUniqueForAnActiveAccount(areaCode, phoneNumber)
     }
 }
 
