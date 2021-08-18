@@ -404,9 +404,11 @@
                     </view>
                     <connections>
                         <outlet property="areaCodeArea" destination="kAi-T0-S4O" id="762-bk-Emi"/>
+                        <outlet property="areaCodeLabel" destination="umg-9a-Rxr" id="49B-C1-gVz"/>
                         <outlet property="areaCodeTextField" destination="BsM-45-lsN" id="gPt-EI-xwP"/>
                         <outlet property="areaCodeTextFieldUnderline" destination="9vI-c4-btP" id="bul-oM-gFM"/>
                         <outlet property="birthDateArea" destination="rqa-Mf-d6t" id="7KD-yC-0py"/>
+                        <outlet property="birthDateLabel" destination="sLy-a9-x5J" id="jbI-j3-w22"/>
                         <outlet property="birthDateTextField" destination="5zZ-l9-JgA" id="IhH-4W-tVj"/>
                         <outlet property="birthDateTextFieldUnderline" destination="CsU-sh-adJ" id="3lo-ee-Oaq"/>
                         <outlet property="firstNameArea" destination="Ysf-yo-f18" id="RII-qd-YQe"/>
@@ -414,9 +416,11 @@
                         <outlet property="firstNameTextField" destination="Kxg-d8-M2B" id="WGm-pw-ZN5"/>
                         <outlet property="firstNameTextFieldUnderline" destination="26O-t9-8Sc" id="eqv-H5-xlc"/>
                         <outlet property="lastNameArea" destination="Qrz-iS-InF" id="NOm-lB-a0g"/>
+                        <outlet property="lastNameLabel" destination="zeg-AX-9Lh" id="iBo-Wg-JCn"/>
                         <outlet property="lastNameTextField" destination="CZZ-Ot-iDb" id="Wl3-rQ-NJ4"/>
                         <outlet property="lastNameTextFieldUnderline" destination="YfU-XF-oxa" id="LeY-uf-0HZ"/>
                         <outlet property="phoneNumberArea" destination="5Ll-tG-wLG" id="jz5-rs-eDy"/>
+                        <outlet property="phoneNumberLabel" destination="Gyf-bF-Ccv" id="khV-zI-N6h"/>
                         <outlet property="phoneNumberTextField" destination="Mqa-WY-RVG" id="WTq-8o-hUH"/>
                         <outlet property="phoneNumberTextFieldUnderline" destination="kHw-5O-qLT" id="JPf-9f-KnB"/>
                         <outlet property="proceedButtonArea" destination="a6X-5e-NDY" id="Umq-2a-Ijl"/>
