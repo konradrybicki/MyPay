@@ -48,6 +48,9 @@ class SCConfigScreenViewController: UIViewController {
     var currentLoginAttempt: Int!
     var enteredDigits: Int = 0
     
+    // user object
+    public var user: User!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         communicate.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) // text color switching problem (black/white) - this line makes sure the text won't dissapear from the screen
