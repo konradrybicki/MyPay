@@ -423,7 +423,9 @@
                         <outlet property="phoneNumberLabel" destination="Gyf-bF-Ccv" id="khV-zI-N6h"/>
                         <outlet property="phoneNumberTextField" destination="Mqa-WY-RVG" id="WTq-8o-hUH"/>
                         <outlet property="phoneNumberTextFieldUnderline" destination="kHw-5O-qLT" id="JPf-9f-KnB"/>
+                        <outlet property="proceedButton" destination="Xde-2d-qdI" id="r0x-4Q-dyH"/>
                         <outlet property="proceedButtonArea" destination="a6X-5e-NDY" id="Umq-2a-Ijl"/>
+                        <outlet property="proceedButtonLabel" destination="DG9-OB-G3e" id="lzA-hr-H1p"/>
                         <segue destination="YMh-4c-uv2" kind="presentation" identifier="presentSCConfigScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="wZ0-S6-N8a"/>
                     </connections>
                 </viewController>

@@ -329,8 +329,8 @@ extension MySQLManager {
             let preparedStatement = try connection.prepare("""
                 select count(*)
                 from Users
-                where AreaCode = '?' and
-                      PhoneNumber = '?' and
+                where AreaCode = ? and
+                      PhoneNumber = ? and
                       ProfileStatus = 'Active';
             """)
             

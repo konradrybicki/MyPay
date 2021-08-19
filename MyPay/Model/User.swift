@@ -23,7 +23,7 @@ public class User {
     // id (initialized right after user's data gets inserted into the database)
     private var userId: Int = -1
     
-    public init(firstName: String, lastName: String, birthDate: String, areaCode: String, phoneNumber: String) {
+    public init(_ firstName: String, _ lastName: String, _ birthDate: String, _ areaCode: String, _ phoneNumber: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.birthDate = birthDate
