@@ -8,9 +8,11 @@
 import UIKit
 import AudioToolbox // area code toolbar plus button press sound
 
+/// Controlls registration form
+
 class RegistrationFormViewController: UIViewController {
     
-    // interface
+    // form fields and input
     
     @IBOutlet weak var firstNameArea: UIView!
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -41,13 +43,7 @@ class RegistrationFormViewController: UIViewController {
     @IBOutlet weak var phoneNumberTextFieldUnderline: UIView!
     var phoneNumberToolbar: UIToolbar!
     
-    @IBOutlet weak var proceedButtonArea: UIView!
-    @IBOutlet weak var proceedButtonLabel: UILabel!
-    @IBOutlet weak var proceedButton: UIButton!
-    
-    var proceedButtonLocked = true
-    
-    // data validation
+    // fields validation
     
     var firstNameValid: Bool = true
     var lastNameValid: Bool = true
@@ -55,7 +51,14 @@ class RegistrationFormViewController: UIViewController {
     var areaCodeValid: Bool = true
     var phoneNumberValid: Bool = true
     
-    // user object
+    // proceed button
+    
+    @IBOutlet weak var proceedButtonArea: UIView!
+    @IBOutlet weak var proceedButtonLabel: UILabel!
+    @IBOutlet weak var proceedButton: UIButton!
+    var proceedButtonLocked = true
+    
+    // user object, that transfers "encapsulated" user data to the next view controller
     
     private var user: User?
     
@@ -63,6 +66,7 @@ class RegistrationFormViewController: UIViewController {
         super.viewDidLoad()
         
         // form fields rounding (as well as the proceed button)
+        
         firstNameArea.layer.cornerRadius = 15
         lastNameArea.layer.cornerRadius = 15
         birthDateArea.layer.cornerRadius = 15
@@ -71,13 +75,22 @@ class RegistrationFormViewController: UIViewController {
         proceedButtonArea.layer.cornerRadius = 15
         
         // text field delegation
+        
         firstNameTextField.delegate = self
         lastNameTextField.delegate = self
         birthDateTextField.delegate = self
         areaCodeTextField.delegate = self
         phoneNumberTextField.delegate = self
         
+        // "typeable" text fields text change event capture
+        
+        firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldDidChangeEditing), for: .editingChanged)
+        lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldDidChangeEditing), for: .editingChanged)
+        areaCodeTextField.addTarget(self, action: #selector(areaCodeTextFieldDidChangeEditing), for: .editingChanged)
+        phoneNumberTextField.addTarget(self, action: #selector(phoneNumberTextFieldDidChangeEditing), for: .editingChanged)
+        
         // birth date date picker
+        
         birthDateDatePicker = createBirthDateDatePicker()
         birthDateTextField.inputView = birthDateDatePicker
         
@@ -93,24 +106,22 @@ class RegistrationFormViewController: UIViewController {
         phoneNumberTextField.inputAccessoryView = phoneNumberToolbar
         
         // first name text field "activation"
-        firstNameTextField.becomeFirstResponder()
         
-        // "typeable" text fields text change event capture
-        firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldDidChangeEditing), for: .editingChanged)
-        lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldDidChangeEditing), for: .editingChanged)
-        areaCodeTextField.addTarget(self, action: #selector(areaCodeTextFieldDidChangeEditing), for: .editingChanged)
-        phoneNumberTextField.addTarget(self, action: #selector(phoneNumberTextFieldDidChangeEditing), for: .editingChanged)
+        firstNameTextField.becomeFirstResponder()
     }
     
-    // navigation
+    // navigation methods
     
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
+        
+        // backward view change
+        
         dismiss(animated: false, completion: nil)
     }
     
     @IBAction func proceedButtonPressed(_ sender: UIButton) {
         
-        // phone number uniqueness check, for an active account
+        // last validation step - area code and phone number combination ("telephone number") database uniqueness check (for an active account)
         
         let areaCode = areaCodeTextField.text!
         let phoneNumber = phoneNumberTextField.text!
@@ -118,31 +129,35 @@ class RegistrationFormViewController: UIViewController {
         let numberUnique: Bool
         
         do {
-            
             numberUnique = try MySQLManager.isTelephoneNumberUniqueForAnActiveAccount(areaCode, phoneNumber)
-            
-            if numberUnique == true {
-                
-                // user object construction (data "encapsulation")
-                
-                let firstName = firstNameTextField.text!
-                let lastName = lastNameTextField.text!
-                let birthDate = birthDateTextField.text!
-                let areaCode = areaCodeTextField.text!
-                let phoneNumber = phoneNumberTextField.text!
-                
-                self.user = User(firstName, lastName, birthDate, areaCode, phoneNumber)
-                            
-                // screen change
-                
-                performSegue(withIdentifier: "presentSCConfigScreen", sender: self)
-            }
-            else {
-                // TODO: error display
-            }
         }
         catch {
+            
             // TODO: error display
+            
+            return
+        }
+        
+        if numberUnique == false {
+            
+            // TODO: error display
+        
+        }
+        else {
+            
+            // validation complete - user object construction (data "encapsulation")
+            
+            let firstName = firstNameTextField.text!
+            let lastName = lastNameTextField.text!
+            let birthDate = birthDateTextField.text!
+            let areaCode = areaCodeTextField.text!
+            let phoneNumber = phoneNumberTextField.text!
+            
+            self.user = User(firstName, lastName, birthDate, areaCode, phoneNumber)
+                        
+            // forward view change
+            
+            performSegue(withIdentifier: "presentSCConfigScreen", sender: self)
         }
     }
     
@@ -150,7 +165,7 @@ class RegistrationFormViewController: UIViewController {
         
         // user object transfer
         
-        let destinationVC = UIViewController() as! SCConfigScreenViewController
+        let destinationVC = segue.destination as! SCConfigScreenViewController
         destinationVC.user = self.user
     }
     
@@ -296,7 +311,7 @@ extension RegistrationFormViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
-        // fields empty/valid (..valid == true)
+        // empty/valid fields blue mark
         
         if textField == firstNameTextField && firstNameValid == true {
             paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
@@ -321,27 +336,35 @@ extension RegistrationFormViewController: UITextFieldDelegate {
         
         guard let firstName_updated = firstNameTextField.text else {
             print("Error inside RegistrationFormViewController->firstNameTextFieldDidChangeEditing() - unexpected unwrap failure for 'firstNameTextField.text' property")
-            
+            // TODO: error display
             return
         }
         
         if firstName_updated != "" {
             
-            // validation
+            // data validation
             
             let firstName_updated_valid: Bool = isNameValid(firstName_updated)
             
             // result (became invalid)
             
             if firstNameValid == true && firstName_updated_valid == false {
+                
+                // invalid field red mark
                 paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1), and: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1))
+                
+                //variable value change
                 firstNameValid = false
             }
             
             // result (became valid)
             
             else if firstNameValid == false && firstName_updated_valid == true {
+                
+                // valid field blue mark
                 paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
+                
+                // variable value change (valid)
                 firstNameValid = true
             }
         }
@@ -350,7 +373,11 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             // invalid became empty
             
             if firstNameValid == false {
+                
+                // empty field blue mark
                 paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
+                
+                // variable value change (empty)
                 firstNameValid = true
             }
         }
@@ -364,7 +391,7 @@ extension RegistrationFormViewController: UITextFieldDelegate {
         
         guard let lastName_updated = lastNameTextField.text else {
             print("Error inside RegistrationFormViewController->lastNameTextFieldDidChangeEditing() - unexpected unwrap failure for 'lastNameTextField.text' property")
-            
+            // TODO: error display
             return
         }
         
@@ -373,18 +400,24 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             let lastName_updated_valid = isNameValid(lastName_updated)
             
             if lastNameValid == true && lastName_updated_valid == false {
+                
                 paintCell(for: lastNameTextField, with: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1), and: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1))
+                
                 lastNameValid = false
             }
             else if lastNameValid == false && lastName_updated_valid == true {
+                
                 paintCell(for: lastNameTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
+                
                 lastNameValid = true
             }
         }
         else {
             
             if lastNameValid == false {
+                
                 paintCell(for: lastNameTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
+                
                 lastNameValid = true
             }
         }
@@ -398,7 +431,7 @@ extension RegistrationFormViewController: UITextFieldDelegate {
         
         guard let areaCode_updated = areaCodeTextField.text else {
             print("Error inside RegistrationFormViewController->areaCodeTextFieldDidChangeEditing() - unexpected unwrap failure for 'areaCodeTextField.text' property")
-            
+            // TODO: error handling
             return
         }
         
@@ -407,11 +440,15 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             let areaCode_updated_valid = isAreaCodeValid(areaCode_updated)
             
             if areaCodeValid == true && areaCode_updated_valid == false {
+                
                 paintCell(for: areaCodeTextField, with: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1), and: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1))
+                
                 areaCodeValid = false
             }
             else if areaCodeValid == false && areaCode_updated_valid == true {
+                
                 paintCell(for: areaCodeTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
+                
                 areaCodeValid = true
             }
         }
@@ -425,7 +462,7 @@ extension RegistrationFormViewController: UITextFieldDelegate {
         
         guard let phoneNumber_updated = phoneNumberTextField.text else {
             print("Error inside RegistrationFormViewController->phoneNumberTextFieldDidChangeEditing() - unexpected unwrap failure for 'phoneNumberTextField.text' property")
-            
+            // TODO: error handling
             return
         }
         
@@ -434,11 +471,15 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             let phoneNumber_updated_valid = isPhoneNumberValid(phoneNumber_updated)
             
             if phoneNumberValid == true && phoneNumber_updated_valid == false {
+                
                 paintCell(for: phoneNumberTextField, with: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1), and: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1))
+                
                 phoneNumberValid = false
             }
             else if phoneNumberValid == false && phoneNumber_updated_valid == true {
+                
                 paintCell(for: phoneNumberTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
+                
                 phoneNumberValid = true
             }
         }
@@ -453,28 +494,31 @@ extension RegistrationFormViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
-        // editing end - first name text field
+        // first name text field editing end
         
         if textField == firstNameTextField {
             
             guard let firstName = firstNameTextField.text else {
                 print("Error inside RegistrationFormViewController->textFieldDidEndEditing() - unexpected unwrap failure for 'firstNameTextField.text' property")
-                
+                // TODO: error handling
                 return
             }
             
             if firstName == "" {
-                paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
+                
+                // empty field double grey mark
+                paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1)) // <- (light gray)
             }
             else if firstNameValid == true {
                 
-                paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
+                // valid field grey and white mark
+                paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) // <- (white)
                 
                 // potential field switch
                 
                 guard let lastName = lastNameTextField.text else {
-                    print("Error inside RegistrationFormViewController->textFieldDidEndEditing() - unexpected unwrap failure for 'lastNameTextField.text' property")
-                    
+                    print("Error inside RegistrationFormViewController->textFieldDidEndEditing()->'first name text field editing end' - unexpected unwrap failure for 'lastNameTextField.text' property")
+                    // TODO: error handling
                     return
                 }
                 
@@ -484,26 +528,27 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             }
         }
         
-        // editing end - last name text field
+        // last name text field editing end
         
         else if textField == lastNameTextField {
             
             guard let lastName = lastNameTextField.text else {
-                print("Error inside RegistrationFormViewController->textFieldDidEndEditing() - unexpected unwrap failure for 'lastNameTextField.text' property")
-                
+                print("Error inside RegistrationFormViewController->textFieldDidEndEditing()->'last name text field editing end' - unexpected unwrap failure for 'lastNameTextField.text' property")
+                // TODO: error handling
                 return
             }
             
             if lastName == "" {
+                
                 paintCell(for: lastNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
             }
             else if lastNameValid == true {
                 
-                paintCell(for: lastNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
+                paintCell(for: lastNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                 
                 guard let birthDate = birthDateTextField.text else {
-                    print("Error inside RegistrationFormViewController->textFieldDidEndEditing() - unexpected unwrap failure for 'birthDateTextField.text' property")
-                    
+                    print("Error inside RegistrationFormViewController->textFieldDidEndEditing()->'last name text field editing end' - unexpected unwrap failure for 'birthDateTextField.text' property")
+                    // TODO: error handling
                     return
                 }
                 
@@ -536,7 +581,7 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                 
                 if birthDate_updated_valid == true {
                     
-                    paintCell(for: birthDateTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
+                    paintCell(for: birthDateTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                     birthDateValid = true
                     
                     guard let areaCode = areaCodeTextField.text else {
@@ -574,7 +619,7 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             }
             else if areaCodeValid == true {
                 
-                paintCell(for: areaCodeTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
+                paintCell(for: areaCodeTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                 
                 guard let phoneNumber = phoneNumberTextField.text else {
                     print("Error inside RegistrationFormViewController->textFieldDidEndEditing() - unexpected unwrap failure for 'phoneNumberTextField.text' property")
@@ -592,10 +637,17 @@ extension RegistrationFormViewController: UITextFieldDelegate {
         
         else if textField == phoneNumberTextField {
             
-            // vield empty/valid (phoneNumberValid == true)
+            guard let phoneNumber = phoneNumberTextField.text else {
+                print("Error inside RegistrationFormViewController->textFieldDidEndEditing() - unexpected unwrap failure for 'phoneNumberTextField.text' property")
+                
+                return
+            }
             
-            if phoneNumberValid == true {
+            if phoneNumber == "" {
                 paintCell(for: phoneNumberTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9450980392, alpha: 1))
+            }
+            else if phoneNumberValid == true {
+                paintCell(for: phoneNumberTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
             }
         }
         
