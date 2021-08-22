@@ -997,17 +997,16 @@
                         <outlet property="twoKeyLabel" destination="EDc-ww-k2D" id="1Js-I7-LnB"/>
                         <outlet property="zeroKey" destination="C0P-LS-cNp" id="zMH-Tr-OPt"/>
                         <outlet property="zeroKeyLabel" destination="wOp-CA-euM" id="uFO-QX-fMZ"/>
-                        <segue destination="ccT-DR-JMy" kind="presentation" identifier="presentRegistrationEndScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="N2Q-s5-Vkp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MAC-TV-0Lz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3079.7101449275365" y="-34.151785714285715"/>
         </scene>
-        <!--Registration end screen-->
+        <!--Communicate screen-->
         <scene sceneID="mE9-WV-Rxr">
             <objects>
-                <viewController id="ccT-DR-JMy" userLabel="Registration end screen" customClass="RegistrationEndScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ccT-DR-JMy" userLabel="Communicate screen" customClass="CommunicateScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LMK-Ye-YM0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1023,13 +1022,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JSo-Ox-wDH" userLabel="Communicate">
-                                                <rect key="frame" x="72" y="316" width="270" height="84"/>
+                                                <rect key="frame" x="141" y="344" width="132.5" height="28"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="270" id="FRA-85-B7W"/>
-                                                    <constraint firstAttribute="height" constant="84" id="dRg-YA-0Rk"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="270" id="FRA-85-B7W"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="28" id="dRg-YA-0Rk"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="Your MyPay account has been created, You can log in now">
+                                                    <fragment content="Communicate">
                                                         <attributes>
                                                             <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="20" name="Arial-BoldMT"/>
@@ -1103,12 +1102,11 @@
                     <connections>
                         <outlet property="communicate" destination="JSo-Ox-wDH" id="eMf-0e-H8Q"/>
                         <outlet property="okButtonPreciseArea" destination="gTy-0g-5d4" id="uED-go-yab"/>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="presentWelcomeScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="4sw-Jq-V0H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZOW-eM-Bxt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4157.971014492754" y="-34.151785714285715"/>
+            <point key="canvasLocation" x="2009" y="-833"/>
         </scene>
     </scenes>
     <resources>

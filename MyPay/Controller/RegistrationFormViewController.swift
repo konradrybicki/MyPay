@@ -132,7 +132,14 @@ class RegistrationFormViewController: UIViewController {
             isNumberUnique = try MySQLManager.isTelephoneNumberUniqueForAnActiveAccount(areaCode, phoneNumber)
         }
         catch {
-            // TODO: error display
+            
+            if error as! DatabaseError == .connectionFailure {
+                //..
+            }
+            if error as! DatabaseError == .interactionError {
+                //..
+            }
+            
             return
         }
         
@@ -450,6 +457,15 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                 areaCodeValid = true
             }
         }
+        else {
+            
+            if areaCodeValid == false {
+                
+                paintCell(for: areaCodeTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
+                
+                areaCodeValid = true
+            }
+        }
         
         return
     }
@@ -475,6 +491,15 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                 phoneNumberValid = false
             }
             else if phoneNumberValid == false && phoneNumber_updated_valid == true {
+                
+                paintCell(for: phoneNumberTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
+                
+                phoneNumberValid = true
+            }
+        }
+        else {
+            
+            if phoneNumberValid == false {
                 
                 paintCell(for: phoneNumberTextField, with: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1), and: #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1))
                 
