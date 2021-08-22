@@ -7,21 +7,21 @@
 
 import Foundation
 
-/// Is responsible for data validation, validating data either separately (ex.: birth date, area code, phone number) or together (ex.: area code and phone number combination)
+/// Is responsible for data validation, validating data of each kind separately (i.e. birth date, area code or phone number)
 
 public class ValidationService {
     
-    /// Checks if name's length is anywhere between 1 and 20 and contains ASCII charset upercased/lowercased letters only
+    /// Checks if name's length is anywhere between 2 and 20 and contains ASCII charset upercased/lowercased letters only
     
     public static func isNameValid(_ name: String) -> Bool {
         
         // submethods - length
         
         func isNameLengthValid() -> Bool {
-            (1...20).contains(name.count)
+            (2...20).contains(name.count)
         }
         
-        // submethods - permitted characters
+        // submethods - character validation
         
         func isUpperCasedLetter(_ character: Character) -> Bool {
             (65...90).contains(character.asciiValue!)
@@ -30,8 +30,6 @@ public class ValidationService {
         func isLowerCasedLetter(_ character: Character) -> Bool {
             (97...122).contains(character.asciiValue!)
         }
-        
-        // submethods - character validation
         
         func isValid(_ character: Character) -> Bool {
             
@@ -50,7 +48,7 @@ public class ValidationService {
             }
         }
         
-        // actual validation
+        // name validation
         
         if isNameLengthValid() == false {
             return false
@@ -96,15 +94,15 @@ public class ValidationService {
         }
     }
     
-    /// Checks if area code's length is anywhere between 1 and 5
+    /// Checks if area code's first character is a '+' , and length is anywhere between 2 and 4
     
     public static func isAreaCodeValid(_ areaCode: String) -> Bool {
-        (1...5).contains(areaCode.count)
+        Array(areaCode)[0] == "+" && (2...4).contains(areaCode.count)
     }
     
-    /// Checks if phone number's length is anywhere between 1 and 10
+    /// Checks if phone number's length is either 7 or 9
     
     public static func isPhoneNumberValid(_ phoneNumber: String) -> Bool {
-        (1...10).contains(phoneNumber.count)
+        [7, 9].contains(phoneNumber.count)
     }
 }
