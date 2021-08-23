@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Controlls communicate screen, presented programmatically by other view controllers, in purpose of either displaying a "succesful" communicate, or an error
+/// Controlls communicate screen, which displays either a "succesful" message or an error to the end user
 
 class CommunicateScreenViewController: UIViewController {
 
@@ -15,41 +15,70 @@ class CommunicateScreenViewController: UIViewController {
     @IBOutlet weak var communicate: UILabel!
     @IBOutlet weak var okButtonPreciseArea: UIView!
     
-    // a communicate message, initialized manually after vc initialization
-    private var message = ""
-    public func setMessage(to message: String) {
-        self.message = message
-    }
-    
-    // a view controller, which the Communicate Screen will bring user to, in case of a forward screen change
-    private var newDestination = ""
-    public func setNewDestination(to newDestination: String) {
-        self.newDestination = newDestination
-    }
+    // a view controller, presented upon tapping an 'ok' button, in case of a forward screen change
+    private var newDestinationVC: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // interface look
         communicate.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         okButtonPreciseArea.layer.cornerRadius = 15
-        
-        // communicate content
-        communicate.text = message
     }
     
     @IBAction func okButtonPressed(_ sender: UIButton) {
 
-        if newDestination != "" {
+        if let newDestinationVC = self.newDestinationVC {
             
             // TODO: forward screen change
             
         }
         else {
-            
             // backward screen change
-            
             dismiss(animated: true, completion: nil)
         }
+    }
+}
+
+extension CommunicateScreenViewController {
+    
+    /// Acts as an initializer, returning an instance of a CommunicateScreenViewController, instantiated from a storyboard constant
+    
+    public static func instantiateVC(withCommunicate communicate: String) -> CommunicateScreenViewController {
+        
+        // storyboard instantiation
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // vc instantiation attempt
+        let communicateScreenVCInstance_wrapped = storyboard.instantiateViewController(withIdentifier: "CommunicateScreenViewController") as? CommunicateScreenViewController
+        
+        // result unwrap
+        guard let communicateScreenVCInstance = communicateScreenVCInstance_wrapped else {
+            print("Error inside CommunicateScreenViewController.instantiateVC(withCommunicate) - unexpected unwrap failure for 'communicateScreenVCInstance_wrapped' constant")
+            exit(1)
+        }
+        
+        // vc setup
+        communicateScreenVCInstance.communicate.text = communicate
+        
+        return communicateScreenVCInstance
+    }
+    
+    /// Acts as an initializer, returning an instance of a CommunicateScreenViewController, instantiated from a storyboard constant
+    
+    public static func instantiateVC(withCommunicate communicate: String, andNewDestinationVC newDestinationVC: String) -> CommunicateScreenViewController {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let communicateScreenVCInstance_wrapped = storyboard.instantiateViewController(withIdentifier: "CommunicateScreenViewController") as? CommunicateScreenViewController
+        
+        guard let communicateScreenVCInstance = communicateScreenVCInstance_wrapped else {
+            print("Error inside CommunicateScreenViewController.instantiateVC(withCommunicate, andNewDestination) - unexpected unwrap failure for 'communicateScreenVCInstance_wrapped' constant")
+            exit(1)
+        }
+        
+        communicateScreenVCInstance.communicate.text = communicate
+        communicateScreenVCInstance.newDestinationVC = newDestinationVC
+        
+        return communicateScreenVCInstance
     }
 }

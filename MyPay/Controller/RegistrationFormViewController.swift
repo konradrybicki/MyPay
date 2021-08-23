@@ -58,6 +58,10 @@ class RegistrationFormViewController: UIViewController {
     @IBOutlet weak var proceedButton: UIButton!
     var proceedButtonLocked = true
     
+    // telephone number uniqueness error
+    
+    @IBOutlet weak var telephoneNumberUniquenessError: UILabel!
+    
     // user object, that transfers "encapsulated" user data to the next view controller
     
     private var user: User?
@@ -134,14 +138,25 @@ class RegistrationFormViewController: UIViewController {
         catch {
             
             if error as! DatabaseError == .connectionFailure {
-                //..
+                
+                // communicate screen vc instantiation
+                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database connection failed, please try again in a moment")
+                
+                // communicate screen vc presentation
+                present(communicateVC, animated: true, completion: nil)
             }
+            
             if error as! DatabaseError == .interactionError {
-                //..
+                
+                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database interaction error, please try again in a moment")
+                
+                present(communicateVC, animated: true, completion: nil)
             }
             
             return
         }
+        
+        // result
         
         if isNumberUnique == true {
             
@@ -156,11 +171,19 @@ class RegistrationFormViewController: UIViewController {
             self.user = User(firstName, lastName, birthDate, areaCode, phoneNumber)
                         
             // forward view change, preceded with user object transfer
-            
             performSegue(withIdentifier: "presentSCConfigScreen", sender: self)
         }
         else {
-            // TODO: error display
+            
+            // area code and phone number fields red mark (fields stay valid)
+            paintCell(for: areaCodeTextField, with: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1), and: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1))
+            paintCell(for: phoneNumberTextField, with: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1), and: #colorLiteral(red: 0.9058823529, green: 0.2980392157, blue: 0.2352941176, alpha: 1))
+            
+            // telephone number uniqueness error display
+            telephoneNumberUniquenessError.isHidden = false
+            
+            // proceed button lock
+            lockProceedButton()
         }
     }
     
@@ -168,8 +191,8 @@ class RegistrationFormViewController: UIViewController {
         
         // user object transfer
         
-        let destinationVC = segue.destination as! SCConfigScreenViewController
-        destinationVC.user = self.user
+        let scConfigScreenVC = segue.destination as! SCConfigScreenViewController
+        scConfigScreenVC.user = self.user
     }
     
 //MARK: - Birth date date picker and toolbar methods
