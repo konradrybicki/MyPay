@@ -378,23 +378,11 @@
                                                     <constraint firstItem="DG9-OB-G3e" firstAttribute="centerY" secondItem="a6X-5e-NDY" secondAttribute="centerY" id="idV-5a-Hxd"/>
                                                 </constraints>
                                             </view>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An account with given area code and phone number already exists, please change the data and try again" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTm-J9-jrC" userLabel="Telephone number uniqueness error">
-                                                <rect key="frame" x="93" y="484" width="228" height="101"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="101" id="JUJ-87-aWt"/>
-                                                    <constraint firstAttribute="width" constant="228" id="SH9-qF-HmI"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
-                                                <color key="textColor" red="0.90588235294117647" green="0.29803921568627451" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="9fd-4w-D2I" firstAttribute="top" secondItem="ij7-ee-lBU" secondAttribute="bottom" constant="29" id="624-X8-vJn"/>
-                                            <constraint firstItem="DTm-J9-jrC" firstAttribute="top" secondItem="9fd-4w-D2I" secondAttribute="bottom" constant="90" id="Dmx-jJ-60U"/>
                                             <constraint firstItem="ij7-ee-lBU" firstAttribute="leading" secondItem="QRz-v7-DLV" secondAttribute="leading" constant="20" id="HDL-hZ-5GF"/>
                                             <constraint firstItem="ij7-ee-lBU" firstAttribute="top" secondItem="QRz-v7-DLV" secondAttribute="top" constant="7.5" id="LpH-Ty-u4f"/>
-                                            <constraint firstItem="DTm-J9-jrC" firstAttribute="centerX" secondItem="QRz-v7-DLV" secondAttribute="centerX" id="TqJ-a7-dpk"/>
                                             <constraint firstItem="a6X-5e-NDY" firstAttribute="bottom" secondItem="QRz-v7-DLV" secondAttribute="bottom" constant="-30" id="fSr-h2-iHJ"/>
                                             <constraint firstItem="a6X-5e-NDY" firstAttribute="leading" secondItem="QRz-v7-DLV" secondAttribute="leading" constant="20" symbolic="YES" id="flL-fA-brO"/>
                                             <constraint firstItem="a6X-5e-NDY" firstAttribute="trailing" secondItem="QRz-v7-DLV" secondAttribute="trailing" constant="-20" id="lmr-Lj-fUo"/>
@@ -438,7 +426,6 @@
                         <outlet property="proceedButton" destination="Xde-2d-qdI" id="r0x-4Q-dyH"/>
                         <outlet property="proceedButtonArea" destination="a6X-5e-NDY" id="Umq-2a-Ijl"/>
                         <outlet property="proceedButtonLabel" destination="DG9-OB-G3e" id="lzA-hr-H1p"/>
-                        <outlet property="telephoneNumberUniquenessError" destination="DTm-J9-jrC" id="beu-C2-tps"/>
                         <segue destination="YMh-4c-uv2" kind="presentation" identifier="presentSCConfigScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="wZ0-S6-N8a"/>
                     </connections>
                 </viewController>
