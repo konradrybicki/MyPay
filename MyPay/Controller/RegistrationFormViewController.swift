@@ -513,7 +513,60 @@ extension RegistrationFormViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        // text field editing end
+        
         textField.endEditing(true)
+        
+        // potential field switch
+        
+        if textField == firstNameTextField {
+            
+            let firstName = firstNameTextField.text!
+            let lastName = lastNameTextField.text!
+            
+            if firstName != "" && firstNameValid == true && // first name filled, valid
+                lastName == "" {                            // last name empty
+                
+                lastNameTextField.becomeFirstResponder()
+            }
+        }
+        else if textField == lastNameTextField {
+            
+            let lastName = lastNameTextField.text!
+            let birthDate = birthDateTextField.text!
+            
+            if lastName != "" && lastNameValid == true &&
+                birthDate == "" {
+                
+                birthDateTextField.becomeFirstResponder()
+            }
+        }
+        else if textField == birthDateTextField {
+            
+            let birthDate = birthDateTextField.text!
+            let areaCode = areaCodeTextField.text!
+            
+            if birthDate != "" && birthDateValid == true &&
+                areaCode == "" {
+                
+                areaCodeTextField.becomeFirstResponder()
+            }
+        }
+        else if textField == areaCodeTextField {
+            
+            let areaCode = areaCodeTextField.text!
+            let phoneNumber = phoneNumberTextField.text!
+            
+            if areaCode != "" && areaCodeValid == true &&
+                phoneNumber == "" {
+                
+                phoneNumberTextField.becomeFirstResponder()
+            }
+        }
+        
+        // delegate's response (text field SHOULD return)
+        
         return true
     }
     
@@ -532,14 +585,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             else if firstNameValid == true {
                 
                 paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) // <- (white)
-                
-                // potential field switch
-                
-                let lastName = lastNameTextField.text!
-                
-                if lastName == "" {
-                    lastNameTextField.becomeFirstResponder()
-                }
             }
         }
         
@@ -556,12 +601,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             else if lastNameValid == true {
                 
                 paintCell(for: lastNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
-                
-                let birthDate = birthDateTextField.text!
-                
-                if birthDate == "" {
-                    birthDateTextField.becomeFirstResponder()
-                }
             }
         }
         
@@ -588,12 +627,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                     paintCell(for: birthDateTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                     
                     birthDateValid = true
-                    
-                    let areaCode = areaCodeTextField.text!
-                    
-                    if areaCode == "" {
-                        areaCodeTextField.becomeFirstResponder()
-                    }
                 }
                 
                 // result (became invalid)
@@ -620,12 +653,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
             else if areaCodeValid == true {
                 
                 paintCell(for: areaCodeTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
-                
-                let phoneNumber = phoneNumberTextField.text!
-                
-                if phoneNumber == "" {
-                    phoneNumberTextField.becomeFirstResponder()
-                }
             }
         }
         
