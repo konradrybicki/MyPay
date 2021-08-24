@@ -252,10 +252,20 @@ class RegistrationFormViewController: UIViewController {
         birthDate_formatted = dateFormatter.string(from: birthDate)
         birthDate_formatted = String(birthDate_formatted.prefix(10))
     
-        // assignment
-        
+        // date assignment
         birthDateTextField.text = birthDate_formatted
+        
+        // text field editing end
         birthDateTextField.endEditing(true)
+        
+        // potential field switch
+        
+        let areaCode = areaCodeTextField.text!
+        
+        if birthDateValid == true && areaCode == "" {
+            
+            areaCodeTextField.becomeFirstResponder()
+        }
     }
     
 //MARK: - Area code toolbar methods
@@ -309,7 +319,20 @@ class RegistrationFormViewController: UIViewController {
     }
     
     @objc func areaCodeToolbar_doneButtonPressed() {
+        
+        // text field editing end
         areaCodeTextField.endEditing(true)
+        
+        // potential field switch
+        
+        let areaCode = areaCodeTextField.text!
+        let phoneNumber = phoneNumberTextField.text!
+        
+        if areaCode != "" && areaCodeValid == true &&
+            phoneNumber == "" {
+            
+            phoneNumberTextField.becomeFirstResponder()
+        }
     }
     
 //MARK: - Phone number toolbar methods
@@ -542,28 +565,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                 birthDateTextField.becomeFirstResponder()
             }
         }
-        else if textField == birthDateTextField {
-            
-            let birthDate = birthDateTextField.text!
-            let areaCode = areaCodeTextField.text!
-            
-            if birthDate != "" && birthDateValid == true &&
-                areaCode == "" {
-                
-                areaCodeTextField.becomeFirstResponder()
-            }
-        }
-        else if textField == areaCodeTextField {
-            
-            let areaCode = areaCodeTextField.text!
-            let phoneNumber = phoneNumberTextField.text!
-            
-            if areaCode != "" && areaCodeValid == true &&
-                phoneNumber == "" {
-                
-                phoneNumberTextField.becomeFirstResponder()
-            }
-        }
         
         // delegate's response (text field SHOULD return)
         
@@ -572,7 +573,7 @@ extension RegistrationFormViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
-        // first name text field editing end
+        // form field color change (and validation, in case of a birth date text field)
         
         if textField == firstNameTextField {
             
@@ -587,9 +588,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                 paintCell(for: firstNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) // <- (white)
             }
         }
-        
-        // last name text field editing end
-        
         else if textField == lastNameTextField {
             
             let lastName = lastNameTextField.text!
@@ -603,9 +601,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                 paintCell(for: lastNameTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
             }
         }
-        
-        // 'birth date text field editing end'
-        
         else if textField == birthDateTextField {
             
             let birthDate_updated = birthDateTextField.text!
@@ -639,9 +634,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                 }
             }
         }
-        
-        // area code text field editing end
-        
         else if textField == areaCodeTextField {
             
             let areaCode = areaCodeTextField.text!
@@ -655,9 +647,6 @@ extension RegistrationFormViewController: UITextFieldDelegate {
                 paintCell(for: areaCodeTextField, with: #colorLiteral(red: 0.4980392157, green: 0.5490196078, blue: 0.5529411765, alpha: 1), and: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
             }
         }
-        
-        // phone number text field editing end
-        
         else if textField == phoneNumberTextField {
             
             let phoneNumber = phoneNumberTextField.text!
@@ -706,24 +695,39 @@ extension RegistrationFormViewController {
     func paintCell(for textField: UITextField!, with labelColor: UIColor, and underlineColor: UIColor) {
         
         if textField == firstNameTextField {
-            firstNameLabel.textColor = labelColor
-            firstNameTextFieldUnderline.backgroundColor = underlineColor
+            
+            UIView.animate(withDuration: 0.2) {
+                self.firstNameLabel.textColor = labelColor
+                self.firstNameTextFieldUnderline.backgroundColor = underlineColor
+            }
         }
         else if textField == lastNameTextField {
-            lastNameLabel.textColor = labelColor
-            lastNameTextFieldUnderline.backgroundColor = underlineColor
+            
+            UIView.animate(withDuration: 0.2) {
+                self.lastNameLabel.textColor = labelColor
+                self.lastNameTextFieldUnderline.backgroundColor = underlineColor
+            }
         }
         else if textField == birthDateTextField {
-            birthDateLabel.textColor = labelColor
-            birthDateTextFieldUnderline.backgroundColor = underlineColor
+            
+            UIView.animate(withDuration: 0.2) {
+                self.birthDateLabel.textColor = labelColor
+                self.birthDateTextFieldUnderline.backgroundColor = underlineColor
+            }
         }
         else if textField == areaCodeTextField {
-            areaCodeLabel.textColor = labelColor
-            areaCodeTextFieldUnderline.backgroundColor = underlineColor
+            
+            UIView.animate(withDuration: 0.2) {
+                self.areaCodeLabel.textColor = labelColor
+                self.areaCodeTextFieldUnderline.backgroundColor = underlineColor
+            }
         }
-        else {
-            phoneNumberLabel.textColor = labelColor
-            phoneNumberTextFieldUnderline.backgroundColor = underlineColor
+        else if textField == phoneNumberTextField {
+            
+            UIView.animate(withDuration: 0.2) {
+                self.phoneNumberLabel.textColor = labelColor
+                self.phoneNumberTextFieldUnderline.backgroundColor = underlineColor
+            }
         }
     }
 }
