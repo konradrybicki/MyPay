@@ -280,6 +280,8 @@ class RegistrationFormViewController: UIViewController {
     
     @objc func areaCodeToolbar_plusButtonPressed() {
         
+        // plus character addition
+        
         let areaCode = areaCodeTextField.text!
         
         if areaCode == "" {
@@ -293,6 +295,16 @@ class RegistrationFormViewController: UIViewController {
                 areaCodeTextField.text = "+" + areaCode
                 AudioServicesPlaySystemSound(1104)
             }
+        }
+        
+        // area code validation, through the areaCodeTextFieldDidChangeEditing() method (only if the '+' character was actually added to the area code)
+        
+        let areaCode_updated = areaCodeTextField.text!
+        
+        let plusCharacterAdded: Bool = areaCode != areaCode_updated
+        
+        if plusCharacterAdded == true {
+            areaCodeTextFieldDidChangeEditing()
         }
     }
     
