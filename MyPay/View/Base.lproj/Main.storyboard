@@ -1006,7 +1006,7 @@
         <!--Communicate screen-->
         <scene sceneID="mE9-WV-Rxr">
             <objects>
-                <viewController id="ccT-DR-JMy" userLabel="Communicate screen" customClass="CommunicateScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommunicateScreenViewController" id="ccT-DR-JMy" userLabel="Communicate screen" customClass="CommunicateScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LMK-Ye-YM0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

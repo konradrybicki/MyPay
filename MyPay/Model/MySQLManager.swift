@@ -65,7 +65,7 @@ public class MySQLManager {
             let result: Result = try preparedStatement.query([])
             
             // single row (MySQL.Row format)
-            let mysqlRow: MySQL.Row = try result.readRow()!
+            let mysqlRow: MySQL.Row = result.rows[0]
             
             // single row (Swift Dictionary)
             let swiftRow: [String : Any] = mysqlRow.values
@@ -172,7 +172,7 @@ extension MySQLManager {
             
             let result = try preparedStatement.query([salt])
             
-            let mysqlRow = try result.readRow()!
+            let mysqlRow = result.rows[0]
             
             let swiftRow = mysqlRow.values
             
@@ -183,8 +183,8 @@ extension MySQLManager {
                 throw DatabaseError.interactionError
             }
             
-            guard let count = value as? Int else {
-                print("Error inside MySQLManager.isSecurityCodeSaltUnique() - Any->Int downcasting failure")
+            guard let count = value as? Int64 else {
+                print("Error inside MySQLManager.isSecurityCodeSaltUnique() - Any->Int64 downcasting failure")
                 throw DatabaseError.interactionError
             }
             
@@ -226,7 +226,7 @@ extension MySQLManager {
             
             let result = try preparedStatement.query([accountNumber])
             
-            let mysqlRow = try result.readRow()!
+            let mysqlRow = result.rows[0]
             
             let swiftRow = mysqlRow.values
             
@@ -237,8 +237,8 @@ extension MySQLManager {
                 throw DatabaseError.interactionError
             }
             
-            guard let count = value as? Int else {
-                print("Error inside MySQLManager.isAccountNumberUnique() - Any->Int downcasting failure")
+            guard let count = value as? Int64 else {
+                print("Error inside MySQLManager.isAccountNumberUnique() - Any->Int64 downcasting failure")
                 throw DatabaseError.interactionError
             }
             
@@ -280,7 +280,7 @@ extension MySQLManager {
             
             let result = try preparedStatement.query([cardNumber])
             
-            let mysqlRow = try result.readRow()!
+            let mysqlRow = result.rows[0]
             
             let swiftRow = mysqlRow.values
             
@@ -291,8 +291,8 @@ extension MySQLManager {
                 throw DatabaseError.interactionError
             }
             
-            guard let count = value as? Int else {
-                print("Error inside MySQLManager.isCardNumberUnique() - Any->Int downcasting failure")
+            guard let count = value as? Int64 else {
+                print("Error inside MySQLManager.isCardNumberUnique() - Any->Int64 downcasting failure")
                 throw DatabaseError.interactionError
             }
             
@@ -336,7 +336,7 @@ extension MySQLManager {
             
             let result = try preparedStatement.query([areaCode, phoneNumber])
             
-            let mysqlRow = try result.readRow()!
+            let mysqlRow = result.rows[0]
             
             let swiftRow = mysqlRow.values
             
@@ -347,8 +347,8 @@ extension MySQLManager {
                 throw DatabaseError.interactionError
             }
             
-            guard let count = value as? Int else {
-                print("Error inside MySQLManager.isTelephoneNumberUniqueForAnActiveAccount() - Any->Int downcasting failure")
+            guard let count = value as? Int64 else {
+                print("Error inside MySQLManager.isTelephoneNumberUniqueForAnActiveAccount() - Any->Int64 downcasting failure")
                 throw DatabaseError.interactionError
             }
             

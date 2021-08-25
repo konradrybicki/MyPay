@@ -15,14 +15,21 @@ class CommunicateScreenViewController: UIViewController {
     @IBOutlet weak var communicate: UILabel!
     @IBOutlet weak var okButtonPreciseArea: UIView!
     
+    // a message, displayed to the user
+    private var communicateMessage: String!
+    
     // a view controller, presented upon tapping an 'ok' button, in case of a forward screen change
     private var newDestinationVC: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // interface look
         communicate.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         okButtonPreciseArea.layer.cornerRadius = 15
+        
+        // communicate message
+        communicate.text = communicateMessage
     }
     
     @IBAction func okButtonPressed(_ sender: UIButton) {
@@ -58,7 +65,7 @@ extension CommunicateScreenViewController {
         }
         
         // vc setup
-        communicateScreenVCInstance.communicate.text = communicate
+        communicateScreenVCInstance.communicateMessage = communicate
         
         return communicateScreenVCInstance
     }
@@ -76,7 +83,7 @@ extension CommunicateScreenViewController {
             exit(1)
         }
         
-        communicateScreenVCInstance.communicate.text = communicate
+        communicateScreenVCInstance.communicateMessage = communicate
         communicateScreenVCInstance.newDestinationVC = newDestinationVC
         
         return communicateScreenVCInstance
