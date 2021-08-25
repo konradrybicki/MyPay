@@ -53,27 +53,19 @@ extension UIViewController {
         
         // loading animation display
         
-        // (in case we'd call the method to display loading animation right after the app loads, so when the window is not yet loaded)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            
-            let window = UIApplication.shared.keyWindow!
-            
-            loadingView.frame = window.bounds
-            window.addSubview(loadingView)
-        }
+        let window = UIApplication.shared.keyWindow!
+        
+        loadingView.frame = window.bounds
+        window.addSubview(loadingView)
     }
     
     /// Removes a view, initialized by the displayLoadingAnimation() method from the screen
     
     public static func hideLoadingAnimation() {
         
-        // (to match animation display time and not remove the loading view before it's actually initialized)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            
-            let window = UIApplication.shared.keyWindow!
-            
-            let loadingView = window.viewWithTag(1)
-            loadingView!.removeFromSuperview()
-        }
+        let window = UIApplication.shared.keyWindow!
+        
+        let loadingView = window.viewWithTag(1)
+        loadingView!.removeFromSuperview()
     }
 }
