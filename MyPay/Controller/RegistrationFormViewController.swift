@@ -121,6 +121,10 @@ class RegistrationFormViewController: UIViewController {
     
     @IBAction func proceedButtonPressed(_ sender: UIButton) {
         
+        // loading animation display
+        
+        UIViewController.displayLoadingAnimation()
+        
         // last validation step - area code and phone number combination ("telephone number") database uniqueness check (for an active account)
         
         let areaCode = areaCodeTextField.text!
@@ -139,14 +143,21 @@ class RegistrationFormViewController: UIViewController {
                 let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database connection failed, please try again in a moment")
                 
                 // communicate screen vc presentation
-                present(communicateVC, animated: true, completion: nil)
+                present(communicateVC, animated: true) {
+                    
+                    // (completion)
+                    
+                    UIViewController.hideLoadingAnimation()
+                }
             }
             
             if error as! DatabaseError == .interactionError {
                 
                 let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database interaction error, please try again in a moment")
                 
-                present(communicateVC, animated: true, completion: nil)
+                present(communicateVC, animated: true) {
+                    UIViewController.hideLoadingAnimation()
+                }
             }
             
             return
@@ -168,12 +179,15 @@ class RegistrationFormViewController: UIViewController {
                         
             // forward view change, preceded with user object transfer
             performSegue(withIdentifier: "presentSCConfigScreen", sender: self)
+            UIViewController.hideLoadingAnimation() // TODO: method call after the segue's actually been performed
         }
         else {
             
             let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "An account with given area code and phone number aready exists in the database, please change the data and try again")
             
-            present(communicateVC, animated: true, completion: nil)
+            present(communicateVC, animated: true) {
+                UIViewController.hideLoadingAnimation()
+            }
         }
     }
     
