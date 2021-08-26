@@ -123,71 +123,74 @@ class RegistrationFormViewController: UIViewController {
     @IBAction func proceedButtonPressed(_ sender: UIButton) {
         
         // loading animation display
-        
         displayLoadingAnimation()
         
-        // last validation step - area code and phone number combination ("telephone number") database uniqueness check (for an active account)
+        // (time for the loading animation to load up)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
         
-        let areaCode = areaCodeTextField.text!
-        let phoneNumber = phoneNumberTextField.text!
-        
-        let isNumberUnique: Bool
-        
-        do {
-            isNumberUnique = try MySQLManager.isTelephoneNumberUniqueForAnActiveAccount(areaCode, phoneNumber)
-        }
-        catch {
+            // last validation step - area code and phone number combination ("telephone number") database uniqueness check (for an active account)
             
-            if error as! DatabaseError == .connectionFailure {
-                
-                // communicate screen vc instantiation
-                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database connection failed, please try again in a moment")
-                
-                // communicate screen vc presentation
-                present(communicateVC, animated: true) {
-                    
-                    // (completion)
-                    
-                    self.hideLoadingAnimation()
-                }
+                let areaCode = self.areaCodeTextField.text!
+                let phoneNumber = self.phoneNumberTextField.text!
+            
+            let isNumberUnique: Bool
+            
+            do {
+                isNumberUnique = try MySQLManager.isTelephoneNumberUniqueForAnActiveAccount(areaCode, phoneNumber)
             }
-            
-            if error as! DatabaseError == .interactionError {
+            catch {
                 
-                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database interaction error, please try again in a moment")
-                
-                present(communicateVC, animated: true) {
-                    self.hideLoadingAnimation()
-                }
-            }
-            
-            return
-        }
-        
-        // result
-        
-        if isNumberUnique == true {
-            
-            // validation complete - user object construction (data "encapsulation")
-            
-            let firstName = firstNameTextField.text!
-            let lastName = lastNameTextField.text!
-            let birthDate = birthDateTextField.text!
-            let areaCode = areaCodeTextField.text!
-            let phoneNumber = phoneNumberTextField.text!
-            
-            self.user = User(firstName, lastName, birthDate, areaCode, phoneNumber)
+                if error as! DatabaseError == .connectionFailure {
+                    
+                    // communicate screen vc instantiation
+                    let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database connection failed, please try again in a moment")
+                    
+                    // communicate screen vc presentation
+                    self.present(communicateVC, animated: true) {
                         
-            // forward view change, preceded with user object transfer
-            performSegue(withIdentifier: "presentSCConfigScreen", sender: self)
-            hideLoadingAnimation() // TODO: method call after the segue's actually been performed
-        }
-        else {
+                        // (completion)
+                        
+                        self.hideLoadingAnimation()
+                    }
+                }
+                
+                if error as! DatabaseError == .interactionError {
+                    
+                    let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database interaction error, please try again in a moment")
+                    
+                    self.present(communicateVC, animated: true) {
+                        self.hideLoadingAnimation()
+                    }
+                }
+                
+                return
+            }
             
-            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "An account with given area code and phone number aready exists in the database, please change the data and try again")
+            // result
             
-            present(communicateVC, animated: true) {
+            if isNumberUnique == true {
+                
+                // validation complete - user object construction (data "encapsulation")
+                
+                let firstName = self.firstNameTextField.text!
+                let lastName = self.lastNameTextField.text!
+                let birthDate = self.birthDateTextField.text!
+                let areaCode = self.areaCodeTextField.text!
+                let phoneNumber = self.phoneNumberTextField.text!
+                
+                self.user = User(firstName, lastName, birthDate, areaCode, phoneNumber)
+                            
+                // forward view change, preceded with user object transfer
+                self.performSegue(withIdentifier: "presentSCConfigScreen", sender: self)
                 self.hideLoadingAnimation()
+            }
+            else {
+                
+                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "An account with given area code and phone number aready exists in the database, please change the data and try again")
+                
+                self.present(communicateVC, animated: true) {
+                    self.hideLoadingAnimation()
+                }
             }
         }
     }

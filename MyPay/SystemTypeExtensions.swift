@@ -39,7 +39,7 @@ extension UIViewController {
         // loading view initialization
         
         let loadingView = UIView(frame: superview.bounds)
-        loadingView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        loadingView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
         loadingView.tag = 1
         
         // loading indicator initialization
