@@ -130,8 +130,8 @@ class RegistrationFormViewController: UIViewController {
         
             // last validation step - area code and phone number combination ("telephone number") database uniqueness check (for an active account)
             
-                let areaCode = self.areaCodeTextField.text!
-                let phoneNumber = self.phoneNumberTextField.text!
+            let areaCode = self.areaCodeTextField.text!
+            let phoneNumber = self.phoneNumberTextField.text!
             
             let isNumberUnique: Bool
             
