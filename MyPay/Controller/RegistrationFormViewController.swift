@@ -5,6 +5,7 @@
 //  Created by Konrad Rybicki on 19/07/2021.
 //
 
+import Foundation
 import UIKit
 import AudioToolbox // area code toolbar plus button press sound
 
@@ -123,7 +124,7 @@ class RegistrationFormViewController: UIViewController {
         
         // loading animation display
         
-        UIViewController.displayLoadingAnimation()
+        displayLoadingAnimation()
         
         // last validation step - area code and phone number combination ("telephone number") database uniqueness check (for an active account)
         
@@ -147,7 +148,7 @@ class RegistrationFormViewController: UIViewController {
                     
                     // (completion)
                     
-                    UIViewController.hideLoadingAnimation()
+                    self.hideLoadingAnimation()
                 }
             }
             
@@ -156,7 +157,7 @@ class RegistrationFormViewController: UIViewController {
                 let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Database interaction error, please try again in a moment")
                 
                 present(communicateVC, animated: true) {
-                    UIViewController.hideLoadingAnimation()
+                    self.hideLoadingAnimation()
                 }
             }
             
@@ -179,14 +180,14 @@ class RegistrationFormViewController: UIViewController {
                         
             // forward view change, preceded with user object transfer
             performSegue(withIdentifier: "presentSCConfigScreen", sender: self)
-            UIViewController.hideLoadingAnimation() // TODO: method call after the segue's actually been performed
+            hideLoadingAnimation() // TODO: method call after the segue's actually been performed
         }
         else {
             
             let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "An account with given area code and phone number aready exists in the database, please change the data and try again")
             
             present(communicateVC, animated: true) {
-                UIViewController.hideLoadingAnimation()
+                self.hideLoadingAnimation()
             }
         }
     }

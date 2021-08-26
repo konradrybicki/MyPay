@@ -24,13 +24,21 @@ extension Int {
 
 extension UIViewController {
     
-    /// Covers the entire screen with a white-colored UIView, which contains a single blue-colored, animating Activity Indicator right in the middle
+    /// Temporarily adds a white-colored UIView, which contains a single blue-colored, animating Activity Indicator right in the middle, to the ViewController's Superview
     
-    public static func displayLoadingAnimation() {
+    public func displayLoadingAnimation() {
+        
+        // (just to enhance code readability)
+        
+        let superview = self.view!
+        
+        defer {
+            self.view = superview
+        }
         
         // loading view initialization
         
-        let loadingView = UIView(frame: UIScreen.main.bounds)
+        let loadingView = UIView(frame: superview.bounds)
         loadingView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         loadingView.tag = 1
         
@@ -53,19 +61,23 @@ extension UIViewController {
         
         // loading animation display
         
-        let window = UIApplication.shared.keyWindow!
-        
-        loadingView.frame = window.bounds
-        window.addSubview(loadingView)
+        superview.addSubview(loadingView)
     }
     
-    /// Removes a view, initialized by the displayLoadingAnimation() method from the screen
+    /// Removes a view, added within the displayLoadingAnimation() method, from the ViewController's Superview
     
-    public static func hideLoadingAnimation() {
+    public func hideLoadingAnimation() {
         
-        let window = UIApplication.shared.keyWindow!
+        let superview = self.view!
         
-        let loadingView = window.viewWithTag(1)
-        loadingView!.removeFromSuperview()
+        defer {
+            self.view = superview
+        }
+        
+        // loading view indentification and removal
+        
+        if let loadingView = superview.viewWithTag(1) {
+            loadingView.removeFromSuperview()
+        }
     }
 }
