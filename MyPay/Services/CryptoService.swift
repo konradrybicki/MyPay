@@ -34,7 +34,11 @@ public class CryptoService {
             
             for _ in 0..<64 {
                 
-                let randomAsciiIndexInRange = Int.random(in: 33...126)
+                var randomAsciiIndexInRange: Int
+                
+                repeat {
+                    randomAsciiIndexInRange = Int.random(in: 33...126)
+                } while randomAsciiIndexInRange == 39 // (apostrophe character index - apostrophes are not allowed in case of database-stored values, due to MySQL's nature)
                 
                 guard let randomAsciiCharacterInRange: Character = randomAsciiIndexInRange.asAsciiCharacter() else {
                     throw DataGenerationError.def
