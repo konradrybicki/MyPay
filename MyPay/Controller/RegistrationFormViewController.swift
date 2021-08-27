@@ -186,7 +186,7 @@ class RegistrationFormViewController: UIViewController {
             }
             else {
                 
-                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "An account with given area code and phone number aready exists in the database, please change the data and try again")
+                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "An account with given area code and phone number aready exists, please change the data and try again")
                 
                 self.present(communicateVC, animated: true) {
                     self.hideLoadingAnimation()
