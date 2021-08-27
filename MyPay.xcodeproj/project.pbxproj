@@ -71,12 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				78BC6F7B26C142F600706611 /* User.swift */,
-				78BC6F7D26C1552D00706611 /* CryptoService.swift */,
 				78BC6F8326C191CA00706611 /* Account.swift */,
 				78FB539626C1D95500DACF8A /* VirtualCard.swift */,
-				784B9F3526C55FFE00C740C0 /* MySQLManager.swift */,
-				78E975E626C9A4CC00153A75 /* CustomErrors.swift */,
-				7861439026D0427200E406D5 /* ValidationService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -121,17 +117,29 @@
 		78B136D2269F10740038FCD2 /* MyPay */ = {
 			isa = PBXGroup;
 			children = (
-				78313C8726A5BFBE00342D85 /* Controller */,
-				78313C8526A5BFAF00342D85 /* View */,
 				78313C8426A5BFAA00342D85 /* Model */,
+				78313C8526A5BFAF00342D85 /* View */,
+				78313C8726A5BFBE00342D85 /* Controller */,
+				78CFAA8D26D92EE20092F526 /* Services */,
 				78B136D3269F10740038FCD2 /* AppDelegate.swift */,
 				78B136D5269F10740038FCD2 /* SceneDelegate.swift */,
 				78B136DC269F10760038FCD2 /* Assets.xcassets */,
 				78B136DE269F10760038FCD2 /* LaunchScreen.storyboard */,
 				78B136E1269F10760038FCD2 /* Info.plist */,
+				78E975E626C9A4CC00153A75 /* CustomErrors.swift */,
 				78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */,
 			);
 			path = MyPay;
+			sourceTree = "<group>";
+		};
+		78CFAA8D26D92EE20092F526 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				78BC6F7D26C1552D00706611 /* CryptoService.swift */,
+				784B9F3526C55FFE00C740C0 /* MySQLManager.swift */,
+				7861439026D0427200E406D5 /* ValidationService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		D539F706DE2F8F89FCFFF01B /* Pods */ = {
