@@ -36,8 +36,8 @@ class SCConfigScreenViewController: UIViewController {
     public var user: User!
     
     // security code
-    private var securityCode_firstAttempt: String!
-    private var securityCode_secondAttempt: String!
+    private var securityCode_firstAttempt = ""
+    private var securityCode_secondAttempt = ""
     
     // counters
     var currentAttempt: Int!
@@ -71,20 +71,22 @@ class SCConfigScreenViewController: UIViewController {
     
     @IBAction func numericKeyPressed(_ sender: UIButton) {
         
-        // vibration
+        // digit entrance
+        enteredDigits += 1
         
+        // vibration
         let impactGenerator = UIImpactFeedbackGenerator(style: .light)
         impactGenerator.impactOccurred()
         
         // pin dot color change
         
-        if enteredDigits == 0 {
+        if enteredDigits == 1 {
             firstPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
         }
-        else if enteredDigits == 1 {
+        else if enteredDigits == 2 {
             secondPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
         }
-        else if enteredDigits == 2 {
+        else if enteredDigits == 3 {
             thirdPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
         }
         else {
@@ -128,14 +130,14 @@ class SCConfigScreenViewController: UIViewController {
         
         // backspace key unlock
         
-        if enteredDigits == 0 {
+        if enteredDigits == 1 {
             backspaceKeyArrow.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             backspaceKey.isUserInteractionEnabled = true
         }
         
         // switching to second attempt
         
-        if enteredDigits == 3 {
+        if enteredDigits == 4 {
             
             lockKeyboard()
             
@@ -154,6 +156,10 @@ class SCConfigScreenViewController: UIViewController {
                     
                     // backspace key arrow hide
                     self.backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                    
+                    // counters
+                    self.currentAttempt = 2
+                    self.enteredDigits = 0
                     
                     // keyboard unlock (backspace key stays locked)
                     self.unlockKeyboard_withoutBackspace()
@@ -179,7 +185,7 @@ class SCConfigScreenViewController: UIViewController {
                             
                             // error communicate
                             
-                            var errorCommunicate: String = ""
+                            var errorCommunicate = ""
                             
                             if let _ = error as? DataGenerationError {
                                 errorCommunicate = "Data generation error, please try again in a moment"
@@ -217,7 +223,52 @@ class SCConfigScreenViewController: UIViewController {
                             try self.user.register()
                         }
                         catch {
-                            // TODO: error display
+                            
+                            var errorCommunicate = ""
+                            
+                            if let databaseError = error as? DatabaseError {
+                                
+                                if databaseError == .connectionFailure {
+                                    errorCommunicate = "Database connection failure, please try again in a moment"
+                                }
+                                else if databaseError == .dataSavingFailure {
+                                    errorCommunicate = "Data saving failure, please try again in a moment"
+                                }
+                                else if databaseError == .interactionError {
+                                    errorCommunicate = "Database interaction error, please try again in a moment"
+                                }
+                            }
+                            else if error as! DataGenerationError == .def {
+                                errorCommunicate = "Data generation error, please try again in a moment"
+                            }
+                            
+                            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate, andNewDestinationVC: "SCConfigScreenViewController")
+                            
+                            self.present(communicateVC, animated: true) {
+                                self.hideLoadingAnimation()
+                            }
+                        }
+                        
+                        // registration complete
+                        
+                        let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Your MyPay account has been created, You can log in now 😊", andNewDestinationVC: "WelcomeScreenViewController")
+                        
+                        self.present(communicateVC, animated: true) {
+                            self.hideLoadingAnimation()
+                        }
+                    }
+                    else if bothAttemptsMatch == false {
+                        
+                        // strong, longer vibration
+                        let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+                        notificationFeedbackGenerator.notificationOccurred(.error)
+                        
+                        // error communicate
+                        
+                        let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Security code mismatch!\nPlease try again", andNewDestinationVC: "SCConfigScreenViewController")
+                        
+                        self.present(communicateVC, animated: true) {
+                            self.hideLoadingAnimation()
                         }
                     }
                 }
@@ -254,25 +305,56 @@ class SCConfigScreenViewController: UIViewController {
     
     @IBAction func backspaceKeyPressed(_ sender: UIButton) {
         
+        // digit deletion
+        enteredDigits -= 1
+        
+        // vibration
         let impactGenerator = UIImpactFeedbackGenerator(style: .light)
         impactGenerator.impactOccurred()
         
-        if enteredDigits == 3 {
+        // pin dot color change
+        
+        if enteredDigits == 2 {
             thirdPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-            enteredDigits -= 1
-        }
-        else if enteredDigits == 2 {
-            secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-            enteredDigits -= 1
         }
         else if enteredDigits == 1 {
-            
-            // digit deletion
+            secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        }
+        else if enteredDigits == 0 {
             firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-            enteredDigits -= 1
+        }
+        
+        // security code
+        
+        if currentAttempt == 1 {
             
-            // backspace key lock
-            backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            if enteredDigits == 2 {
+                securityCode_firstAttempt = String(securityCode_firstAttempt.prefix(2))
+            }
+            else if enteredDigits == 1 {
+                securityCode_firstAttempt = String(securityCode_firstAttempt.prefix(1))
+            }
+            else if enteredDigits == 0 {
+                securityCode_firstAttempt = ""
+            }
+        }
+        else {
+            
+            if enteredDigits == 2 {
+                securityCode_secondAttempt = String(securityCode_secondAttempt.prefix(2))
+            }
+            else if enteredDigits == 1 {
+                securityCode_secondAttempt = String(securityCode_secondAttempt.prefix(1))
+            }
+            else if enteredDigits == 0 {
+                securityCode_secondAttempt = ""
+            }
+        }
+        
+        // backspace key lock
+        
+        if enteredDigits == 0 {
+            backspaceKeyArrow.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             backspaceKey.isUserInteractionEnabled = false
         }
     }
