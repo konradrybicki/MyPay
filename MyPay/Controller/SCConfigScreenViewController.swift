@@ -162,87 +162,90 @@ class SCConfigScreenViewController: UIViewController {
                         // loading animation
                         self.displayLoadingAnimation()
                         
-                        // cryptography - salt generation
-                        
-                        let salt: String
-                        
-                        do {
-                            salt = try CryptoService.generateSalt()
-                        }
-                        catch {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                             
-                            // error communicate
+                            // cryptography - salt generation
                             
-                            var errorCommunicate = ""
+                            let salt: String
                             
-                            if let _ = error as? DataGenerationError {
-                                errorCommunicate = "Data generation error, please try again in a moment"
+                            do {
+                                salt = try CryptoService.generateSalt()
                             }
-                            else if error as! DatabaseError == .connectionFailure {
-                                errorCommunicate = "Database connection failure, please try again in a moment"
-                            }
-                            else if error as! DatabaseError == .interactionError {
-                                errorCommunicate = "Database interaction error, please try again in a moment"
-                            }
-                            
-                            // communicate screen
-                            
-                            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
-                            
-                            self.present(communicateVC, animated: true) {
-                                self.hideLoadingAnimation()
-                            }
-                            
-                            return
-                        }
-                        
-                        // cryptography - security code hashing
-                        
-                        let hash = CryptoService.hash(securityCode: self.securityCode_secondAttempt, saltingWith: salt)
-                        
-                        // user object - security code data supplementation
-                        
-                        self.user.securityCodeHash = hash
-                        self.user.securityCodeSalt = salt
-                        
-                        // registration
-                        
-                        do {
-                            try self.user.register()
-                        }
-                        catch {
-                            
-                            var errorCommunicate = ""
-                            
-                            if let databaseError = error as? DatabaseError {
+                            catch {
                                 
-                                if databaseError == .connectionFailure {
+                                // error communicate
+                                
+                                var errorCommunicate = ""
+                                
+                                if let _ = error as? DataGenerationError {
+                                    errorCommunicate = "Data generation error, please try again in a moment"
+                                }
+                                else if error as! DatabaseError == .connectionFailure {
                                     errorCommunicate = "Database connection failure, please try again in a moment"
                                 }
-                                else if databaseError == .dataSavingFailure {
-                                    errorCommunicate = "Data saving failure, please try again in a moment"
-                                }
-                                else if databaseError == .interactionError {
+                                else if error as! DatabaseError == .interactionError {
                                     errorCommunicate = "Database interaction error, please try again in a moment"
                                 }
-                            }
-                            else if error as! DataGenerationError == .def {
-                                errorCommunicate = "Data generation error, please try again in a moment"
+                                
+                                // communicate screen
+                                
+                                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+                                
+                                self.present(communicateVC, animated: true) {
+                                    self.hideLoadingAnimation()
+                                }
+                                
+                                return
                             }
                             
-                            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+                            // cryptography - security code hashing
+                            
+                            let hash = CryptoService.hash(securityCode: self.securityCode_secondAttempt, saltingWith: salt)
+                            
+                            // user object - security code data supplementation
+                            
+                            self.user.securityCodeHash = hash
+                            self.user.securityCodeSalt = salt
+                            
+                            // registration
+                            
+                            do {
+                                try self.user.register()
+                            }
+                            catch {
+                                
+                                var errorCommunicate = ""
+                                
+                                if let databaseError = error as? DatabaseError {
+                                    
+                                    if databaseError == .connectionFailure {
+                                        errorCommunicate = "Database connection failure, please try again in a moment"
+                                    }
+                                    else if databaseError == .dataSavingFailure {
+                                        errorCommunicate = "Data saving failure, please try again in a moment"
+                                    }
+                                    else if databaseError == .interactionError {
+                                        errorCommunicate = "Database interaction error, please try again in a moment"
+                                    }
+                                }
+                                else if error as! DataGenerationError == .def {
+                                    errorCommunicate = "Data generation error, please try again in a moment"
+                                }
+                                
+                                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+                                
+                                self.present(communicateVC, animated: true) {
+                                    self.hideLoadingAnimation()
+                                }
+                            }
+                            
+                            // registration complete
+                            
+                            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Your MyPay account has been created, You can log in now 😊", andNewDestinationVC: "WelcomeScreenViewController")
                             
                             self.present(communicateVC, animated: true) {
                                 self.hideLoadingAnimation()
                             }
-                        }
-                        
-                        // registration complete
-                        
-                        let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Your MyPay account has been created, You can log in now 😊", andNewDestinationVC: "WelcomeScreenViewController")
-                        
-                        self.present(communicateVC, animated: true) {
-                            self.hideLoadingAnimation()
                         }
                     }
                     else {
