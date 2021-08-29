@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class SCConfigScreenViewController: UIViewController {
     
@@ -61,9 +62,10 @@ class SCConfigScreenViewController: UIViewController {
     @IBAction func unwindButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+}
     
-    // keyboard
-    
+extension SCConfigScreenViewController {
+
     @IBAction func numericKeyPressed(_ sender: UIButton) {
         
         // digit entrance
@@ -103,18 +105,15 @@ class SCConfigScreenViewController: UIViewController {
         
         enteredDigits += 1
         
-        // vibration
-        
+        // vibration (light)
         let impactGenerator = UIImpactFeedbackGenerator(style: .light)
         impactGenerator.impactOccurred()
         
         switch enteredDigits {
         
         case 1:
-            
             // pin dot color change
             firstPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
-            
             // backspace key unlock
             unlockBackspace()
         case 2:
@@ -122,16 +121,15 @@ class SCConfigScreenViewController: UIViewController {
         case 3:
             thirdPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
         default:
-            
             fourthPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
             
             // keyboard lock
             lockKeyboard()
             
-            // 0.25s delay, just to hold a pin dot color change, so that the user actually sees it changing
+            // 0.25s delay, just for the user to see fourth pin dot changing its color, before switching to the second attempt
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 
-                if self.currentAttempt == 1 {
+                if self.currentAttempt == 1 { // (a switch to the second attempt)
                     
                     // communicate change
                     self.communicate.text = "Please repeat a security code for Your account"
@@ -154,7 +152,7 @@ class SCConfigScreenViewController: UIViewController {
                 }
                 else if self.currentAttempt == 2 {
                     
-                    // security code validation
+                    // security code attempts match check
                     let bothAttemptsMatch: Bool = self.securityCode_firstAttempt == self.securityCode_secondAttempt
                     
                     if bothAttemptsMatch == true {
@@ -162,18 +160,19 @@ class SCConfigScreenViewController: UIViewController {
                         // loading animation
                         self.displayLoadingAnimation()
                         
+                        // time for the loading animation to display
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                             
-                            // cryptography - salt generation
+                            // security code salt generation
                             
-                            let salt: String
+                            let securityCodeSalt: String
                             
                             do {
-                                salt = try CryptoService.generateSalt()
+                                securityCodeSalt = try CryptoService.generateSalt()
                             }
                             catch {
                                 
-                                // error communicate
+                                // error communicate preparation
                                 
                                 var errorCommunicate = ""
                                 
@@ -187,7 +186,7 @@ class SCConfigScreenViewController: UIViewController {
                                     errorCommunicate = "Database interaction error, please try again in a moment"
                                 }
                                 
-                                // communicate screen
+                                // communicate screen display
                                 
                                 let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
                                 
@@ -198,14 +197,14 @@ class SCConfigScreenViewController: UIViewController {
                                 return
                             }
                             
-                            // cryptography - security code hashing
+                            // security code hashing (sha256)
                             
-                            let hash = CryptoService.hash(securityCode: self.securityCode_secondAttempt, saltingWith: salt)
+                            let securityCodeHash = CryptoService.hash(securityCode: self.securityCode_secondAttempt, saltingWith: securityCodeSalt)
                             
                             // user object - security code data supplementation
                             
-                            self.user.securityCodeHash = hash
-                            self.user.securityCodeSalt = salt
+                            self.user.securityCodeHash = securityCodeHash
+                            self.user.securityCodeSalt = securityCodeSalt
                             
                             // registration
                             
@@ -241,24 +240,23 @@ class SCConfigScreenViewController: UIViewController {
                             
                             // registration complete
                             
-                            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Your MyPay account has been created, You can log in now 😊", andNewDestinationVC: "WelcomeScreenViewController")
+                            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Your MyPay account has been created 🎉\nYou can log in now 🏦", andNewDestinationVC: "WelcomeScreenViewController")
                             
                             self.present(communicateVC, animated: true) {
                                 self.hideLoadingAnimation()
                             }
                         }
                     }
-                    else {
+                    else if bothAttemptsMatch == false {
                         
-                        // strong, longer vibration
-                        let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
-                        notificationFeedbackGenerator.notificationOccurred(.error)
+                        // vibration (error)
+                        UINotificationFeedbackGenerator().notificationOccurred(.error)
                         
-                        // error communicate
+                        // missmatch communicate
                         
                         let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Security code mismatch!\nPlease try again")
                         
-                        self.present(communicateVC, animated: true) {
+                        self.present(communicateVC, animated: true) { // (sc config screen "reset")
                             
                             // communicate change
                             self.communicate.text = "Please enter a security code for Your account"
@@ -272,7 +270,7 @@ class SCConfigScreenViewController: UIViewController {
                             // backspace key arrow hide
                             self.backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                             
-                            // security code reset for both attempts
+                            // security code reset (both attempts)
                             self.securityCode_firstAttempt = ""
                             self.securityCode_secondAttempt = ""
                             
