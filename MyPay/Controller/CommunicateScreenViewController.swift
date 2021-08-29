@@ -21,6 +21,9 @@ class CommunicateScreenViewController: UIViewController {
     // a view controller, presented upon tapping an 'ok' button, in case of a forward screen change
     private var newDestinationVC: String?
     
+    // data passed to a new destination vc, right before it's presentation
+    private var newDestinationData: Any?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,14 +36,29 @@ class CommunicateScreenViewController: UIViewController {
     }
     
     @IBAction func okButtonPressed(_ sender: UIButton) {
-
-        if let newDestinationVC = self.newDestinationVC {
+        
+        if let newDestinationVC = self.newDestinationVC { // (forward screen change)
             
-            // TODO: forward screen change
+            // storyboard instantiation
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
             
+            if newDestinationVC == "WelcomeScreenViewController" {
+                
+                // destination vc instantiation attempt
+                let welcomeScreenVC_wrapped = storyboard.instantiateViewController(withIdentifier: "WelcomeScreenViewController") as? WelcomeScreenViewController
+                
+                // result unwrap
+                guard let welcomeScreenVC = welcomeScreenVC_wrapped else {
+                    print("Error inside CommunicateScreenViewController->okButtonPressed() - unexpected unwrap failure for 'welcomeScreenVC_wrapped' constant")
+                    exit(1)
+                }
+                
+                // destination vc presentation
+                present(welcomeScreenVC, animated: true, completion: nil)
+            }
         }
-        else {
-            // backward screen change
+        else { // (backward screen change)
+            
             dismiss(animated: true, completion: nil)
         }
     }
@@ -48,29 +66,26 @@ class CommunicateScreenViewController: UIViewController {
 
 extension CommunicateScreenViewController {
     
-    /// Acts as an initializer, returning an instance of a CommunicateScreenViewController, instantiated from a storyboard constant
+    /// Acts as an initializer, returning an instance of a CommunicateScreenViewController that, upon tapping an 'ok' button, will take the user back to a presenting view controller
     
     public static func instantiateVC(withCommunicate communicate: String) -> CommunicateScreenViewController {
         
-        // storyboard instantiation
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        // vc instantiation attempt
         let communicateScreenVCInstance_wrapped = storyboard.instantiateViewController(withIdentifier: "CommunicateScreenViewController") as? CommunicateScreenViewController
         
-        // result unwrap
         guard let communicateScreenVCInstance = communicateScreenVCInstance_wrapped else {
             print("Error inside CommunicateScreenViewController.instantiateVC(withCommunicate) - unexpected unwrap failure for 'communicateScreenVCInstance_wrapped' constant")
             exit(1)
         }
         
-        // vc setup
+        // initial setup
         communicateScreenVCInstance.communicateMessage = communicate
         
         return communicateScreenVCInstance
     }
     
-    /// Acts as an initializer, returning an instance of a CommunicateScreenViewController, instantiated from a storyboard constant
+    /// Acts as an initializer, returning an instance of a CommunicateScreenViewController that, upon tapping an 'ok' button, will take the user to a specified view controller
     
     public static func instantiateVC(withCommunicate communicate: String, andNewDestinationVC newDestinationVC: String) -> CommunicateScreenViewController {
         
@@ -85,6 +100,26 @@ extension CommunicateScreenViewController {
         
         communicateScreenVCInstance.communicateMessage = communicate
         communicateScreenVCInstance.newDestinationVC = newDestinationVC
+        
+        return communicateScreenVCInstance
+    }
+    
+    /// Acts as an initializer, returning an instance of a CommunicateScreenViewController that, upon tapping an 'ok' button, will take the user to a specified view controller, initializing it with given data
+    
+    public static func instantiateVC(withCommunicate communicateMessage: String, andNewDestinationVC newDestinationVC: String, passingData newDestinationData: Any) -> CommunicateScreenViewController {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let communicateScreenVCInstance_wrapped = storyboard.instantiateViewController(withIdentifier: "CommunicateScreenViewController") as? CommunicateScreenViewController
+        
+        guard let communicateScreenVCInstance = communicateScreenVCInstance_wrapped else {
+            print("Error inside CommunicateScreenViewController.instantiateVC(withCommunicate, andNewDestination, passingData) - unexpected unwrap failure for 'communicateScreenVCInstance_wrapped' constant")
+            exit(1)
+        }
+        
+        communicateScreenVCInstance.communicateMessage = communicateMessage
+        communicateScreenVCInstance.newDestinationVC = newDestinationVC
+        communicateScreenVCInstance.newDestinationData = newDestinationData
         
         return communicateScreenVCInstance
     }
