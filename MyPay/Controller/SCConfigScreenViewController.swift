@@ -8,6 +8,8 @@
 import UIKit
 import AudioToolbox
 
+
+
 class SCConfigScreenViewController: UIViewController {
     
     // communicate
@@ -70,37 +72,13 @@ extension SCConfigScreenViewController {
         
         // digit entrance
         
-        let newDigit: Int
-        
-        switch sender {
-        
-        case oneKey:
-            newDigit = 1
-        case twoKey:
-            newDigit = 2
-        case threeKey:
-            newDigit = 3
-        case fourKey:
-            newDigit = 4
-        case fiveKey:
-            newDigit = 5
-        case sixKey:
-            newDigit = 6
-        case sevenKey:
-            newDigit = 7
-        case eightKey:
-            newDigit = 8
-        case nineKey:
-            newDigit = 9
-        default:
-            newDigit = 0
-        }
+        let pressedKey = sender
+        let enteredDigit: Int = getDigit(correspondingTo: pressedKey)
         
         if currentAttempt == 1 {
-            securityCode_firstAttempt += String(newDigit)
-        }
-        else {
-            securityCode_secondAttempt += String(newDigit)
+            securityCode_firstAttempt += String(enteredDigit)
+        } else {
+            securityCode_secondAttempt += String(enteredDigit)
         }
         
         enteredDigits += 1
@@ -129,33 +107,31 @@ extension SCConfigScreenViewController {
             // 0.25s delay, just for the user to see fourth pin dot changing its color, before switching to the second attempt
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 
-                if self.currentAttempt == 1 { // (a switch to the second attempt)
+                if self.currentAttempt == 1 {
                     
-                    // communicate change
-                    self.communicate.text = "Please repeat a security code for Your account"
-                    
-                    // pin dots reset
-                    self.firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-                    self.secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-                    self.thirdPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-                    self.fourthPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-                    
-                    // backspace key arrow hide
-                    self.backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                    
-                    // counters values change
-                    self.currentAttempt = 2
-                    self.enteredDigits = 0
-                    
-                    // keyboard unlock (backspace key stays locked)
-                    self.unlockKeyboard_withoutBackspace()
+                    self.switchToSecondAttempt()
                 }
-                else if self.currentAttempt == 2 {
+                else {
                     
                     // security code attempts match check
                     let bothAttemptsMatch: Bool = self.securityCode_firstAttempt == self.securityCode_secondAttempt
                     
-                    if bothAttemptsMatch == true {
+                    if bothAttemptsMatch == false {
+                        
+                        // vibration (error)
+                        UINotificationFeedbackGenerator().notificationOccurred(.error)
+                        
+                        // missmatch communicate
+                        
+                        let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Security code mismatch!\nPlease try again")
+                        
+                        self.present(communicateVC, animated: true) {
+                            
+                            // view "reset" after communicate presentation
+                            self.switchToFirstAttempt()
+                        }
+                    }
+                    else {
                         
                         // loading animation
                         self.displayLoadingAnimation()
@@ -191,6 +167,7 @@ extension SCConfigScreenViewController {
                                 let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
                                 
                                 self.present(communicateVC, animated: true) {
+                                    self.switchToFirstAttempt()
                                     self.hideLoadingAnimation()
                                 }
                                 
@@ -234,6 +211,7 @@ extension SCConfigScreenViewController {
                                 let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
                                 
                                 self.present(communicateVC, animated: true) {
+                                    self.switchToFirstAttempt()
                                     self.hideLoadingAnimation()
                                 }
                             }
@@ -245,44 +223,6 @@ extension SCConfigScreenViewController {
                             self.present(communicateVC, animated: true) {
                                 self.hideLoadingAnimation()
                             }
-                        }
-                    }
-                    else if bothAttemptsMatch == false {
-                        
-                        // vibration (error)
-                        UINotificationFeedbackGenerator().notificationOccurred(.error)
-                        
-                        // missmatch communicate
-                        
-                        let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Security code mismatch!\nPlease try again")
-                        
-                        self.present(communicateVC, animated: true) { // (sc config screen "reset")
-                            
-                            // communicate change
-                            self.communicate.text = "Please enter a security code for Your account"
-                            
-                            // pin dots reset
-                            self.firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-                            self.secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-                            self.thirdPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-                            self.fourthPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-                            
-                            // backspace key arrow hide
-                            self.backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                            
-                            // security code reset (both attempts)
-                            self.securityCode_firstAttempt = ""
-                            self.securityCode_secondAttempt = ""
-                            
-                            // counters values change
-                            self.currentAttempt = 1
-                            self.enteredDigits = 0
-                            
-                            // keyboard unlock (backspace key stays locked)
-                            self.unlockKeyboard_withoutBackspace()
-                            
-                            // loading animation hide
-                            self.hideLoadingAnimation()
                         }
                     }
                 }
@@ -341,17 +281,98 @@ extension SCConfigScreenViewController {
             lockBackspace()
         }
     }
+}
+
+extension SCConfigScreenViewController {
     
-    func unlockBackspace() -> Void {
-        backspaceKeyArrow.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        backspaceKey.isUserInteractionEnabled = true
+    func getDigit(correspondingTo keyboardKey: UIButton) -> Int {
+        
+        let correspondingDigit: Int
+        
+        switch keyboardKey {
+        
+        case oneKey:
+            correspondingDigit = 1
+        case twoKey:
+            correspondingDigit = 2
+        case threeKey:
+            correspondingDigit = 3
+        case fourKey:
+            correspondingDigit = 4
+        case fiveKey:
+            correspondingDigit = 5
+        case sixKey:
+            correspondingDigit = 6
+        case sevenKey:
+            correspondingDigit = 7
+        case eightKey:
+            correspondingDigit = 8
+        case nineKey:
+            correspondingDigit = 9
+        default:
+            correspondingDigit = 0
+        }
+        
+        return correspondingDigit
     }
+}
+
+extension SCConfigScreenViewController {
     
-    func lockBackspace() -> Void {
+    func switchToSecondAttempt() -> Void {
+        
+        // communicate change
+        communicate.text = "Please repeat a security code for Your account"
+        
+        // pin dots reset
+        firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        thirdPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        fourthPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        
+        // backspace key arrow hide
         backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        backspaceKey.isUserInteractionEnabled = false
+        
+        // counters values change
+        currentAttempt = 2
+        enteredDigits = 0
+        
+        // keyboard unlock (backspace key stays locked)
+        unlockKeyboard_withoutBackspace()
     }
     
+    func switchToFirstAttempt() -> Void {
+        
+        // communicate change
+        communicate.text = "Please enter a security code for Your account"
+        
+        // pin dots reset
+        firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        thirdPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        fourthPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        
+        // backspace key arrow hide
+        backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        // security code reset (both attempts)
+        securityCode_firstAttempt = ""
+        securityCode_secondAttempt = ""
+        
+        // counters values change
+        currentAttempt = 1
+        enteredDigits = 0
+        
+        // keyboard unlock (backspace key stays locked)
+        unlockKeyboard_withoutBackspace()
+        
+        // loading animation hide
+        hideLoadingAnimation()
+    }
+}
+    
+extension SCConfigScreenViewController {
+
     func lockKeyboard() -> Void {
         oneKey.isUserInteractionEnabled = false
         twoKey.isUserInteractionEnabled = false
@@ -377,5 +398,15 @@ extension SCConfigScreenViewController {
         eightKey.isUserInteractionEnabled = true
         nineKey.isUserInteractionEnabled = true
         zeroKey.isUserInteractionEnabled = true
+    }
+    
+    func unlockBackspace() -> Void {
+        backspaceKeyArrow.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        backspaceKey.isUserInteractionEnabled = true
+    }
+    
+    func lockBackspace() -> Void {
+        backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        backspaceKey.isUserInteractionEnabled = false
     }
 }
