@@ -154,7 +154,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rH4-Pj-cfk" userLabel="Cancel button area">
-                                                <rect key="frame" x="345" y="0.0" width="60" height="60"/>
+                                                <rect key="frame" x="9" y="0.0" width="60" height="60"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CancelCross_greyBackground" translatesAutoresizingMaskIntoConstraints="NO" id="FL7-Ny-WJA" userLabel="Cancel button cross">
                                                         <rect key="frame" x="22" y="22" width="16" height="16"/>
@@ -179,7 +179,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="rH4-Pj-cfk" firstAttribute="bottom" secondItem="7OZ-R7-loZ" secondAttribute="bottom" id="8tf-jy-7kU"/>
-                                            <constraint firstItem="rH4-Pj-cfk" firstAttribute="trailing" secondItem="7OZ-R7-loZ" secondAttribute="trailing" constant="-9" id="RDt-52-y4o"/>
+                                            <constraint firstItem="rH4-Pj-cfk" firstAttribute="leading" secondItem="7OZ-R7-loZ" secondAttribute="leading" constant="9" id="ZQc-uN-LE0"/>
                                             <constraint firstItem="rH4-Pj-cfk" firstAttribute="top" secondItem="7OZ-R7-loZ" secondAttribute="top" id="bZF-Af-lhC"/>
                                             <constraint firstAttribute="height" constant="60" id="jYU-Ko-OhB"/>
                                         </constraints>

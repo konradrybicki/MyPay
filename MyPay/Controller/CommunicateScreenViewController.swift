@@ -85,6 +85,9 @@ extension CommunicateScreenViewController {
         // initial setup
         communicateScreenVCInstance.communicateMessage = communicate
         
+        // presentation style
+        communicateScreenVCInstance.modalPresentationStyle = .fullScreen
+        
         return communicateScreenVCInstance
     }
     
@@ -103,6 +106,8 @@ extension CommunicateScreenViewController {
         
         communicateScreenVCInstance.communicateMessage = communicate
         communicateScreenVCInstance.newDestinationVC = newDestinationVC
+        
+        communicateScreenVCInstance.modalPresentationStyle = .fullScreen
         
         return communicateScreenVCInstance
     }
@@ -123,6 +128,8 @@ extension CommunicateScreenViewController {
         communicateScreenVCInstance.communicateMessage = communicateMessage
         communicateScreenVCInstance.newDestinationVC = newDestinationVC
         communicateScreenVCInstance.newDestinationData = newDestinationData
+        
+        communicateScreenVCInstance.modalPresentationStyle = .fullScreen
         
         return communicateScreenVCInstance
     }
