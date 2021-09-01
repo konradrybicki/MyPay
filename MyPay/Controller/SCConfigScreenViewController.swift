@@ -217,6 +217,9 @@ extension SCConfigScreenViewController {
                             
                             // registration complete
                             
+                            // vibration (success)
+                            UINotificationFeedbackGenerator().notificationOccurred(.success)
+                            
                             let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: "Your MyPay account has been created 🎉\nYou can log in now 🏦", andNewDestinationVC: "WelcomeScreenViewController")
                             
                             self.present(communicateVC, animated: true) {
