@@ -81,3 +81,12 @@ extension UIViewController {
         }
     }
 }
+
+extension String {
+    
+    /// Returns a string's value, without the last character
+    
+    public func droppedLastCharacter() -> String {
+        String(self.prefix(self.count-1))
+    }
+}

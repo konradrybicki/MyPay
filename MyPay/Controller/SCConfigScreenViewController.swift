@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import AudioToolbox
 
-
+/// Controlls the security code configuration screen
 
 class SCConfigScreenViewController: UIViewController {
     
@@ -232,52 +231,32 @@ extension SCConfigScreenViewController {
     
     @IBAction func backspaceKeyPressed(_ sender: UIButton) {
         
-        // counter decrementation
+        // digit deletion
+        
+        if currentAttempt == 1 {
+            securityCode_firstAttempt = securityCode_firstAttempt.droppedLastCharacter()
+        }
+        else {
+            securityCode_secondAttempt = securityCode_secondAttempt.droppedLastCharacter()
+        }
+        
         enteredDigits -= 1
         
         // vibration
+        
         let impactGenerator = UIImpactFeedbackGenerator(style: .light)
         impactGenerator.impactOccurred()
 
+        // pin dot color change and backspace lock
+        
         switch enteredDigits {
         
         case 2:
-            
-            // pin dot color change
             thirdPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-            
-            // pin character "drop"
-            if currentAttempt == 1 {
-                securityCode_firstAttempt = String(securityCode_firstAttempt.prefix(2))
-            }
-            else {
-                securityCode_secondAttempt = String(securityCode_secondAttempt.prefix(2))
-            }
-            
         case 1:
-            
             secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-            
-            if currentAttempt == 1 {
-                securityCode_firstAttempt = String(securityCode_firstAttempt.prefix(1))
-            }
-            else {
-                securityCode_secondAttempt = String(securityCode_secondAttempt.prefix(1))
-            }
-            
         default:
-            
             firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
-            
-            // security code reinitialization
-            if currentAttempt == 1 {
-                securityCode_firstAttempt = ""
-            }
-            else {
-                securityCode_secondAttempt = ""
-            }
-            
-            // backspace key lock
             lockBackspace()
         }
     }
@@ -285,11 +264,13 @@ extension SCConfigScreenViewController {
 
 extension SCConfigScreenViewController {
     
-    func getDigit(correspondingTo keyboardKey: UIButton) -> Int {
+    /// Returns an integer value, corresponding to a given numeric key (ex.: getDigit(correspondingTo: sevenKey) will return '7')
+    
+    func getDigit(correspondingTo numericKey: UIButton) -> Int {
         
         let correspondingDigit: Int
         
-        switch keyboardKey {
+        switch numericKey {
         
         case oneKey:
             correspondingDigit = 1
@@ -319,6 +300,8 @@ extension SCConfigScreenViewController {
 
 extension SCConfigScreenViewController {
     
+    /// Changes the view/controller content, allowing the user to repeat a security code, entered during the first attempt
+    
     func switchToSecondAttempt() -> Void {
         
         // communicate change
@@ -340,6 +323,8 @@ extension SCConfigScreenViewController {
         // keyboard unlock (backspace key stays locked)
         unlockKeyboard_withoutBackspace()
     }
+    
+    /// Changes the view/controller content, "resetting" it to the default state (first attempt)
     
     func switchToFirstAttempt() -> Void {
         
@@ -373,6 +358,8 @@ extension SCConfigScreenViewController {
     
 extension SCConfigScreenViewController {
 
+    /// Disables user interaction on all keyboard keys
+    
     func lockKeyboard() -> Void {
         oneKey.isUserInteractionEnabled = false
         twoKey.isUserInteractionEnabled = false
@@ -387,6 +374,8 @@ extension SCConfigScreenViewController {
         backspaceKey.isUserInteractionEnabled = false
     }
     
+    /// Enables user interaction on all keyboard keys, except the backspace
+    
     func unlockKeyboard_withoutBackspace() -> Void {
         oneKey.isUserInteractionEnabled = true
         twoKey.isUserInteractionEnabled = true
@@ -400,10 +389,14 @@ extension SCConfigScreenViewController {
         zeroKey.isUserInteractionEnabled = true
     }
     
+    /// Makes the backspace key visible and enables user interaction on it
+    
     func unlockBackspace() -> Void {
         backspaceKeyArrow.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         backspaceKey.isUserInteractionEnabled = true
     }
+    
+    /// Hides the backspace key and disables user interaction on it
     
     func lockBackspace() -> Void {
         backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
