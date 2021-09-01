@@ -12,7 +12,7 @@
         <!--Welcome screen-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Welcome screen" customClass="WelcomeScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeScreenViewController" id="BYZ-38-t0r" userLabel="Welcome screen" customClass="WelcomeScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -137,7 +137,7 @@
         <!--Registration form-->
         <scene sceneID="W4N-Y4-TcB">
             <objects>
-                <viewController id="Zte-2X-0nn" userLabel="Registration form" customClass="RegistrationFormViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegistrationFormViewController" id="Zte-2X-0nn" userLabel="Registration form" customClass="RegistrationFormViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cOU-GQ-D22">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -436,7 +436,7 @@
         <!--SC config screen-->
         <scene sceneID="bli-p3-qlJ">
             <objects>
-                <viewController id="YMh-4c-uv2" userLabel="SC config screen" customClass="SCConfigScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SCConfigScreenViewController" id="YMh-4c-uv2" userLabel="SC config screen" customClass="SCConfigScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1K2-Ao-GXz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -917,13 +917,13 @@
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.backward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hWr-F4-bzk" userLabel="backspace key arrow">
                                                                         <rect key="frame" x="24.5" y="27" width="25" height="20"/>
-                                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="25" id="Kru-pB-7BL"/>
                                                                             <constraint firstAttribute="height" constant="25" id="xNV-3a-5vf"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CaX-Af-SIs" userLabel="backspace key">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CaX-Af-SIs" userLabel="backspace key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
                                                                             <action selector="backspaceKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="Zw5-qw-XCP"/>
@@ -974,29 +974,19 @@
                         <outlet property="backspaceKeyArrow" destination="hWr-F4-bzk" id="0e8-iz-W7m"/>
                         <outlet property="communicate" destination="zU1-Vk-0b0" id="JKN-tm-aNH"/>
                         <outlet property="eightKey" destination="PA3-Pd-zVk" id="QLG-Qe-gLC"/>
-                        <outlet property="eightKeyLabel" destination="qEI-Ou-l2W" id="3Of-ih-8gl"/>
                         <outlet property="firstPinDot" destination="Dre-g1-hl0" id="j3N-NY-3R3"/>
                         <outlet property="fiveKey" destination="0Y0-0M-wV4" id="prq-kL-mGK"/>
-                        <outlet property="fiveKeyLabel" destination="mbs-7b-Mc6" id="cIc-fa-TLR"/>
                         <outlet property="fourKey" destination="qR6-Im-9Xi" id="EXe-AR-M8w"/>
-                        <outlet property="fourKeyLabel" destination="QH9-u7-rQU" id="JAp-4Y-Z6W"/>
                         <outlet property="fourthPinDot" destination="Sbi-Pl-Edm" id="Hm1-oM-GxC"/>
                         <outlet property="nineKey" destination="LSd-O7-pvd" id="zfQ-lX-ojM"/>
-                        <outlet property="nineKeyLabel" destination="Fag-7c-yZt" id="MkT-3l-0uu"/>
                         <outlet property="oneKey" destination="yKp-nB-S73" id="JuT-lP-Rsn"/>
-                        <outlet property="oneKeyLabel" destination="CcL-ga-mTp" id="BwW-aE-6Gg"/>
                         <outlet property="secondPinDot" destination="ABP-nx-sYy" id="wiJ-CE-QL5"/>
                         <outlet property="sevenKey" destination="KcL-9R-FHR" id="m52-dj-ESM"/>
-                        <outlet property="sevenKeyLabel" destination="cd4-Hs-pQU" id="WE2-vq-iDQ"/>
                         <outlet property="sixKey" destination="8T5-SY-gcg" id="wCR-ml-9j7"/>
-                        <outlet property="sixKeyLabel" destination="N4e-ZD-ddc" id="O0v-Y0-pgt"/>
                         <outlet property="thirdPinDot" destination="UIP-I4-x43" id="Fja-2D-s6h"/>
                         <outlet property="threeKey" destination="LhP-PR-BsX" id="n9M-0s-wSV"/>
-                        <outlet property="threeKeyLabel" destination="psD-io-qWj" id="Elz-8D-vdM"/>
                         <outlet property="twoKey" destination="fL4-jr-ZOJ" id="cIG-8h-4sD"/>
-                        <outlet property="twoKeyLabel" destination="EDc-ww-k2D" id="1Js-I7-LnB"/>
                         <outlet property="zeroKey" destination="C0P-LS-cNp" id="zMH-Tr-OPt"/>
-                        <outlet property="zeroKeyLabel" destination="wOp-CA-euM" id="uFO-QX-fMZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MAC-TV-0Lz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
