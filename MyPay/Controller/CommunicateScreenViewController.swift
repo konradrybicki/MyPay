@@ -53,6 +53,9 @@ class CommunicateScreenViewController: UIViewController {
                     exit(1)
                 }
                 
+                // destination vc presentation style
+                welcomeScreenVC.modalPresentationStyle = .fullScreen
+                
                 // destination vc presentation
                 present(welcomeScreenVC, animated: true, completion: nil)
             }

@@ -10,10 +10,10 @@
 public class Account {
     
     private(set) var accountNumber: String = ""
-    private(set) var userId: Int = -1
+    private(set) var userId: Int16 = -1
     public var balance: Double = 0
     
-    public init(forUserWithId userId: Int) throws {
+    public init(forUserWithId userId: Int16) throws {
         self.accountNumber = try generateAccountNumber()
         self.userId = userId
     }

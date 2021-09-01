@@ -69,7 +69,7 @@ public class VirtualCard {
         return expirationMonth
     }
     
-    /// Returns a four-digit String, representing a virtual card's expiration year (current year + 4)
+    /// Returns a two-digit String, representing a virtual card's expiration year (current year + 4)
     
     private func getExpirationYear() throws -> String {
         
@@ -80,7 +80,10 @@ public class VirtualCard {
         
         // current year (string->int)
         
-        let currentYear_str = String(currentDate.prefix(4))
+        let startIndex = currentDate.index(currentDate.startIndex, offsetBy: 2)
+        let endIndex  = currentDate.index(currentDate.startIndex, offsetBy: 3)
+        
+        let currentYear_str = String(currentDate[startIndex...endIndex])
         
         guard let currentYear_int = Int(currentYear_str) else {
             print("Error inside VirtualCard->getexpirationYear() - String->Int parsing failure")

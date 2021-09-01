@@ -13,7 +13,7 @@ public class MySQLManager {
     
     /// Inserts all 'user' object's field values into the database and, after the insertion is complete, retrieves user's id
     
-    public static func insert(user: User) throws -> Int {
+    public static func insert(user: User) throws -> Int16 {
         
         // connection establishment
         
@@ -55,7 +55,7 @@ public class MySQLManager {
         
         // sql statement execution (id selection)
         
-        let userId: Int
+        let userId: Int16
         
         do {
             
@@ -80,7 +80,7 @@ public class MySQLManager {
             }
             
             // last inserted user id (Any->Int downcasting)
-            guard let maxUserID = value as? Int else {
+            guard let maxUserID = value as? Int16 else {
                 print("Error inside MySQLManager.insert(user) - Any->Int downcasting failure")
                 throw DatabaseError.interactionError
             }
