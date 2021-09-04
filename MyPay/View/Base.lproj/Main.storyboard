@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nZa-Bf-YM6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OMe-77-0qQ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -1853,6 +1853,94 @@
             </objects>
             <point key="canvasLocation" x="3219" y="-419"/>
         </scene>
+        <!--Home screen-->
+        <scene sceneID="lBd-jU-z6m">
+            <objects>
+                <viewController storyboardIdentifier="HomeScreenViewController" id="OMe-77-0qQ" userLabel="Home screen" customClass="HomeScreenViewController" customModule="MyPay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XJv-nW-0fU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JHH-zg-lBm" userLabel="Background">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" red="0.92549019607843142" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7dl-pF-5Yk" userLabel="Main stack view">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFs-Ui-URg" userLabel="Top bar">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="y1s-a7-tK6" userLabel="App logo">
+                                                <rect key="frame" x="20" y="10" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="JCg-8U-LhA"/>
+                                                    <constraint firstAttribute="width" constant="40" id="wBL-Nz-Yxb"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MyPay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJU-uq-JX1" userLabel="MyPay">
+                                                <rect key="frame" x="69" y="19" width="63.5" height="22.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="22.5" id="DHH-Ea-yhH"/>
+                                                    <constraint firstAttribute="width" constant="63.5" id="gXl-54-6Rb"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="20"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfd-jK-yon" userLabel="Logout button">
+                                                <rect key="frame" x="354" y="10" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="F9p-TO-Duu"/>
+                                                    <constraint firstAttribute="width" constant="40" id="wGZ-fu-En6"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="power" catalog="system"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="iJU-uq-JX1" firstAttribute="leading" secondItem="y1s-a7-tK6" secondAttribute="trailing" constant="9" id="H3f-Pm-oz5"/>
+                                            <constraint firstItem="qfd-jK-yon" firstAttribute="centerY" secondItem="BFs-Ui-URg" secondAttribute="centerY" id="HzR-VI-nBM"/>
+                                            <constraint firstItem="y1s-a7-tK6" firstAttribute="centerY" secondItem="BFs-Ui-URg" secondAttribute="centerY" id="SHk-Rk-weB"/>
+                                            <constraint firstItem="iJU-uq-JX1" firstAttribute="centerY" secondItem="BFs-Ui-URg" secondAttribute="centerY" id="baI-OG-TeE"/>
+                                            <constraint firstAttribute="height" constant="60" id="nPL-Xc-tJg"/>
+                                            <constraint firstItem="qfd-jK-yon" firstAttribute="trailing" secondItem="BFs-Ui-URg" secondAttribute="trailing" constant="-20" id="uGC-vL-Y9g"/>
+                                            <constraint firstItem="y1s-a7-tK6" firstAttribute="leading" secondItem="BFs-Ui-URg" secondAttribute="leading" constant="20" id="wyU-aG-zjg"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aqL-Qd-UwK" userLabel="Account area">
+                                        <rect key="frame" x="0.0" y="60" width="414" height="50"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bY2-TH-cWb">
+                                        <rect key="frame" x="0.0" y="110" width="414" height="658"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lWP-uu-BFc">
+                                        <rect key="frame" x="0.0" y="768" width="414" height="50"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="06y-mv-JWl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JHH-zg-lBm" firstAttribute="top" secondItem="XJv-nW-0fU" secondAttribute="top" id="1pk-Az-hxf"/>
+                            <constraint firstItem="JHH-zg-lBm" firstAttribute="trailing" secondItem="XJv-nW-0fU" secondAttribute="trailing" id="5hg-fD-oj1"/>
+                            <constraint firstItem="7dl-pF-5Yk" firstAttribute="leading" secondItem="06y-mv-JWl" secondAttribute="leading" id="H8m-m8-ov8"/>
+                            <constraint firstItem="JHH-zg-lBm" firstAttribute="bottom" secondItem="XJv-nW-0fU" secondAttribute="bottom" id="VqO-tp-dCg"/>
+                            <constraint firstItem="7dl-pF-5Yk" firstAttribute="trailing" secondItem="06y-mv-JWl" secondAttribute="trailing" id="fFA-N7-FE2"/>
+                            <constraint firstItem="JHH-zg-lBm" firstAttribute="leading" secondItem="XJv-nW-0fU" secondAttribute="leading" id="qe5-Kj-RU5"/>
+                            <constraint firstItem="7dl-pF-5Yk" firstAttribute="top" secondItem="06y-mv-JWl" secondAttribute="top" id="ux8-eR-WHy"/>
+                            <constraint firstItem="7dl-pF-5Yk" firstAttribute="bottom" secondItem="06y-mv-JWl" secondAttribute="bottom" id="xAk-c2-axu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="appLogo" destination="y1s-a7-tK6" id="Kav-eq-fMA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bpq-3R-CRs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4338" y="-419"/>
+        </scene>
         <!--Logout screen-->
         <scene sceneID="LH9-Us-Oho">
             <objects>
@@ -1924,10 +2012,10 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3So-Gk-aGc" userLabel="Yes button">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
-                                                                <color key="backgroundColor" red="0.75294117650000003" green="0.22352941179999999" blue="0.16862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" red="0.55686274509803924" green="0.26666666666666666" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="21"/>
                                                                 <state key="normal" title="Yes">
-                                                                    <color key="titleColor" red="0.17254901960784313" green="0.24313725490196078" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                             </button>
                                                         </subviews>
@@ -1972,11 +2060,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AppLogo" width="40" height="40"/>
         <image name="CancelCross_greyBackground" width="16" height="16"/>
         <image name="WelcomeScreenLogo" width="220" height="220"/>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
+        <image name="power" catalog="system" width="128" height="124"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
