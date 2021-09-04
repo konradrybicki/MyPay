@@ -133,7 +133,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2148" y="-364"/>
+            <point key="canvasLocation" x="1023" y="11"/>
         </scene>
         <!--Registration form-->
         <scene sceneID="W4N-Y4-TcB">
@@ -1097,7 +1097,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZOW-eM-Bxt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4400" y="-34"/>
+            <point key="canvasLocation" x="4371" y="11"/>
         </scene>
         <!--Login form-->
         <scene sceneID="PfB-Zi-HRU">
@@ -1190,17 +1190,102 @@
                                             <constraint firstItem="rhr-l7-JYZ" firstAttribute="centerY" secondItem="yse-5z-5Ad" secondAttribute="centerY" id="mNw-a7-4Tl"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5zG-hE-5Pw">
-                                        <rect key="frame" x="0.0" y="164" width="414" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rHI-AO-zZh" userLabel="Phone stack view area">
+                                        <rect key="frame" x="0.0" y="164" width="414" height="107"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-nh-ADU" userLabel="Phone stack view">
+                                                <rect key="frame" x="20" y="23.5" width="374" height="60"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iae-fz-hsq" userLabel="Area code area">
+                                                        <rect key="frame" x="0.0" y="0.0" width="110" height="60"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Area code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDR-2T-auQ" userLabel="Area code">
+                                                                <rect key="frame" x="20" y="10" width="64" height="16"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
+                                                                <color key="textColor" red="0.49803921569999998" green="0.54901960780000003" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IFx-wg-SNu" userLabel="Area code text field">
+                                                                <rect key="frame" x="20" y="10" width="70" height="39"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="light" returnKeyType="done"/>
+                                                            </textField>
+                                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fR8-g9-36f" userLabel="Area code text field underline">
+                                                                <rect key="frame" x="20" y="51" width="70" height="2"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <color key="backgroundColor" red="0.92549019610000005" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="110" id="liT-jM-kiW"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NyL-Yw-2CT" userLabel="Phone number area">
+                                                        <rect key="frame" x="120" y="0.0" width="254" height="60"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ByO-C6-ga1" userLabel="Phone number">
+                                                                <rect key="frame" x="20" y="10" width="92" height="16"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
+                                                                <color key="textColor" red="0.49803921569999998" green="0.54901960780000003" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DO0-Y3-PJ7" userLabel="Phone number text field">
+                                                                <rect key="frame" x="20" y="10" width="214" height="39"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="light" returnKeyType="done"/>
+                                                            </textField>
+                                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Awb-Sp-Rkt" userLabel="Phone number text field underline">
+                                                                <rect key="frame" x="20" y="51" width="214" height="2"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <color key="backgroundColor" red="0.92549019610000005" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="4GP-qT-0oK"/>
+                                                    <constraint firstAttribute="width" constant="374" id="twU-dT-cFG"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="U5q-nh-ADU" firstAttribute="centerY" secondItem="rHI-AO-zZh" secondAttribute="centerY" id="4ej-zN-fkt"/>
+                                            <constraint firstItem="U5q-nh-ADU" firstAttribute="centerX" secondItem="rHI-AO-zZh" secondAttribute="centerX" id="znW-Mc-qcc"/>
+                                            <constraint firstAttribute="height" constant="107" id="zpJ-00-Yex"/>
+                                        </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MnX-nq-Yl7">
-                                        <rect key="frame" x="0.0" y="214" width="414" height="46"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MnX-nq-Yl7" userLabel="Empty area">
+                                        <rect key="frame" x="0.0" y="271" width="414" height="435"/>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EOj-Dg-u9R">
-                                        <rect key="frame" x="0.0" y="260" width="414" height="558"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOj-Dg-u9R" userLabel="Proceed button area">
+                                        <rect key="frame" x="0.0" y="706" width="414" height="112"/>
+                                        <subviews>
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CvL-hX-aTa" userLabel="Proceed button">
+                                                <rect key="frame" x="20" y="30" width="374" height="52"/>
+                                                <color key="backgroundColor" red="0.16078431372549018" green="0.50196078431372548" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="374" id="4j3-5u-XSA"/>
+                                                    <constraint firstAttribute="height" constant="52" id="fqW-nR-Hbh"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="21"/>
+                                                <state key="normal" title="Proceed">
+                                                    <color key="titleColor" red="0.74117647058823533" green="0.76470588235294112" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="CvL-hX-aTa" firstAttribute="centerY" secondItem="EOj-Dg-u9R" secondAttribute="centerY" id="0TQ-7j-d5N"/>
+                                            <constraint firstAttribute="height" constant="112" id="AC1-1p-wmt"/>
+                                            <constraint firstItem="CvL-hX-aTa" firstAttribute="centerX" secondItem="EOj-Dg-u9R" secondAttribute="centerX" id="hps-q7-jun"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                             </stackView>
@@ -1221,7 +1306,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QY0-7o-TB4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1118.840579710145" y="437.94642857142856"/>
+            <point key="canvasLocation" x="2148" y="-419"/>
         </scene>
     </scenes>
     <resources>
