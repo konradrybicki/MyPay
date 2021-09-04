@@ -10,6 +10,7 @@
 		7803165526C073FD004844C0 /* MySQL in Frameworks */ = {isa = PBXBuildFile; productRef = 7803165426C073FD004844C0 /* MySQL */; };
 		78313C8926A5C71500342D85 /* RegistrationFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */; };
 		783CAE7726B74D530093611D /* CommunicateScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CAE7626B74D530093611D /* CommunicateScreenViewController.swift */; };
+		7843930426E2CAF400981D08 /* LoginFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7843930326E2CAF400981D08 /* LoginFormViewController.swift */; };
 		784B9F3626C55FFE00C740C0 /* MySQLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B9F3526C55FFE00C740C0 /* MySQLManager.swift */; };
 		7861439126D0427200E406D5 /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7861439026D0427200E406D5 /* ValidationService.swift */; };
 		78B136D4269F10740038FCD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B136D3269F10740038FCD2 /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 		273DBBBE895170D5E615BA5F /* Pods-MyPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPay.debug.xcconfig"; path = "Target Support Files/Pods-MyPay/Pods-MyPay.debug.xcconfig"; sourceTree = "<group>"; };
 		78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationFormViewController.swift; path = MyPay/Controller/RegistrationFormViewController.swift; sourceTree = SOURCE_ROOT; };
 		783CAE7626B74D530093611D /* CommunicateScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicateScreenViewController.swift; sourceTree = "<group>"; };
+		7843930326E2CAF400981D08 /* LoginFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormViewController.swift; sourceTree = "<group>"; };
 		784B9F3526C55FFE00C740C0 /* MySQLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySQLManager.swift; sourceTree = "<group>"; };
 		7861439026D0427200E406D5 /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
 		78B136D0269F10740038FCD2 /* MyPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,7 @@
 				78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */,
 				783CAE7626B74D530093611D /* CommunicateScreenViewController.swift */,
 				78B136D7269F10740038FCD2 /* WelcomeScreenViewController.swift */,
+				7843930326E2CAF400981D08 /* LoginFormViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				783CAE7726B74D530093611D /* CommunicateScreenViewController.swift in Sources */,
 				7861439126D0427200E406D5 /* ValidationService.swift in Sources */,
 				78B136D4269F10740038FCD2 /* AppDelegate.swift in Sources */,
+				7843930426E2CAF400981D08 /* LoginFormViewController.swift in Sources */,
 				78B136D6269F10740038FCD2 /* SceneDelegate.swift in Sources */,
 				78BC6F7C26C142F600706611 /* User.swift in Sources */,
 			);
