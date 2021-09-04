@@ -11,6 +11,8 @@
 		78313C8926A5C71500342D85 /* RegistrationFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */; };
 		783CAE7726B74D530093611D /* CommunicateScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CAE7626B74D530093611D /* CommunicateScreenViewController.swift */; };
 		7843930426E2CAF400981D08 /* LoginFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7843930326E2CAF400981D08 /* LoginFormViewController.swift */; };
+		7843930626E3D6A900981D08 /* SCEntranceScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7843930526E3D6A900981D08 /* SCEntranceScreenViewController.swift */; };
+		7843930826E3DC5800981D08 /* LogoutScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7843930726E3DC5800981D08 /* LogoutScreenViewController.swift */; };
 		784B9F3626C55FFE00C740C0 /* MySQLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B9F3526C55FFE00C740C0 /* MySQLManager.swift */; };
 		7861439126D0427200E406D5 /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7861439026D0427200E406D5 /* ValidationService.swift */; };
 		78B136D4269F10740038FCD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B136D3269F10740038FCD2 /* AppDelegate.swift */; };
@@ -35,6 +37,8 @@
 		78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationFormViewController.swift; path = MyPay/Controller/RegistrationFormViewController.swift; sourceTree = SOURCE_ROOT; };
 		783CAE7626B74D530093611D /* CommunicateScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicateScreenViewController.swift; sourceTree = "<group>"; };
 		7843930326E2CAF400981D08 /* LoginFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormViewController.swift; sourceTree = "<group>"; };
+		7843930526E3D6A900981D08 /* SCEntranceScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCEntranceScreenViewController.swift; sourceTree = "<group>"; };
+		7843930726E3DC5800981D08 /* LogoutScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutScreenViewController.swift; sourceTree = "<group>"; };
 		784B9F3526C55FFE00C740C0 /* MySQLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySQLManager.swift; sourceTree = "<group>"; };
 		7861439026D0427200E406D5 /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
 		78B136D0269F10740038FCD2 /* MyPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +99,8 @@
 				783CAE7626B74D530093611D /* CommunicateScreenViewController.swift */,
 				78B136D7269F10740038FCD2 /* WelcomeScreenViewController.swift */,
 				7843930326E2CAF400981D08 /* LoginFormViewController.swift */,
+				7843930526E3D6A900981D08 /* SCEntranceScreenViewController.swift */,
+				7843930726E3DC5800981D08 /* LogoutScreenViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -269,9 +275,11 @@
 				784B9F3626C55FFE00C740C0 /* MySQLManager.swift in Sources */,
 				78D0886A26B1DC22008A7B5A /* SCConfigScreenViewController.swift in Sources */,
 				78B136D8269F10740038FCD2 /* WelcomeScreenViewController.swift in Sources */,
+				7843930626E3D6A900981D08 /* SCEntranceScreenViewController.swift in Sources */,
 				78E975E726C9A4CC00153A75 /* CustomErrors.swift in Sources */,
 				78BC6F8226C1672400706611 /* SystemTypeExtensions.swift in Sources */,
 				78FB539726C1D95500DACF8A /* VirtualCard.swift in Sources */,
+				7843930826E3DC5800981D08 /* LogoutScreenViewController.swift in Sources */,
 				78313C8926A5C71500342D85 /* RegistrationFormViewController.swift in Sources */,
 				78BC6F8426C191CA00706611 /* Account.swift in Sources */,
 				783CAE7726B74D530093611D /* CommunicateScreenViewController.swift in Sources */,
