@@ -1888,22 +1888,39 @@
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfd-jK-yon" userLabel="Logout button">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B2F-Mc-yYY" userLabel="Logout button area">
                                                 <rect key="frame" x="334" y="0.0" width="60" height="60"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="power" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0U8-gk-GFk" userLabel="Logout button image">
+                                                        <rect key="frame" x="18" y="18" width="24" height="23.5"/>
+                                                        <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="24" id="TLs-3S-yOb"/>
+                                                            <constraint firstAttribute="width" constant="24" id="UF1-tK-EaP"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="coU-xU-hXl" userLabel="Logout button">
+                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                    </button>
+                                                </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="60" id="wGZ-fu-En6"/>
+                                                    <constraint firstItem="coU-xU-hXl" firstAttribute="trailing" secondItem="B2F-Mc-yYY" secondAttribute="trailing" id="5IJ-Cn-KKy"/>
+                                                    <constraint firstItem="coU-xU-hXl" firstAttribute="leading" secondItem="B2F-Mc-yYY" secondAttribute="leading" id="5KN-EZ-uc6"/>
+                                                    <constraint firstItem="0U8-gk-GFk" firstAttribute="centerX" secondItem="B2F-Mc-yYY" secondAttribute="centerX" id="beC-GO-QvB"/>
+                                                    <constraint firstItem="coU-xU-hXl" firstAttribute="top" secondItem="B2F-Mc-yYY" secondAttribute="top" id="f2u-Wo-Yks"/>
+                                                    <constraint firstItem="0U8-gk-GFk" firstAttribute="centerY" secondItem="B2F-Mc-yYY" secondAttribute="centerY" id="nNR-wE-m1b"/>
+                                                    <constraint firstItem="coU-xU-hXl" firstAttribute="bottom" secondItem="B2F-Mc-yYY" secondAttribute="bottom" id="vmM-sA-OFa"/>
+                                                    <constraint firstAttribute="width" constant="60" id="xrS-PC-gdM"/>
                                                 </constraints>
-                                                <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" image="power" catalog="system"/>
-                                            </button>
+                                            </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="qfd-jK-yon" firstAttribute="trailing" secondItem="BFs-Ui-URg" secondAttribute="trailing" constant="-20" id="4N8-wp-sH0"/>
+                                            <constraint firstItem="B2F-Mc-yYY" firstAttribute="top" secondItem="BFs-Ui-URg" secondAttribute="top" id="4tg-SU-xxN"/>
+                                            <constraint firstItem="B2F-Mc-yYY" firstAttribute="bottom" secondItem="BFs-Ui-URg" secondAttribute="bottom" id="Aa9-1q-uif"/>
                                             <constraint firstItem="iJU-uq-JX1" firstAttribute="leading" secondItem="y1s-a7-tK6" secondAttribute="trailing" constant="9" id="H3f-Pm-oz5"/>
-                                            <constraint firstItem="qfd-jK-yon" firstAttribute="top" secondItem="BFs-Ui-URg" secondAttribute="top" id="NuI-IN-Gl1"/>
                                             <constraint firstItem="y1s-a7-tK6" firstAttribute="centerY" secondItem="BFs-Ui-URg" secondAttribute="centerY" id="SHk-Rk-weB"/>
                                             <constraint firstItem="iJU-uq-JX1" firstAttribute="centerY" secondItem="BFs-Ui-URg" secondAttribute="centerY" id="baI-OG-TeE"/>
-                                            <constraint firstItem="qfd-jK-yon" firstAttribute="bottom" secondItem="BFs-Ui-URg" secondAttribute="bottom" id="iGd-ZE-f23"/>
+                                            <constraint firstItem="B2F-Mc-yYY" firstAttribute="trailing" secondItem="BFs-Ui-URg" secondAttribute="trailing" constant="-20" id="eTr-M0-kiO"/>
                                             <constraint firstAttribute="height" constant="60" id="nPL-Xc-tJg"/>
                                             <constraint firstItem="y1s-a7-tK6" firstAttribute="leading" secondItem="BFs-Ui-URg" secondAttribute="leading" constant="20" id="wyU-aG-zjg"/>
                                         </constraints>
@@ -1998,11 +2015,11 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="d8H-Mk-zkx" userLabel="Home button image">
-                                                                <rect key="frame" x="51.5" y="12.5" width="35" height="35"/>
+                                                                <rect key="frame" x="54" y="15" width="30" height="30"/>
                                                                 <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="35" id="6CT-oz-iQB"/>
-                                                                    <constraint firstAttribute="height" constant="35" id="bra-Ak-zHk"/>
+                                                                    <constraint firstAttribute="width" constant="30" id="6CT-oz-iQB"/>
+                                                                    <constraint firstAttribute="height" constant="30" id="bra-Ak-zHk"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLG-7l-92q" userLabel="Home button">
@@ -2022,11 +2039,11 @@
                                                         <rect key="frame" x="138" y="0.0" width="138" height="60"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left.arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="jok-Rz-Kah" userLabel="Transfer button image">
-                                                                <rect key="frame" x="54" y="14" width="30" height="32"/>
-                                                                <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <rect key="frame" x="56.5" y="16.5" width="25" height="27"/>
+                                                                <color key="tintColor" red="0.74117647058823533" green="0.76470588235294112" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="30" id="OZ9-V2-Ibe"/>
-                                                                    <constraint firstAttribute="height" constant="30" id="zZl-7h-uzb"/>
+                                                                    <constraint firstAttribute="width" constant="25" id="OZ9-V2-Ibe"/>
+                                                                    <constraint firstAttribute="height" constant="25" id="zZl-7h-uzb"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yHe-j6-wcy" userLabel="Transfer button">
@@ -2046,11 +2063,11 @@
                                                         <rect key="frame" x="276" y="0.0" width="138" height="60"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="creditcard.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hSF-d3-M3k" userLabel="Virtual card button image">
-                                                                <rect key="frame" x="49" y="11.5" width="40" height="36.5"/>
-                                                                <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <rect key="frame" x="51.5" y="14" width="35" height="31.5"/>
+                                                                <color key="tintColor" red="0.74117647058823533" green="0.76470588235294112" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="40" id="bAi-Cz-eaW"/>
-                                                                    <constraint firstAttribute="width" constant="40" id="d65-H4-vWu"/>
+                                                                    <constraint firstAttribute="height" constant="35" id="bAi-Cz-eaW"/>
+                                                                    <constraint firstAttribute="width" constant="35" id="d65-H4-vWu"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R8P-oL-fFR" userLabel="Virtual card button">
