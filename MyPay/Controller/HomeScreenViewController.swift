@@ -10,12 +10,20 @@ import UIKit
 class HomeScreenViewController: UIViewController {
 
     @IBOutlet weak var appLogo: UIImageView!
+    @IBOutlet weak var account: UIView!
+    @IBOutlet weak var topUpButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         appLogo.layer.cornerRadius = 7
         appLogo.clipsToBounds = true
+        
+        account.layer.cornerRadius = 15
+        account.clipsToBounds = true
+        
+        topUpButton.layer.cornerRadius = 10
+        topUpButton.clipsToBounds = true
     }
     
 
