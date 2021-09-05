@@ -1988,10 +1988,93 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bY2-TH-cWb" userLabel="Empty area">
                                         <rect key="frame" x="0.0" y="232" width="414" height="526"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lWP-uu-BFc" userLabel="Navigation bar">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iwo-We-Q3M" userLabel="Navigation bar">
                                         <rect key="frame" x="0.0" y="758" width="414" height="60"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TnI-G1-Dyn" userLabel="Navigation stack">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8zi-Sd-Rgi" userLabel="Home button area">
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="d8H-Mk-zkx" userLabel="Home button image">
+                                                                <rect key="frame" x="51.5" y="12.5" width="35" height="35"/>
+                                                                <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="35" id="6CT-oz-iQB"/>
+                                                                    <constraint firstAttribute="height" constant="35" id="bra-Ak-zHk"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLG-7l-92q" userLabel="Home button">
+                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
+                                                            </button>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="cLG-7l-92q" firstAttribute="leading" secondItem="8zi-Sd-Rgi" secondAttribute="leading" id="3gf-ID-N4F"/>
+                                                            <constraint firstItem="cLG-7l-92q" firstAttribute="top" secondItem="8zi-Sd-Rgi" secondAttribute="top" id="GWm-9a-9Dt"/>
+                                                            <constraint firstItem="d8H-Mk-zkx" firstAttribute="centerX" secondItem="8zi-Sd-Rgi" secondAttribute="centerX" id="Jmh-Qo-nLP"/>
+                                                            <constraint firstItem="cLG-7l-92q" firstAttribute="trailing" secondItem="8zi-Sd-Rgi" secondAttribute="trailing" id="Zn7-d7-fHR"/>
+                                                            <constraint firstItem="cLG-7l-92q" firstAttribute="bottom" secondItem="8zi-Sd-Rgi" secondAttribute="bottom" id="fqm-na-Z8l"/>
+                                                            <constraint firstItem="d8H-Mk-zkx" firstAttribute="centerY" secondItem="8zi-Sd-Rgi" secondAttribute="centerY" id="zQs-e9-IRC"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ziJ-o1-Poa" userLabel="Transfer button area">
+                                                        <rect key="frame" x="138" y="0.0" width="138" height="60"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left.arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="jok-Rz-Kah" userLabel="Transfer button image">
+                                                                <rect key="frame" x="54" y="14" width="30" height="32"/>
+                                                                <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="30" id="OZ9-V2-Ibe"/>
+                                                                    <constraint firstAttribute="height" constant="30" id="zZl-7h-uzb"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yHe-j6-wcy" userLabel="Transfer button">
+                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
+                                                            </button>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="yHe-j6-wcy" firstAttribute="leading" secondItem="ziJ-o1-Poa" secondAttribute="leading" id="1h1-Ae-sy4"/>
+                                                            <constraint firstItem="jok-Rz-Kah" firstAttribute="centerY" secondItem="ziJ-o1-Poa" secondAttribute="centerY" id="2Cc-AX-LoC"/>
+                                                            <constraint firstItem="yHe-j6-wcy" firstAttribute="bottom" secondItem="ziJ-o1-Poa" secondAttribute="bottom" id="Gs3-fZ-cYo"/>
+                                                            <constraint firstItem="jok-Rz-Kah" firstAttribute="centerX" secondItem="ziJ-o1-Poa" secondAttribute="centerX" id="Hxg-JO-9Oa"/>
+                                                            <constraint firstItem="yHe-j6-wcy" firstAttribute="trailing" secondItem="ziJ-o1-Poa" secondAttribute="trailing" id="XEa-94-YBX"/>
+                                                            <constraint firstItem="yHe-j6-wcy" firstAttribute="top" secondItem="ziJ-o1-Poa" secondAttribute="top" id="qdv-nL-qWZ"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KEa-do-SWn" userLabel="Virtual card button area">
+                                                        <rect key="frame" x="276" y="0.0" width="138" height="60"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="creditcard.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hSF-d3-M3k" userLabel="Virtual card button image">
+                                                                <rect key="frame" x="49" y="11.5" width="40" height="36.5"/>
+                                                                <color key="tintColor" red="0.20392156859999999" green="0.59607843140000005" blue="0.85882352939999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="40" id="bAi-Cz-eaW"/>
+                                                                    <constraint firstAttribute="width" constant="40" id="d65-H4-vWu"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R8P-oL-fFR" userLabel="Virtual card button">
+                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
+                                                            </button>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="R8P-oL-fFR" firstAttribute="leading" secondItem="KEa-do-SWn" secondAttribute="leading" id="9ml-cW-1I5"/>
+                                                            <constraint firstItem="R8P-oL-fFR" firstAttribute="top" secondItem="KEa-do-SWn" secondAttribute="top" id="GMk-3J-UkF"/>
+                                                            <constraint firstItem="R8P-oL-fFR" firstAttribute="bottom" secondItem="KEa-do-SWn" secondAttribute="bottom" id="Nyr-Vb-gDJ"/>
+                                                            <constraint firstItem="R8P-oL-fFR" firstAttribute="trailing" secondItem="KEa-do-SWn" secondAttribute="trailing" id="Zy8-Ef-IRt"/>
+                                                            <constraint firstItem="hSF-d3-M3k" firstAttribute="centerX" secondItem="KEa-do-SWn" secondAttribute="centerX" id="e9K-37-FEA"/>
+                                                            <constraint firstItem="hSF-d3-M3k" firstAttribute="centerY" secondItem="KEa-do-SWn" secondAttribute="centerY" id="mfm-5B-QeA"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="SRV-Jz-AKc"/>
+                                            <constraint firstItem="TnI-G1-Dyn" firstAttribute="leading" secondItem="iwo-We-Q3M" secondAttribute="leading" id="Hwq-Me-XaR"/>
+                                            <constraint firstItem="TnI-G1-Dyn" firstAttribute="top" secondItem="iwo-We-Q3M" secondAttribute="top" id="S9e-Ma-UaL"/>
+                                            <constraint firstItem="TnI-G1-Dyn" firstAttribute="bottom" secondItem="iwo-We-Q3M" secondAttribute="bottom" id="YXb-zQ-yrA"/>
+                                            <constraint firstItem="TnI-G1-Dyn" firstAttribute="trailing" secondItem="iwo-We-Q3M" secondAttribute="trailing" id="nef-5T-vvb"/>
+                                            <constraint firstAttribute="height" constant="60" id="wbR-eh-OIO"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -2143,9 +2226,11 @@
         <image name="CancelCross_greyBackground" width="16" height="16"/>
         <image name="WelcomeScreenLogo" width="220" height="220"/>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="arrow.left.arrow.right" catalog="system" width="119" height="128"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="creditcard.fill" catalog="system" width="128" height="88"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="power" catalog="system" width="128" height="124"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
