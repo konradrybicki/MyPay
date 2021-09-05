@@ -96,14 +96,14 @@
 		78313C8726A5BFBE00342D85 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */,
-				78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */,
-				783CAE7626B74D530093611D /* CommunicateScreenViewController.swift */,
 				78B136D7269F10740038FCD2 /* WelcomeScreenViewController.swift */,
+				78313C8826A5C71500342D85 /* RegistrationFormViewController.swift */,
+				78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */,
+				783CAE7626B74D530093611D /* CommunicateScreenViewController.swift */,
 				7843930326E2CAF400981D08 /* LoginFormViewController.swift */,
 				7843930526E3D6A900981D08 /* SCEntranceScreenViewController.swift */,
-				7843930726E3DC5800981D08 /* LogoutScreenViewController.swift */,
 				7843930926E3FA2300981D08 /* HomeScreenViewController.swift */,
+				7843930726E3DC5800981D08 /* LogoutScreenViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OMe-77-0qQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -76,6 +76,9 @@
                                                                 <state key="normal" title="Log in">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="loginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2yM-uh-cZu"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </view>
@@ -1131,6 +1134,9 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dq9-rF-KOb" userLabel="Unwind button">
                                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                        <connections>
+                                                            <action selector="unwindArrowPressed:" destination="IfM-gq-dP7" eventType="touchUpInside" id="MnF-wB-xUY"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -1280,6 +1286,9 @@
                                                 <state key="normal" title="Proceed">
                                                     <color key="titleColor" red="0.74117647058823533" green="0.76470588235294112" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="proceedButtonPressed:" destination="IfM-gq-dP7" eventType="touchUpInside" id="1Kn-AQ-l2a"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -1305,6 +1314,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="areaCodeArea" destination="iae-fz-hsq" id="H9I-1w-90x"/>
+                        <outlet property="phoneNumberArea" destination="NyL-Yw-2CT" id="3K5-U4-5Zs"/>
+                        <outlet property="proceedButton" destination="CvL-hX-aTa" id="RNh-xJ-4QV"/>
                         <segue destination="WAQ-mQ-PT5" kind="presentation" identifier="presentSCEntranceScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="JpQ-19-yQg"/>
                     </connections>
                 </viewController>
@@ -1344,6 +1356,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9DG-Rq-Zpk" userLabel="Unwind button">
                                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                         <connections>
+                                                            <action selector="unwindArrowPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="6Js-mx-vnz"/>
                                                             <action selector="unwindButtonPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="1aK-0b-chI"/>
                                                         </connections>
                                                     </button>
@@ -1805,6 +1818,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="59p-Gg-Bf4" userLabel="backspace key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
+                                                                            <action selector="backspaceKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="KtN-f1-plZ"/>
                                                                             <action selector="backspaceKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="qdG-9Y-BDF"/>
                                                                         </connections>
                                                                     </button>
@@ -1848,6 +1862,9 @@
                             <constraint firstItem="S9N-Ol-O0L" firstAttribute="leading" secondItem="CgD-PL-Lo9" secondAttribute="leading" id="vRe-YZ-Qoy"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="OMe-77-0qQ" kind="presentation" identifier="presentHomeScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="5SU-bM-nV6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjK-iz-OSv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1901,6 +1918,10 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="coU-xU-hXl" userLabel="Logout button">
                                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                        <connections>
+                                                            <action selector="logoutButtonPressed:" destination="OMe-77-0qQ" eventType="touchUpInside" id="zL5-ke-mFT"/>
+                                                            <segue destination="nZa-Bf-YM6" kind="presentation" identifier="presentLogoutScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="osb-1A-kkY"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -2177,6 +2198,9 @@
                                                                 <state key="normal" title="No">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="noButtonPressed:" destination="nZa-Bf-YM6" eventType="touchUpInside" id="RTm-4h-ZyO"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -2196,6 +2220,9 @@
                                                                 <state key="normal" title="Yes">
                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="yesButtonPressed:" destination="nZa-Bf-YM6" eventType="touchUpInside" id="505-xU-O3F"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -2232,6 +2259,10 @@
                             <constraint firstItem="P6w-6f-2gd" firstAttribute="trailing" secondItem="ana-Td-50V" secondAttribute="trailing" id="xHk-4d-dbJ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="noButton" destination="082-kE-717" id="dVV-W6-SY9"/>
+                        <outlet property="yesButton" destination="3So-Gk-aGc" id="AoV-FE-cgE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aaf-gw-ndc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

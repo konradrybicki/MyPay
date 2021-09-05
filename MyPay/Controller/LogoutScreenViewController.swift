@@ -9,21 +9,32 @@ import UIKit
 
 class LogoutScreenViewController: UIViewController {
 
+    @IBOutlet weak var noButton: UIButton!
+    @IBOutlet weak var yesButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        noButton.layer.cornerRadius = 15
+        noButton.clipsToBounds = true
+        
+        yesButton.layer.cornerRadius = 15
+        yesButton.clipsToBounds = true
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func noButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
-    */
-
+    
+    @IBAction func yesButtonPressed(_ sender: UIButton) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let welcomeScreenVC = storyboard.instantiateViewController(withIdentifier: "WelcomeScreenViewController") as! WelcomeScreenViewController
+        
+        welcomeScreenVC.modalPresentationStyle = .fullScreen
+        welcomeScreenVC.modalTransitionStyle = .crossDissolve
+        
+        present(welcomeScreenVC, animated: true, completion: nil)
+    }
 }
