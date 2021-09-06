@@ -9,6 +9,7 @@
 public enum DatabaseError: Error {
     case connectionFailure
     case dataSavingFailure
+    case dataLoadingFailure
     case interactionError
 }
 

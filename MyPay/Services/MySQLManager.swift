@@ -154,6 +154,219 @@ public class MySQLManager {
 
 extension MySQLManager {
     
+    /// Selects specified user's security code data (hash and salt) from the database
+    
+    public static func selectSecurityCodeData(forUserWith userId: Int16) throws -> (String, String) {
+        
+        let connection = try establishConnection()
+        
+        let scHash: String
+        let scSalt: String
+        
+        do {
+            
+            let preparedStatement = try connection.prepare("""
+                select
+                  SecurityCodeHash as 'scHash',
+                  SecurityCodeSalt as 'scSalt'
+                from Users
+                where UserID = ?;
+            """)
+            
+            let result = try preparedStatement.query([userId])
+            
+            let mysqlRow = result.rows[0]
+            
+            let swiftRow: [String : Any] = mysqlRow.values
+            
+            // dict keys, for both elements
+            
+            let hashKey = "scHash"
+            let saltKey = "scSalt"
+            
+            // accessing dict values
+            
+            guard let hashValue = swiftRow[hashKey] else {
+                print("Error inside MySQLManager.selectSecurityCodeData() - dict value access failure for key '\(hashKey)'")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            guard let saltValue = swiftRow[saltKey] else {
+                print("Error inside MySQLManager.selectSecurityCodeData() - dict value access failure for key '\(saltKey)'")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            // downcasting
+            
+            guard let hash = hashValue as? String else {
+                print("Error inside MySQLManager.selectSecurityCodeData() - Any->String downcasting failure (hash value)")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            guard let salt = saltValue as? String else {
+                print("Error inside MySQLManager.selectSecurityCodeData() - Any->String downcasting failure (salt value)")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            // result
+            
+            scHash = hash
+            scSalt = salt
+        }
+        catch DatabaseError.dataLoadingFailure {
+            throw DatabaseError.dataLoadingFailure
+        }
+        catch {
+            print(error)
+            throw DatabaseError.dataLoadingFailure
+        }
+        
+        return (scHash, scSalt)
+    }
+}
+
+extension MySQLManager {
+    
+    /// Checks if there is any active account in the database, with the same area code and phone number as given. If one exists, the 'UserID' column value is returned
+    
+    public static func doesAnActiveAccountExist(forGiven areaCode: String, and phoneNumber: String) throws -> Int16? {
+        
+        // submethod - user id selection
+        
+        func selectUserId(forActiveUserWithGiven areaCode: String, and phoneNumber: String) throws -> Int16 {
+            
+            let connection = try establishConnection()
+            
+            let userId: Int16
+            
+            do {
+                
+                let preparedStatement = try connection.prepare("""
+                    select UserID
+                    from Users
+                    where AreaCode = ? and
+                          PhoneNumber = ? and
+                          ProfileStatus = 'Active';
+                """)
+                
+                let result = try preparedStatement.query([areaCode, phoneNumber])
+                
+                let mysqlRow = result.rows[0]
+                
+                let swiftRow = mysqlRow.values
+                
+                let key = "UserID"
+                
+                guard let value = swiftRow[key] else {
+                    print("Error inside MySQLManager.doesAnActiveAccountExist()->selectUserId() - dict value access failure for key '\(key)'")
+                    throw DatabaseError.interactionError
+                }
+                
+                guard let _userId = value as? Int16 else {
+                    print("Error inside MySQLManager.doesAnActiveAccountExist()->selectUserId() - Any->Int16 downcasting failure")
+                    throw DatabaseError.interactionError
+                }
+                
+                userId = _userId
+            }
+            catch DatabaseError.interactionError {
+                throw DatabaseError.interactionError
+            }
+            catch {
+                print(error)
+                throw DatabaseError.interactionError
+            }
+            
+            return userId
+        }
+        
+        // account existance check (via isTelephoneNumberUniqueForAnActiveAccount() method)
+        
+        let doesAccountExist: Bool
+        
+        let isTelephoneNumberUnique = try isTelephoneNumberUniqueForAnActiveAccount(areaCode, phoneNumber)
+        
+        if isTelephoneNumberUnique == true {
+            doesAccountExist = false
+        }
+        else {
+            doesAccountExist = true
+        }
+        
+        // result
+        
+        if doesAccountExist == false {
+            return nil
+        }
+        else {
+            
+            // user id selection and return
+            
+            let userId: Int16 = try selectUserId(forActiveUserWithGiven: areaCode, and: phoneNumber)
+            
+            return userId
+        }
+    }
+}
+
+extension MySQLManager {
+    
+    /// Checks if given area code and phone number combination ('telephone number') is a database-unique value, for all active accounts
+    
+    public static func isTelephoneNumberUniqueForAnActiveAccount(_ areaCode: String, _ phoneNumber: String) throws -> Bool {
+        
+        let connection = try establishConnection()
+        
+        var isTelephoneNumberUnique: Bool
+        
+        do {
+            
+            let preparedStatement = try connection.prepare("""
+                select count(*)
+                from Users
+                where AreaCode = ? and
+                      PhoneNumber = ? and
+                      ProfileStatus = 'Active';
+            """)
+            
+            let result = try preparedStatement.query([areaCode, phoneNumber])
+            
+            let mysqlRow = result.rows[0]
+            
+            let swiftRow = mysqlRow.values
+            
+            let key = "count(*)"
+            
+            guard let value = swiftRow[key] else {
+                print("Error inside MySQLManager.isTelephoneNumberUniqueForAnActiveAccount() - dict value access failure for key '\(key)'")
+                throw DatabaseError.interactionError
+            }
+            
+            guard let count = value as? Int64 else {
+                print("Error inside MySQLManager.isTelephoneNumberUniqueForAnActiveAccount() - Any->Int64 downcasting failure")
+                throw DatabaseError.interactionError
+            }
+            
+            if count == 0 {
+                isTelephoneNumberUnique = true
+            }
+            else {
+                isTelephoneNumberUnique = false
+            }
+        }
+        catch DatabaseError.interactionError {
+            throw DatabaseError.interactionError
+        }
+        catch {
+            print(error)
+            throw DatabaseError.interactionError
+        }
+        
+        try closeConnection(connection)
+        
+        return isTelephoneNumberUnique
+    }
+    
     /// Checks if there is any salt in the database, with the same value as given
     
     public static func isSecurityCodeSaltUnique(_ salt: String) throws -> Bool {
@@ -314,62 +527,6 @@ extension MySQLManager {
         try closeConnection(connection)
         
         return isCardNumberUnique
-    }
-    
-    /// Checks if there is any active account in the database, with the same area code and phone number as given
-    
-    public static func isTelephoneNumberUniqueForAnActiveAccount(_ areaCode: String, _ phoneNumber: String) throws -> Bool {
-        
-        let connection = try establishConnection()
-        
-        var isTelephoneNumberUnique: Bool
-        
-        do {
-            
-            let preparedStatement = try connection.prepare("""
-                select count(*)
-                from Users
-                where AreaCode = ? and
-                      PhoneNumber = ? and
-                      ProfileStatus = 'Active';
-            """)
-            
-            let result = try preparedStatement.query([areaCode, phoneNumber])
-            
-            let mysqlRow = result.rows[0]
-            
-            let swiftRow = mysqlRow.values
-            
-            let key = "count(*)"
-            
-            guard let value = swiftRow[key] else {
-                print("Error inside MySQLManager.isTelephoneNumberUniqueForAnActiveAccount() - dict value access failure for key '\(key)'")
-                throw DatabaseError.interactionError
-            }
-            
-            guard let count = value as? Int64 else {
-                print("Error inside MySQLManager.isTelephoneNumberUniqueForAnActiveAccount() - Any->Int64 downcasting failure")
-                throw DatabaseError.interactionError
-            }
-            
-            if count == 0 {
-                isTelephoneNumberUnique = true
-            }
-            else {
-                isTelephoneNumberUnique = false
-            }
-        }
-        catch DatabaseError.interactionError {
-            throw DatabaseError.interactionError
-        }
-        catch {
-            print(error)
-            throw DatabaseError.interactionError
-        }
-        
-        try closeConnection(connection)
-        
-        return isTelephoneNumberUnique
     }
 }
 
