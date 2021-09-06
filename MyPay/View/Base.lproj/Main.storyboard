@@ -1983,14 +1983,32 @@
                                                             <constraint firstItem="VSf-3S-N0c" firstAttribute="top" secondItem="7Cc-Qo-Sb6" secondAttribute="top" constant="9" id="yN8-VG-lkX"/>
                                                         </constraints>
                                                     </view>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="creditcard.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="XUP-vh-8oK" userLabel="Virtual card button">
-                                                        <rect key="frame" x="304" y="21.5" width="50" height="33.5"/>
-                                                        <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nF5-hR-VpF" userLabel="Credit card button area">
+                                                        <rect key="frame" x="284" y="0.0" width="90" height="77"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="creditcard.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ogg-E1-VsH" userLabel="Credit card button image">
+                                                                <rect key="frame" x="22.5" y="22.5" width="45" height="31.5"/>
+                                                                <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="35" id="6qZ-ho-ysO"/>
+                                                                    <constraint firstAttribute="width" constant="45" id="sXF-AW-YMT"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHi-Yx-XnC" userLabel="Credit card button">
+                                                                <rect key="frame" x="0.0" y="0.0" width="90" height="77"/>
+                                                            </button>
+                                                        </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="50" id="iFE-Mn-coQ"/>
-                                                            <constraint firstAttribute="height" constant="37" id="kg1-Ww-dez"/>
+                                                            <constraint firstAttribute="width" constant="90" id="1x9-3e-sza"/>
+                                                            <constraint firstAttribute="height" constant="77" id="2Kd-mV-dRM"/>
+                                                            <constraint firstItem="ZHi-Yx-XnC" firstAttribute="trailing" secondItem="nF5-hR-VpF" secondAttribute="trailing" id="74W-Nx-rsY"/>
+                                                            <constraint firstItem="ZHi-Yx-XnC" firstAttribute="bottom" secondItem="nF5-hR-VpF" secondAttribute="bottom" id="7UB-gd-PGt"/>
+                                                            <constraint firstItem="Ogg-E1-VsH" firstAttribute="centerY" secondItem="nF5-hR-VpF" secondAttribute="centerY" id="WYg-EG-b84"/>
+                                                            <constraint firstItem="Ogg-E1-VsH" firstAttribute="centerX" secondItem="nF5-hR-VpF" secondAttribute="centerX" id="ga5-rm-YZw"/>
+                                                            <constraint firstItem="ZHi-Yx-XnC" firstAttribute="top" secondItem="nF5-hR-VpF" secondAttribute="top" id="rGt-JM-4Pn"/>
+                                                            <constraint firstItem="ZHi-Yx-XnC" firstAttribute="leading" secondItem="nF5-hR-VpF" secondAttribute="leading" id="rLe-nD-CoF"/>
                                                         </constraints>
-                                                    </imageView>
+                                                    </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cV-S7-R61" userLabel="Top-up button">
                                                         <rect key="frame" x="20" y="77" width="100" height="35"/>
                                                         <color key="backgroundColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2006,12 +2024,12 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
+                                                    <constraint firstItem="nF5-hR-VpF" firstAttribute="top" secondItem="Pbj-Hw-0qr" secondAttribute="top" id="9Ah-5h-G3l"/>
                                                     <constraint firstItem="4cV-S7-R61" firstAttribute="leading" secondItem="Pbj-Hw-0qr" secondAttribute="leading" constant="20" id="IUf-kb-xGA"/>
-                                                    <constraint firstItem="XUP-vh-8oK" firstAttribute="trailing" secondItem="Pbj-Hw-0qr" secondAttribute="trailing" constant="-20" id="NG6-Fl-83Y"/>
                                                     <constraint firstItem="7Cc-Qo-Sb6" firstAttribute="top" secondItem="Pbj-Hw-0qr" secondAttribute="top" constant="20" id="OO6-3e-ERt"/>
-                                                    <constraint firstItem="XUP-vh-8oK" firstAttribute="top" secondItem="Pbj-Hw-0qr" secondAttribute="top" constant="20" id="SYV-nq-GlL"/>
                                                     <constraint firstItem="4cV-S7-R61" firstAttribute="top" secondItem="7Cc-Qo-Sb6" secondAttribute="bottom" constant="20" id="YgI-Xh-Wkc"/>
                                                     <constraint firstItem="7Cc-Qo-Sb6" firstAttribute="leading" secondItem="Pbj-Hw-0qr" secondAttribute="leading" constant="20" id="epG-Bw-gTg"/>
+                                                    <constraint firstItem="nF5-hR-VpF" firstAttribute="trailing" secondItem="Pbj-Hw-0qr" secondAttribute="trailing" id="kPz-7O-klW"/>
                                                     <constraint firstAttribute="height" constant="132" id="qKU-BT-6CN"/>
                                                 </constraints>
                                             </view>
@@ -2036,7 +2054,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="d8H-Mk-zkx" userLabel="Home button image">
-                                                                <rect key="frame" x="54" y="15" width="30" height="30"/>
+                                                                <rect key="frame" x="64" y="15" width="30" height="30"/>
                                                                 <color key="tintColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="30" id="6CT-oz-iQB"/>
@@ -2050,7 +2068,7 @@
                                                         <constraints>
                                                             <constraint firstItem="cLG-7l-92q" firstAttribute="leading" secondItem="8zi-Sd-Rgi" secondAttribute="leading" id="3gf-ID-N4F"/>
                                                             <constraint firstItem="cLG-7l-92q" firstAttribute="top" secondItem="8zi-Sd-Rgi" secondAttribute="top" id="GWm-9a-9Dt"/>
-                                                            <constraint firstItem="d8H-Mk-zkx" firstAttribute="centerX" secondItem="8zi-Sd-Rgi" secondAttribute="centerX" id="Jmh-Qo-nLP"/>
+                                                            <constraint firstItem="d8H-Mk-zkx" firstAttribute="centerX" secondItem="8zi-Sd-Rgi" secondAttribute="centerX" constant="10" id="Jmh-Qo-nLP"/>
                                                             <constraint firstItem="cLG-7l-92q" firstAttribute="trailing" secondItem="8zi-Sd-Rgi" secondAttribute="trailing" id="Zn7-d7-fHR"/>
                                                             <constraint firstItem="cLG-7l-92q" firstAttribute="bottom" secondItem="8zi-Sd-Rgi" secondAttribute="bottom" id="fqm-na-Z8l"/>
                                                             <constraint firstItem="d8H-Mk-zkx" firstAttribute="centerY" secondItem="8zi-Sd-Rgi" secondAttribute="centerY" id="zQs-e9-IRC"/>
@@ -2084,7 +2102,7 @@
                                                         <rect key="frame" x="276" y="0.0" width="138" height="60"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="creditcard.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hSF-d3-M3k" userLabel="Virtual card button image">
-                                                                <rect key="frame" x="51.5" y="14" width="35" height="31.5"/>
+                                                                <rect key="frame" x="41.5" y="14" width="35" height="31.5"/>
                                                                 <color key="tintColor" red="0.74117647058823533" green="0.76470588235294112" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="35" id="bAi-Cz-eaW"/>
@@ -2100,7 +2118,7 @@
                                                             <constraint firstItem="R8P-oL-fFR" firstAttribute="top" secondItem="KEa-do-SWn" secondAttribute="top" id="GMk-3J-UkF"/>
                                                             <constraint firstItem="R8P-oL-fFR" firstAttribute="bottom" secondItem="KEa-do-SWn" secondAttribute="bottom" id="Nyr-Vb-gDJ"/>
                                                             <constraint firstItem="R8P-oL-fFR" firstAttribute="trailing" secondItem="KEa-do-SWn" secondAttribute="trailing" id="Zy8-Ef-IRt"/>
-                                                            <constraint firstItem="hSF-d3-M3k" firstAttribute="centerX" secondItem="KEa-do-SWn" secondAttribute="centerX" id="e9K-37-FEA"/>
+                                                            <constraint firstItem="hSF-d3-M3k" firstAttribute="centerX" secondItem="KEa-do-SWn" secondAttribute="centerX" constant="-10" id="e9K-37-FEA"/>
                                                             <constraint firstItem="hSF-d3-M3k" firstAttribute="centerY" secondItem="KEa-do-SWn" secondAttribute="centerY" id="mfm-5B-QeA"/>
                                                         </constraints>
                                                     </view>
