@@ -156,7 +156,7 @@ extension MySQLManager {
     
     /// Selects specified user's security code data (hash and salt) from the database
     
-    public static func selectSecurityCodeData(forUserWith userId: Int16) throws -> (String, String) {
+    public static func selectSecurityCodeData(forUserWith userId: Int16) throws -> (hash: String, salt: String) {
         
         let connection = try establishConnection()
         
