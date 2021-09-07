@@ -1869,6 +1869,22 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backspaceKey" destination="59p-Gg-Bf4" id="ntt-Po-Qlg"/>
+                        <outlet property="backspaceKeyArrow" destination="YTY-ga-m1l" id="4tv-95-17B"/>
+                        <outlet property="eightKey" destination="H17-pv-ISc" id="J3I-Dp-2CQ"/>
+                        <outlet property="firstPinDot" destination="pT8-ja-yna" id="f1R-PE-wXK"/>
+                        <outlet property="fiveKey" destination="NIU-HE-pM5" id="egd-s7-vPn"/>
+                        <outlet property="fourKey" destination="Hag-ph-DAb" id="zfk-vA-YMM"/>
+                        <outlet property="fourthPinDot" destination="E8d-vW-NI6" id="hO0-0Q-2WI"/>
+                        <outlet property="nineKey" destination="x3d-LW-fHa" id="MIY-WU-vJ5"/>
+                        <outlet property="oneKey" destination="rEL-12-9wc" id="9Tv-CK-ShT"/>
+                        <outlet property="secondPinDot" destination="XuW-ND-eKd" id="eNE-ZA-MSF"/>
+                        <outlet property="sevenKey" destination="9EO-JN-rlA" id="kfe-PO-Qr8"/>
+                        <outlet property="sixKey" destination="pjK-XW-uAe" id="SQs-WX-Vtu"/>
+                        <outlet property="thirdPinDot" destination="8e9-7S-eri" id="FLZ-7S-W2E"/>
+                        <outlet property="threeKey" destination="dpN-am-Lj5" id="iUc-zg-lk1"/>
+                        <outlet property="twoKey" destination="nZJ-bY-QhM" id="GYd-a6-UfY"/>
+                        <outlet property="zeroKey" destination="oiS-Hr-bf8" id="JBc-JI-tHX"/>
                         <segue destination="OMe-77-0qQ" kind="presentation" identifier="presentHomeScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="5SU-bM-nV6"/>
                     </connections>
                 </viewController>
