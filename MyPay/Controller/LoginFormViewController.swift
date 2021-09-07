@@ -81,11 +81,79 @@ class LoginFormViewController: UIViewController {
     }
     
     @IBAction func proceedButtonPressed(_ sender: UIButton) {
-        // TODO: proceed button pressed
+        
+        // loading animation
+        displayLoadingAnimation()
+        
+        // time for the loading animation to display
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+            
+            // active account existance check, for given area code and phone number
+            
+            let areaCode = self.areaCodeTextField.text!
+            let phoneNumber = self.phoneNumberTextField.text!
+            
+            let potentialUsersId: Int16?
+            
+            do {
+                potentialUsersId = try MySQLManager.doesAnActiveAccountExist(forGiven: areaCode, and: phoneNumber)
+            }
+            catch {
+                
+                // error communicate preparation
+                
+                var errorCommunicate = ""
+                
+                if error as! DatabaseError == .connectionFailure {
+                    errorCommunicate = "Database connection failure, please try again in a moment"
+                }
+                else if error as! DatabaseError == .interactionError {
+                    errorCommunicate = "Database interaction error, please try again in a moment"
+                }
+                
+                // error communicate display
+                
+                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+                
+                self.present(communicateVC, animated: true) {
+                    self.hideLoadingAnimation()
+                }
+                
+                return
+            }
+            
+            // check result
+            
+            if let userId = potentialUsersId {
+                
+                // userId pass "preparation"
+                self.identifiedUsersId = userId
+                
+                // forward screen change, preceded with user id pass
+                self.performSegue(withIdentifier: "presentSCEntranceScreen", sender: self)
+                self.hideLoadingAnimation()
+            }
+            else {
+                
+                // appropriate communicate display
+                
+                let noSuchUserCommunicate = "No active account has been found for such data 🧐\n\nPlease make sure the phone number You're entering is correct"
+                
+                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: noSuchUserCommunicate)
+                
+                self.present(communicateVC, animated: true) {
+                    self.hideLoadingAnimation()
+                }
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // TODO: prepare for segue
+        
+        // identified user's id pass
+        
+        let scEntranceScreenVC = segue.destination as! SCEntranceScreenViewController
+        scEntranceScreenVC.loggingUsersId = self.identifiedUsersId
     }
 }
 
@@ -421,7 +489,7 @@ extension LoginFormViewController {
     
     func unlockProceedButton() {
         proceedButton.backgroundColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
-        proceedButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        proceedButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
         proceedButton.isUserInteractionEnabled = true
     }
 
@@ -429,7 +497,7 @@ extension LoginFormViewController {
     
     func lockProceedButton() {
         proceedButton.backgroundColor = #colorLiteral(red: 0.1607843137, green: 0.5019607843, blue: 0.7254901961, alpha: 1)
-        proceedButton.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        proceedButton.setTitleColor(#colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1), for: .normal)
         proceedButton.isUserInteractionEnabled = false
     }
 }

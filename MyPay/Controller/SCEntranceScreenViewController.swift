@@ -9,6 +9,8 @@ import UIKit
 
 class SCEntranceScreenViewController: UIViewController {
 
+    public var loggingUsersId: Int16!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
