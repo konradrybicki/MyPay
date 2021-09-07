@@ -1314,8 +1314,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="areaCodeArea" destination="iae-fz-hsq" id="H9I-1w-90x"/>
-                        <outlet property="phoneNumberArea" destination="NyL-Yw-2CT" id="3K5-U4-5Zs"/>
+                        <outlet property="areaCodeArea" destination="iae-fz-hsq" id="QV4-aY-W83"/>
+                        <outlet property="areaCodeLabel" destination="bDR-2T-auQ" id="V2X-zC-92d"/>
+                        <outlet property="areaCodeTextField" destination="IFx-wg-SNu" id="9ut-W9-aV9"/>
+                        <outlet property="areaCodeTextFieldUnderline" destination="fR8-g9-36f" id="qSt-Vq-bIh"/>
+                        <outlet property="phoneNumberArea" destination="NyL-Yw-2CT" id="cTg-xX-0al"/>
+                        <outlet property="phoneNumberLabel" destination="ByO-C6-ga1" id="RcA-ym-SL5"/>
+                        <outlet property="phoneNumberTextField" destination="DO0-Y3-PJ7" id="TDX-GF-qD6"/>
+                        <outlet property="phoneNumberTextFieldUnderline" destination="Awb-Sp-Rkt" id="eb5-Za-4l4"/>
                         <outlet property="proceedButton" destination="CvL-hX-aTa" id="RNh-xJ-4QV"/>
                         <segue destination="WAQ-mQ-PT5" kind="presentation" identifier="presentSCEntranceScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="JpQ-19-yQg"/>
                     </connections>

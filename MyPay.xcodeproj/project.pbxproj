@@ -28,6 +28,7 @@
 		78BC6F8426C191CA00706611 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F8326C191CA00706611 /* Account.swift */; };
 		78D0886A26B1DC22008A7B5A /* SCConfigScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */; };
 		78E975E726C9A4CC00153A75 /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E975E626C9A4CC00153A75 /* CustomErrors.swift */; };
+		78F382BD26E7BB52000B3284 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F382BC26E7BB52000B3284 /* GlobalVariables.swift */; };
 		78FB539726C1D95500DACF8A /* VirtualCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB539626C1D95500DACF8A /* VirtualCard.swift */; };
 		9B1485C90E6A34023DB0D0DE /* libPods-MyPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 206B83DD29C29D280CDD4EF8 /* libPods-MyPay.a */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SCConfigScreenViewController.swift; path = MyPay/Controller/SCConfigScreenViewController.swift; sourceTree = SOURCE_ROOT; };
 		78E6C6B926C06FDD005D94EB /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		78E975E626C9A4CC00153A75 /* CustomErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
+		78F382BC26E7BB52000B3284 /* GlobalVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		78FB539626C1D95500DACF8A /* VirtualCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualCard.swift; sourceTree = "<group>"; };
 		D2CAD71FB39361D78205C4EF /* Pods-MyPay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPay.release.xcconfig"; path = "Target Support Files/Pods-MyPay/Pods-MyPay.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,6 +142,7 @@
 				78B136E1269F10760038FCD2 /* Info.plist */,
 				78E975E626C9A4CC00153A75 /* CustomErrors.swift */,
 				78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */,
+				78F382BC26E7BB52000B3284 /* GlobalVariables.swift */,
 			);
 			path = MyPay;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				78BC6F8226C1672400706611 /* SystemTypeExtensions.swift in Sources */,
 				78FB539726C1D95500DACF8A /* VirtualCard.swift in Sources */,
 				7843930826E3DC5800981D08 /* LogoutScreenViewController.swift in Sources */,
+				78F382BD26E7BB52000B3284 /* GlobalVariables.swift in Sources */,
 				78313C8926A5C71500342D85 /* RegistrationFormViewController.swift in Sources */,
 				78BC6F8426C191CA00706611 /* Account.swift in Sources */,
 				783CAE7726B74D530093611D /* CommunicateScreenViewController.swift in Sources */,
