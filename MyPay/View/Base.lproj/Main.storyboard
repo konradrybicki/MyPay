@@ -1535,6 +1535,7 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="RFI-9Y-HDW"/>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="ryG-Td-2rj"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -1561,6 +1562,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZJ-bY-QhM" userLabel="'2' key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="0tE-Zq-ros"/>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="n5M-Wh-BJy"/>
                                                                         </connections>
                                                                     </button>
@@ -1589,6 +1591,7 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="4Me-UN-FkU"/>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="Pvl-q2-F88"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -1620,6 +1623,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hag-ph-DAb" userLabel="'4' key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="Fqh-xs-ckc"/>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="VhH-Hb-cIH"/>
                                                                         </connections>
                                                                     </button>
@@ -1647,6 +1651,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NIU-HE-pM5" userLabel="'5' key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="CJh-sk-iKe"/>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="Mlp-U3-NnB"/>
                                                                         </connections>
                                                                     </button>
@@ -1674,6 +1679,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pjK-XW-uAe" userLabel="'6' key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="9C0-VR-Xja"/>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="Hux-KT-ub7"/>
                                                                         </connections>
                                                                     </button>
@@ -1707,6 +1713,7 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="CQm-hr-mvT"/>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="th8-cE-Z8l"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -1733,6 +1740,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H17-pv-ISc" userLabel="'8' key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="Ich-on-tJi"/>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="pe8-oi-Xl5"/>
                                                                         </connections>
                                                                     </button>
@@ -1760,6 +1768,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x3d-LW-fHa" userLabel="'9' key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="bQx-Wz-lF8"/>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="qey-cd-QIM"/>
                                                                         </connections>
                                                                     </button>
@@ -1795,6 +1804,7 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiS-Hr-bf8" userLabel="'0' key">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                                         <connections>
+                                                                            <action selector="numericKeyPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="1KY-VO-gR2"/>
                                                                             <action selector="numericKeyPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="QBr-m3-kN6"/>
                                                                         </connections>
                                                                     </button>

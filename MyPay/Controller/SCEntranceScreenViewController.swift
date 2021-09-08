@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import CryptoSwift
+
+/// Controlls Security Code entrance screen
 
 class SCEntranceScreenViewController: UIViewController {
 
@@ -36,8 +39,8 @@ class SCEntranceScreenViewController: UIViewController {
     private var loggingUsersSCHash: String!
     private var loggingUsersSCSalt: String!
     
-    // security code, typed by the user
-    private var typedSecurityCode: String!
+    // entered security code
+    private var enteredSecurityCode: String!
     private var enteredDigits: Int!
     
     override func viewDidLoad() {
@@ -87,15 +90,243 @@ class SCEntranceScreenViewController: UIViewController {
         
         // security code variables initialization
         
-        typedSecurityCode = ""
+        enteredSecurityCode = ""
         enteredDigits = 0
     }
     
     @IBAction func unwindArrowPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+}
+
+//MARK: - Keyboard keypress methods
+
+extension SCEntranceScreenViewController {
+    
+    @IBAction func numericKeyPressed(_ sender: UIButton) {
+        
+        // digit entrance
+        
+        let pressedKey = sender
+        let enteredDigit: Int = getDigit(correspondingTo: pressedKey)
+        
+        enteredSecurityCode += String(enteredDigit)
+        enteredDigits += 1
+        
+        // vibration (light)
+        
+        let impactGenerator = UIImpactFeedbackGenerator(style: .light)
+        impactGenerator.impactOccurred()
+        
+        // pin dot color change + additional (depending on the number of entered digits)
+        
+        if enteredDigits == 1 {
+            firstPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
+            unlockBackspace()
+        }
+        else if enteredDigits == 2 {
+            secondPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
+        }
+        else if enteredDigits == 3 {
+            thirdPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
+        }
+        else {
+            fourthPinDot.tintColor = #colorLiteral(red: 0.2039215686, green: 0.5960784314, blue: 0.8588235294, alpha: 1)
+            
+            // keyboard lock
+            lockKeyboard()
+            
+            // 0.25s delay, just for the user to see fourth pin dot changing its color, before the view changes / error communicate displays
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            
+                // entered security code validation
+                
+                let enteredSecurityCodeValid = self.isEnteredSecurityCodeValid()
+                
+                if enteredSecurityCodeValid == true {
+                    
+                    // logging user's id "save" (global variable)
+                    GlobalVariables.currentlyLoggedUsersId = self.loggingUsersId
+                    
+                    // view change (home screen)
+                    self.performSegue(withIdentifier: "presentHomeScreen", sender: self)
+                }
+                else {
+                    
+                    // vibration (error)
+                    UINotificationFeedbackGenerator().notificationOccurred(.error)
+                    
+                    // appropriate communicate display
+                    
+                    let errorCommunicate = "Security code invalid\nPlease try again"
+                    
+                    let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+                    
+                    self.present(communicateVC, animated: true) {
+                        self.resetSecurityCodeEntranceAttempt()
+                    }
+                }
+            }
+        }
+    }
     
     @IBAction func backspaceKeyPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "presentHomeScreen", sender: self)
+        
+        // digit deletion
+        
+        enteredSecurityCode = enteredSecurityCode.droppedLastCharacter()
+        enteredDigits -= 1
+        
+        // vibration (light)
+        
+        let impactGenerator = UIImpactFeedbackGenerator(style: .light)
+        impactGenerator.impactOccurred()
+        
+        // pin dot color change and backspace lock
+        
+        if enteredDigits == 2 {
+            thirdPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        }
+        else if enteredDigits == 1 {
+            secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        }
+        else {
+            firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+            lockBackspace()
+        }
+    }
+}
+
+//MARK: - Keyboard key digit extract method
+
+extension SCEntranceScreenViewController {
+    
+    /// Returns an integer value, corresponding to a given numeric key (ex.: getDigit(correspondingTo: sevenKey) will return '7')
+    
+    func getDigit(correspondingTo numericKey: UIButton) -> Int {
+        
+        let correspondingDigit: Int
+        
+        switch numericKey {
+        
+        case oneKey:
+            correspondingDigit = 1
+        case twoKey:
+            correspondingDigit = 2
+        case threeKey:
+            correspondingDigit = 3
+        case fourKey:
+            correspondingDigit = 4
+        case fiveKey:
+            correspondingDigit = 5
+        case sixKey:
+            correspondingDigit = 6
+        case sevenKey:
+            correspondingDigit = 7
+        case eightKey:
+            correspondingDigit = 8
+        case nineKey:
+            correspondingDigit = 9
+        default:
+            correspondingDigit = 0
+        }
+        
+        return correspondingDigit
+    }
+}
+
+//MARK: - Entered security code validation method
+
+extension SCEntranceScreenViewController {
+    
+    /// Concatenates logging user's salt with entered security code, hashes the result and checks, whether its equal to a logging user's security code hash
+    
+    func isEnteredSecurityCodeValid() -> Bool {
+        
+        let enteredSecurityCode_salted = loggingUsersSCSalt + enteredSecurityCode
+        let enteringUsersSCHash = enteredSecurityCode_salted.sha256()
+        
+        if enteringUsersSCHash == loggingUsersSCHash {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+}
+
+//MARK: - View controller reset method
+
+extension SCEntranceScreenViewController {
+    
+    /// Brings the view controller back to its initial state
+    
+    func resetSecurityCodeEntranceAttempt() -> Void {
+        
+        // pin dots reset
+        firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        secondPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        thirdPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        fourthPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
+        
+        // backspace key arrow hide
+        backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        // entered security code reset
+        enteredSecurityCode = ""
+        enteredDigits = 0
+        
+        // keyboard unlock (backspace key stays locked)
+        unlockKeyboard_withoutBackspace()
+    }
+}
+
+//MARK: - Keyboard lock control methods
+
+extension SCEntranceScreenViewController {
+    
+    /// Disables user interaction on all keyboard keys
+    
+    func lockKeyboard() -> Void {
+        oneKey.isUserInteractionEnabled = false
+        twoKey.isUserInteractionEnabled = false
+        threeKey.isUserInteractionEnabled = false
+        fourKey.isUserInteractionEnabled = false
+        fiveKey.isUserInteractionEnabled = false
+        sixKey.isUserInteractionEnabled = false
+        sevenKey.isUserInteractionEnabled = false
+        eightKey.isUserInteractionEnabled = false
+        nineKey.isUserInteractionEnabled = false
+        zeroKey.isUserInteractionEnabled = false
+        backspaceKey.isUserInteractionEnabled = false
+    }
+    
+    /// Enables user interaction on all keyboard keys, except the backspace
+    
+    func unlockKeyboard_withoutBackspace() -> Void {
+        oneKey.isUserInteractionEnabled = true
+        twoKey.isUserInteractionEnabled = true
+        threeKey.isUserInteractionEnabled = true
+        fourKey.isUserInteractionEnabled = true
+        fiveKey.isUserInteractionEnabled = true
+        sixKey.isUserInteractionEnabled = true
+        sevenKey.isUserInteractionEnabled = true
+        eightKey.isUserInteractionEnabled = true
+        nineKey.isUserInteractionEnabled = true
+        zeroKey.isUserInteractionEnabled = true
+    }
+    
+    /// Makes the backspace key visible and enables user interaction on it
+    
+    func unlockBackspace() -> Void {
+        backspaceKeyArrow.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        backspaceKey.isUserInteractionEnabled = true
+    }
+    
+    /// Hides the backspace key and disables user interaction on it
+    
+    func lockBackspace() -> Void {
+        backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        backspaceKey.isUserInteractionEnabled = false
     }
 }
