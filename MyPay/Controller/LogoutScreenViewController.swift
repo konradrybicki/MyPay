@@ -7,14 +7,19 @@
 
 import UIKit
 
-class LogoutScreenViewController: UIViewController {
+/// Controlls the logout screen
 
+class LogoutScreenViewController: UIViewController {
+    
+    // logout decision confirm buttons
     @IBOutlet weak var noButton: UIButton!
     @IBOutlet weak var yesButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // button rounding
+        
         noButton.layer.cornerRadius = 15
         noButton.clipsToBounds = true
         
@@ -28,6 +33,8 @@ class LogoutScreenViewController: UIViewController {
     
     @IBAction func yesButtonPressed(_ sender: UIButton) {
         
+        // view change (welcome screen)
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let welcomeScreenVC = storyboard.instantiateViewController(withIdentifier: "WelcomeScreenViewController") as! WelcomeScreenViewController
@@ -35,6 +42,10 @@ class LogoutScreenViewController: UIViewController {
         welcomeScreenVC.modalPresentationStyle = .fullScreen
         welcomeScreenVC.modalTransitionStyle = .crossDissolve
         
-        present(welcomeScreenVC, animated: true, completion: nil)
+        present(welcomeScreenVC, animated: true) {
+            
+            // logged user's id "deletion"
+            GlobalVariables.currentlyLoggedUsersId = nil
+        }
     }
 }
