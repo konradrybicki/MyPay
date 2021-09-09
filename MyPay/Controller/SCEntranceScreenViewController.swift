@@ -10,7 +10,7 @@ import CryptoSwift
 
 /// Controlls the Security Code entrance screen, displayed:
 /// 1) After entering an identified phone number, in the login form
-/// 2) Upon the "sceneDidEnterBackground()" SceneDelegate method call, in one of the controllers
+/// 2) Upon the account access lock (so when the scene enters the background, while the user is logged in)
 
 class SCEntranceScreenViewController: UIViewController {
 
@@ -159,10 +159,9 @@ extension SCEntranceScreenViewController {
                         // view change (home screen)
                         self.performSegue(withIdentifier: "presentHomeScreen", sender: self)
                     }
-                    else { // (account access lock scenario)
+                    else { // (account access unlock scenario)
                         
-                        self.modalTransitionStyle = .crossDissolve
-                        self.dismiss(animated: true, completion: nil)
+                        AccountAccessManager.unlockAccess()
                     }
                 }
                 else {

@@ -51,41 +51,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
         
-        AccountAccessManager.lockAccess()
-    }
-}
-
-fileprivate class AccountAccessManager {
-    
-    static func lockAccess() {
+        // account access lock
         
-        // top view controller identification
+        let userLogged: Bool = GlobalVariables.currentlyLoggedUsersId != nil
+        let accountUnlocked: Bool = AccountAccessManager.accountAccessState == .unlocked
         
-        var currentVC = UIApplication.shared.keyWindow!.rootViewController
-        
-        while let currentVC_presentedVC = currentVC!.presentedViewController {
-            currentVC = currentVC_presentedVC
+        if (userLogged == true) && (accountUnlocked == true) {
+            AccountAccessManager.lockAccess()
         }
         
-        let topVC = currentVC
-        
-        // SC entrance screen vc instantiation
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let scEntranceScreenVC = storyboard.instantiateViewController(withIdentifier: "SCEntranceScreenViewController") as! SCEntranceScreenViewController
-        
-        scEntranceScreenVC.loggingUsersId = GlobalVariables.currentlyLoggedUsersId
-        
-        // SC entrance screen vc presentation
-        
-        scEntranceScreenVC.modalTransitionStyle = .crossDissolve
-        scEntranceScreenVC.modalPresentationStyle = .fullScreen
-        
-        topVC!.present(scEntranceScreenVC, animated: true) {
-            
-            // unwind arrow hide/lock
-            scEntranceScreenVC.unwindButtonArrow.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            scEntranceScreenVC.unwindButton.isUserInteractionEnabled = false
-        }
     }
 }
