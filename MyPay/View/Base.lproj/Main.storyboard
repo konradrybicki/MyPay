@@ -1363,7 +1363,6 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                         <connections>
                                                             <action selector="unwindArrowPressed:" destination="WAQ-mQ-PT5" eventType="touchUpInside" id="6Js-mx-vnz"/>
-                                                            <action selector="unwindButtonPressed:" destination="YMh-4c-uv2" eventType="touchUpInside" id="1aK-0b-chI"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -1894,6 +1893,8 @@
                         <outlet property="thirdPinDot" destination="8e9-7S-eri" id="FLZ-7S-W2E"/>
                         <outlet property="threeKey" destination="dpN-am-Lj5" id="iUc-zg-lk1"/>
                         <outlet property="twoKey" destination="nZJ-bY-QhM" id="GYd-a6-UfY"/>
+                        <outlet property="unwindButton" destination="9DG-Rq-Zpk" id="SW1-TH-bAf"/>
+                        <outlet property="unwindButtonArrow" destination="HcY-NR-ImG" id="FGO-Yy-5BK"/>
                         <outlet property="zeroKey" destination="oiS-Hr-bf8" id="JBc-JI-tHX"/>
                         <segue destination="OMe-77-0qQ" kind="presentation" identifier="presentHomeScreen" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="5SU-bM-nV6"/>
                     </connections>

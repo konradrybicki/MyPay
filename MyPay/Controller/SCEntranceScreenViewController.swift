@@ -8,10 +8,16 @@
 import UIKit
 import CryptoSwift
 
-/// Controlls Security Code entrance screen
+/// Controlls the Security Code entrance screen, displayed:
+/// 1) After entering an identified phone number, in the login form
+/// 2) Upon the "sceneDidEnterBackground()" SceneDelegate method call, in one of the controllers
 
 class SCEntranceScreenViewController: UIViewController {
 
+    // unwind button
+    @IBOutlet weak var unwindButton: UIButton!
+    @IBOutlet weak var unwindButtonArrow: UIImageView!
+    
     // pin dots
     @IBOutlet weak var firstPinDot: UIImageView!
     @IBOutlet weak var secondPinDot: UIImageView!
@@ -145,11 +151,19 @@ extension SCEntranceScreenViewController {
                 
                 if enteredSecurityCodeValid == true {
                     
-                    // logging user's id "save" (global variable)
-                    GlobalVariables.currentlyLoggedUsersId = self.loggingUsersId
-                    
-                    // view change (home screen)
-                    self.performSegue(withIdentifier: "presentHomeScreen", sender: self)
+                    if self.presentingViewController as? LoginFormViewController != nil { // (login scenario)
+                        
+                        // logging user's id "save" (global variable)
+                        GlobalVariables.currentlyLoggedUsersId = self.loggingUsersId
+                        
+                        // view change (home screen)
+                        self.performSegue(withIdentifier: "presentHomeScreen", sender: self)
+                    }
+                    else { // (account access lock scenario)
+                        
+                        self.modalTransitionStyle = .crossDissolve
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
                 else {
                     
