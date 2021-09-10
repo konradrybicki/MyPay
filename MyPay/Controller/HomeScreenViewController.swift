@@ -13,6 +13,9 @@ class HomeScreenViewController: UIViewController {
     @IBOutlet weak var account: UIView!
     @IBOutlet weak var topUpButton: UIButton!
     
+    @IBOutlet weak var balance_integerPart: UILabel!
+    @IBOutlet weak var balance_decimalPart: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

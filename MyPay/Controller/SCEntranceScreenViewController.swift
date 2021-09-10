@@ -208,6 +208,77 @@ extension SCEntranceScreenViewController {
             lockBackspace()
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // loading animation display
+        
+        displayLoadingAnimation()
+        
+        // logged user's account balance load
+        
+        let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
+        
+        let loggedUsersBalance: Double
+        
+        do {
+            loggedUsersBalance = try MySQLManager.selectAccountBalance(forUserWithId: loggedUsersId)
+        }
+        catch {
+            
+            var errorCommunicate = ""
+            
+            if error as! DatabaseError == .connectionFailure {
+                errorCommunicate = "Database connection failure, please try again in a moment"
+            }
+            else if error as! DatabaseError == .dataLoadingFailure {
+                errorCommunicate = "Data loading failure, please try again in a moment"
+            }
+            
+            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+            
+            self.present(communicateVC, animated: true) {
+                self.hideLoadingAnimation()
+                self.resetSecurityCodeEntranceAttempt()
+            }
+            
+            return
+        }
+        
+        // logged user's account balance display preparation
+        
+        // (integer part)
+        
+        let balance_integerPart = Int(loggedUsersBalance)
+        let balance_integerPart_str = String(balance_integerPart)
+        
+        // (decimal part) 100.25
+        
+        var balance_decimalPart_str: String
+        
+        let balance_str = String(loggedUsersBalance)
+        
+        let dotIndex = balance_str.firstIndex(of: ".")
+        let begIndex = balance_str.index(dotIndex!, offsetBy: 1)
+        let endIndex = balance_str.endIndex
+        
+        balance_decimalPart_str = String(balance_str[begIndex...endIndex])
+        
+        if balance_decimalPart_str.count == 1 {
+            balance_decimalPart_str += "0"
+        }
+        
+        // logged user's account balance display
+        
+        let homeScreenVC = segue.destination as! HomeScreenViewController
+        
+        homeScreenVC.balance_integerPart.text = balance_integerPart_str
+        homeScreenVC.balance_decimalPart.text = balance_decimalPart_str
+        
+        // loading animation hide
+        
+        hideLoadingAnimation()
+    }
 }
 
 //MARK: - Keyboard key digit extract method

@@ -2185,6 +2185,8 @@
                     <connections>
                         <outlet property="account" destination="Pbj-Hw-0qr" id="w1X-xT-KZf"/>
                         <outlet property="appLogo" destination="y1s-a7-tK6" id="Kav-eq-fMA"/>
+                        <outlet property="balance_decimalPart" destination="VSf-3S-N0c" id="7rN-gU-800"/>
+                        <outlet property="balance_integerPart" destination="ghE-T0-BMb" id="K0X-3Z-avg"/>
                         <outlet property="topUpButton" destination="4cV-S7-R61" id="Nkl-lt-WVK"/>
                     </connections>
                 </viewController>

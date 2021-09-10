@@ -223,6 +223,51 @@ extension MySQLManager {
         
         return (scHash, scSalt)
     }
+    
+    /// Selects specified user's account balance from the database
+    
+    public static func selectAccountBalance(forUserWithId userId: Int16) throws -> Double {
+        
+        let connection = try establishConnection()
+        
+        let balance: Double
+        
+        do {
+            
+            let preparedStatement = try connection.prepare("select Balance from Accounts where UserID = ?;")
+            
+            let result = try preparedStatement.query([userId])
+            
+            let mysqlRow = result.rows[0]
+            
+            let swiftRow: [String : Any] = mysqlRow.values
+            
+            let key = "Balance"
+            
+            guard let value = swiftRow[key] else {
+                print("Error inside MySQLManager.selectAccountBalance() - dict value access failure for key '\(key)'")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            guard let _balance = value as? Double else {
+                print("Error inside MySQLManager.selectAccountBalance() - Any->Double downcasting failure")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            balance = _balance
+        }
+        catch DatabaseError.dataLoadingFailure {
+            throw DatabaseError.dataLoadingFailure
+        }
+        catch {
+            print(error)
+            throw DatabaseError.dataLoadingFailure
+        }
+        
+        try closeConnection(connection)
+        
+        return balance
+    }
 }
 
 extension MySQLManager {
