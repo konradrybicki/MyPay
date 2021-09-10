@@ -156,7 +156,7 @@ extension SCEntranceScreenViewController {
                         // logging user's id "save" (global variable)
                         GlobalVariables.currentlyLoggedUsersId = self.loggingUsersId
                         
-                        // view change (home screen)
+                        // forward view change (home screen)
                         self.performSegue(withIdentifier: "presentHomeScreen", sender: self)
                     }
                     else { // (account access unlock scenario)
@@ -214,70 +214,65 @@ extension SCEntranceScreenViewController {
         // loading animation display
         
         displayLoadingAnimation()
-        
-        // logged user's account balance load
-        
-        let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
-        
-        let loggedUsersBalance: Double
-        
-        do {
-            loggedUsersBalance = try MySQLManager.selectAccountBalance(forUserWithId: loggedUsersId)
-        }
-        catch {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
             
-            var errorCommunicate = ""
+            // logged user's account balance load
             
-            if error as! DatabaseError == .connectionFailure {
-                errorCommunicate = "Database connection failure, please try again in a moment"
+            let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
+            
+            let loggedUsersBalance: String
+            
+            do {
+                loggedUsersBalance = try MySQLManager.selectAccountBalance(forUserWithId: loggedUsersId)
             }
-            else if error as! DatabaseError == .dataLoadingFailure {
-                errorCommunicate = "Data loading failure, please try again in a moment"
+            catch {
+                
+                var errorCommunicate = ""
+                
+                if error as! DatabaseError == .connectionFailure {
+                    errorCommunicate = "Database connection failure, please try again in a moment"
+                }
+                else if error as! DatabaseError == .dataLoadingFailure {
+                    errorCommunicate = "Data loading failure, please try again in a moment"
+                }
+                
+                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+                
+                self.present(communicateVC, animated: true) {
+                    self.hideLoadingAnimation()
+                    self.resetSecurityCodeEntranceAttempt()
+                }
+                
+                return
             }
             
-            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+            // home screen balance display preparation
             
-            self.present(communicateVC, animated: true) {
-                self.hideLoadingAnimation()
-                self.resetSecurityCodeEntranceAttempt()
+            // (integer part)
+            
+            let balance_integerPart: String
+            
+            var begIndex = loggedUsersBalance.startIndex
+            let dotIndex = loggedUsersBalance.firstIndex(of: ".")
+            var endIndex = loggedUsersBalance.index(dotIndex!, offsetBy: -1)
+            
+            balance_integerPart = String(loggedUsersBalance[begIndex...endIndex])
+            
+            // (decimal part)
+            
+            var balance_decimalPart: String
+            
+            begIndex = loggedUsersBalance.index(dotIndex!, offsetBy: 1)
+            endIndex = loggedUsersBalance.index(loggedUsersBalance.endIndex, offsetBy: -1)
+            
+            balance_decimalPart = String(loggedUsersBalance[begIndex...endIndex])
+            
+            if balance_decimalPart.count == 1 {
+                balance_decimalPart += "0"
             }
             
-            return
+            
         }
-        
-        // logged user's account balance display preparation
-        
-        // (integer part)
-        
-        let balance_integerPart = Int(loggedUsersBalance)
-        let balance_integerPart_str = String(balance_integerPart)
-        
-        // (decimal part) 100.25
-        
-        var balance_decimalPart_str: String
-        
-        let balance_str = String(loggedUsersBalance)
-        
-        let dotIndex = balance_str.firstIndex(of: ".")
-        let begIndex = balance_str.index(dotIndex!, offsetBy: 1)
-        let endIndex = balance_str.endIndex
-        
-        balance_decimalPart_str = String(balance_str[begIndex...endIndex])
-        
-        if balance_decimalPart_str.count == 1 {
-            balance_decimalPart_str += "0"
-        }
-        
-        // logged user's account balance display
-        
-        let homeScreenVC = segue.destination as! HomeScreenViewController
-        
-        homeScreenVC.balance_integerPart.text = balance_integerPart_str
-        homeScreenVC.balance_decimalPart.text = balance_decimalPart_str
-        
-        // loading animation hide
-        
-        hideLoadingAnimation()
     }
 }
 

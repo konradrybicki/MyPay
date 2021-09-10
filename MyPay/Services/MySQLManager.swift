@@ -226,11 +226,11 @@ extension MySQLManager {
     
     /// Selects specified user's account balance from the database
     
-    public static func selectAccountBalance(forUserWithId userId: Int16) throws -> Double {
+    public static func selectAccountBalance(forUserWithId userId: Int16) throws -> String {
         
         let connection = try establishConnection()
         
-        let balance: Double
+        let balance: String
         
         do {
             
@@ -249,8 +249,8 @@ extension MySQLManager {
                 throw DatabaseError.dataLoadingFailure
             }
             
-            guard let _balance = value as? Double else {
-                print("Error inside MySQLManager.selectAccountBalance() - Any->Double downcasting failure")
+            guard let _balance = value as? String else {
+                print("Error inside MySQLManager.selectAccountBalance() - Any->String downcasting failure")
                 throw DatabaseError.dataLoadingFailure
             }
             
