@@ -153,11 +153,19 @@ extension SCEntranceScreenViewController {
                     
                     if self.presentingViewController as? LoginFormViewController != nil { // (login scenario)
                         
-                        // logging user's id "save" (global variable)
-                        GlobalVariables.currentlyLoggedUsersId = self.loggingUsersId
-                        
-                        // forward view change (home screen)
-                        self.performSegue(withIdentifier: "presentHomeScreen", sender: self)
+                        // loading animation display
+                        self.displayLoadingAnimation()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+                            
+                            // logging user's id "save" (global variable)
+                            GlobalVariables.currentlyLoggedUsersId = self.loggingUsersId
+                            
+                            // forward view change (home screen)
+                            self.performSegue(withIdentifier: "presentHomeScreen", sender: self)
+                            
+                            // loading animation hide
+                            self.hideLoadingAnimation()
+                        }
                     }
                     else { // (account access unlock scenario)
                         
@@ -211,68 +219,65 @@ extension SCEntranceScreenViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // loading animation display
+        // logged user's account balance load
         
-        displayLoadingAnimation()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
-            
-            // logged user's account balance load
-            
-            let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
-            
-            let loggedUsersBalance: String
-            
-            do {
-                loggedUsersBalance = try MySQLManager.selectAccountBalance(forUserWithId: loggedUsersId)
-            }
-            catch {
-                
-                var errorCommunicate = ""
-                
-                if error as! DatabaseError == .connectionFailure {
-                    errorCommunicate = "Database connection failure, please try again in a moment"
-                }
-                else if error as! DatabaseError == .dataLoadingFailure {
-                    errorCommunicate = "Data loading failure, please try again in a moment"
-                }
-                
-                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
-                
-                self.present(communicateVC, animated: true) {
-                    self.hideLoadingAnimation()
-                    self.resetSecurityCodeEntranceAttempt()
-                }
-                
-                return
-            }
-            
-            // home screen balance display preparation
-            
-            // (integer part)
-            
-            let balance_integerPart: String
-            
-            var begIndex = loggedUsersBalance.startIndex
-            let dotIndex = loggedUsersBalance.firstIndex(of: ".")
-            var endIndex = loggedUsersBalance.index(dotIndex!, offsetBy: -1)
-            
-            balance_integerPart = String(loggedUsersBalance[begIndex...endIndex])
-            
-            // (decimal part)
-            
-            var balance_decimalPart: String
-            
-            begIndex = loggedUsersBalance.index(dotIndex!, offsetBy: 1)
-            endIndex = loggedUsersBalance.index(loggedUsersBalance.endIndex, offsetBy: -1)
-            
-            balance_decimalPart = String(loggedUsersBalance[begIndex...endIndex])
-            
-            if balance_decimalPart.count == 1 {
-                balance_decimalPart += "0"
-            }
-            
-            
+        let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
+        
+        let loggedUsersBalance: String
+        
+        do {
+            loggedUsersBalance = try MySQLManager.selectAccountBalance(forUserWithId: loggedUsersId)
         }
+        catch {
+            
+            var errorCommunicate = ""
+            
+            if error as! DatabaseError == .connectionFailure {
+                errorCommunicate = "Database connection failure, please try again in a moment"
+            }
+            else if error as! DatabaseError == .dataLoadingFailure {
+                errorCommunicate = "Data loading failure, please try again in a moment"
+            }
+            
+            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+            
+            self.present(communicateVC, animated: true) {
+                self.hideLoadingAnimation()
+                self.resetSecurityCodeEntranceAttempt()
+            }
+            
+            return
+        }
+        
+        // home screen balance display preparation
+        
+        // (integer part)
+        
+        let balance_integerPart: String
+        
+        var begIndex = loggedUsersBalance.startIndex
+        let dotIndex = loggedUsersBalance.firstIndex(of: ".")
+        var endIndex = loggedUsersBalance.index(dotIndex!, offsetBy: -1)
+        
+        balance_integerPart = String(loggedUsersBalance[begIndex...endIndex])
+        
+        // (decimal part)
+        
+        var balance_decimalPart: String
+        
+        begIndex = loggedUsersBalance.index(dotIndex!, offsetBy: 1)
+        endIndex = loggedUsersBalance.index(loggedUsersBalance.endIndex, offsetBy: -1)
+        
+        balance_decimalPart = String(loggedUsersBalance[begIndex...endIndex])
+        
+        if balance_decimalPart.count == 1 {
+            balance_decimalPart += "0"
+        }
+        
+        // home screen display-ready balance pass (balance can only be displayed after the segue is performed so, following chosen approach, it is going to be displayed by the Home Screen VC itself)
+        
+        let homeScreenVC = segue.destination as! HomeScreenViewController
+        homeScreenVC.balance_displayReady = (balance_integerPart, balance_decimalPart)
     }
 }
 
