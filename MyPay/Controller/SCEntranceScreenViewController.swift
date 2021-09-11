@@ -375,6 +375,10 @@ extension SCEntranceScreenViewController: HomeScreenDelegate {
     
     func homeScreen(viewLoadingDidAbortWith error: Error) {
         
+        // logged user's id "deletion"
+        
+        GlobalVariables.currentlyLoggedUsersId = nil
+        
         // error communicate preparation
         
         var errorCommunicate = ""
