@@ -49,6 +49,12 @@ class SCEntranceScreenViewController: UIViewController {
     private var enteredSecurityCode: String!
     private var enteredDigits: Int!
     
+    // Home screen vc instance, initialized upon the prepare(for segue:) method call, with the segue.destination property value.
+    // This is done in purpose of setting up a delegate for the HomeScreenViewController, so that our SCEntranceViewController
+    // can be informed about any errors, that might occur while the segue performs.
+    
+    public var homeScreenVC: HomeScreenViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -216,69 +222,6 @@ extension SCEntranceScreenViewController {
             lockBackspace()
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        // logged user's account balance load
-        
-        let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
-        
-        let loggedUsersBalance: String
-        
-        do {
-            loggedUsersBalance = try MySQLManager.selectAccountBalance(forUserWithId: loggedUsersId)
-        }
-        catch {
-            
-            var errorCommunicate = ""
-            
-            if error as! DatabaseError == .connectionFailure {
-                errorCommunicate = "Database connection failure, please try again in a moment"
-            }
-            else if error as! DatabaseError == .dataLoadingFailure {
-                errorCommunicate = "Data loading failure, please try again in a moment"
-            }
-            
-            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
-            
-            self.present(communicateVC, animated: true) {
-                self.hideLoadingAnimation()
-                self.resetSecurityCodeEntranceAttempt()
-            }
-            
-            return
-        }
-        
-        // home screen balance display preparation
-        
-        // (integer part)
-        
-        let balance_integerPart: String
-        
-        var begIndex = loggedUsersBalance.startIndex
-        let dotIndex = loggedUsersBalance.firstIndex(of: ".")
-        var endIndex = loggedUsersBalance.index(dotIndex!, offsetBy: -1)
-        
-        balance_integerPart = String(loggedUsersBalance[begIndex...endIndex])
-        
-        // (decimal part)
-        
-        var balance_decimalPart: String
-        
-        begIndex = loggedUsersBalance.index(dotIndex!, offsetBy: 1)
-        endIndex = loggedUsersBalance.index(loggedUsersBalance.endIndex, offsetBy: -1)
-        
-        balance_decimalPart = String(loggedUsersBalance[begIndex...endIndex])
-        
-        if balance_decimalPart.count == 1 {
-            balance_decimalPart += "0"
-        }
-        
-        // home screen display-ready balance pass (balance can only be displayed after the segue is performed so, following chosen approach, it is going to be displayed by the Home Screen VC itself)
-        
-        let homeScreenVC = segue.destination as! HomeScreenViewController
-        homeScreenVC.balance_displayReady = (balance_integerPart, balance_decimalPart)
-    }
 }
 
 //MARK: - Keyboard key digit extract method
@@ -412,5 +355,44 @@ extension SCEntranceScreenViewController {
     func lockBackspace() -> Void {
         backspaceKeyArrow.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         backspaceKey.isUserInteractionEnabled = false
+    }
+}
+
+//MARK: - Home screen segue perform related methods
+
+extension SCEntranceScreenViewController {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // home screen instance initialization and delegate setup
+        
+        homeScreenVC = segue.destination as? HomeScreenViewController
+        homeScreenVC.delegate = self
+    }
+}
+
+extension SCEntranceScreenViewController: HomeScreenDelegate {
+    
+    func homeScreen(viewLoadingDidAbortWith error: Error) {
+        
+        // error communicate preparation
+        
+        var errorCommunicate = ""
+        
+        if error as! DatabaseError == .connectionFailure {
+            errorCommunicate = "Database connection failure, please try again in a moment"
+        }
+        else if error as! DatabaseError == .dataLoadingFailure {
+            errorCommunicate = "Data loading failure, please try again in a moment"
+        }
+        
+        // error communicate display
+        
+        let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+        
+        present(communicateVC, animated: true) {
+            self.resetSecurityCodeEntranceAttempt()
+            self.hideLoadingAnimation()
+        }
     }
 }
