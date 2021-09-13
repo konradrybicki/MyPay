@@ -32,25 +32,28 @@ class HomeScreenViewController: UIViewController {
         topUpButton.layer.cornerRadius = 10
         topUpButton.clipsToBounds = true
         
-        // logged user's account balance load (login and account access unlock scenarios only)
+        // logged user's account balance load (login scenario only)
         
-        let loginScenario: Bool = presentingViewController == nil // (segue perform)
-        let accountAccessUnlockScenario: Bool = presentingViewController as? SCEntranceScreenViewController != nil
-            
-        if loginScenario || accountAccessUnlockScenario {
+        let loginScenario: Bool = GlobalVariables.currentlyLoggedUsersAccountBalance == nil
+        
+        if loginScenario {
             loadLoggedUsersAccountBalance()
         }
+        
+        // logged user's account balance display
+        
+        displayLoggedUsersAccountBalance()
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "presentLogoutScreen", sender: self)
     }
     
-    /// Loads and displays currently logged user's account balance. In case of an error, aborts view loading and informs the delegate about the circumstances
+    /// Uses MySQLManager's selectAccountBalance() method to select logged user's account balance from the database. After the balance has been selected, saves it in a global variable. In case of an error, aborts view loading and informs the delegate about the circumstances
     
     func loadLoggedUsersAccountBalance() -> Void {
         
-        // balance load
+        // logged user's account balance database selection
         
         let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
         
@@ -71,26 +74,37 @@ class HomeScreenViewController: UIViewController {
             return
         }
         
-        // loaded balance display preparation   100.25
+        // selected balance "save" (global variable)
+        
+        GlobalVariables.currentlyLoggedUsersAccountBalance = loggedUsersAccountBalance
+    }
+    
+    /// Prepares logged user's account balance to display, dividing it into integer and decimal parts, according to the interface structure. After the balance has been prepared, assigns both values to responding labels 'text' properties
+    
+    func displayLoggedUsersAccountBalance() -> Void {
+        
+        // balance display preparation
+        
+        let loggedUsersBalance: String = GlobalVariables.currentlyLoggedUsersAccountBalance!
         
         // (integer part)
         
         let balance_integerPart: String
         
-        var begIndex = loggedUsersAccountBalance.startIndex
-        let dotIndex = loggedUsersAccountBalance.firstIndex(of: ".")
-        var endIndex = loggedUsersAccountBalance.index(dotIndex!, offsetBy: -1)
+        var begIndex = loggedUsersBalance.startIndex
+        let dotIndex = loggedUsersBalance.firstIndex(of: ".")
+        var endIndex = loggedUsersBalance.index(dotIndex!, offsetBy: -1)
         
-        balance_integerPart = String(loggedUsersAccountBalance[begIndex...endIndex])
+        balance_integerPart = String(loggedUsersBalance[begIndex...endIndex])
         
         // (decimal part)
         
         var balance_decimalPart: String
         
-        begIndex = loggedUsersAccountBalance.index(dotIndex!, offsetBy: 1)
-        endIndex = loggedUsersAccountBalance.index(loggedUsersAccountBalance.endIndex, offsetBy: -1)
+        begIndex = loggedUsersBalance.index(dotIndex!, offsetBy: 1)
+        endIndex = loggedUsersBalance.index(loggedUsersBalance.endIndex, offsetBy: -1)
         
-        balance_decimalPart = String(loggedUsersAccountBalance[begIndex...endIndex])
+        balance_decimalPart = String(loggedUsersBalance[begIndex...endIndex])
         
         if balance_decimalPart.count == 1 {
             balance_decimalPart += "0"

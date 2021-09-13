@@ -9,4 +9,5 @@
 
 struct GlobalVariables {
     public static var currentlyLoggedUsersId: Int16? = nil
+    public static var currentlyLoggedUsersAccountBalance: String? = nil
 }
