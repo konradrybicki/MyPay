@@ -44,11 +44,13 @@ class LogoutScreenViewController: UIViewController {
         
         present(welcomeScreenVC, animated: true) {
             
-            // DatabaseListener service stop (account balance updates checking)
-            DatabaseListener.stopListeningFor_loggedUsersAccountBalanceUpdate()
+            // initialized database listeners stop
+            for listener in GlobalVariables.initializedListeners {
+                listener.stopListening()
+            }
             
             // logged user's id "deletion"
-            GlobalVariables.currentlyLoggedUsersId = nil
+            GlobalVariables.loggedUsersId = nil
         }
     }
 }

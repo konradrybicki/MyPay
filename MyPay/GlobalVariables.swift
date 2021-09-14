@@ -8,6 +8,11 @@
 /// Contains global variables, declared as static fields (ex. - currently logged user's id)
 
 struct GlobalVariables {
-    public static var currentlyLoggedUsersId: Int16? = nil
-    public static var currentlyLoggedUsersAccountBalance: String? = nil
+    
+    // logged user's data
+    public static var loggedUsersId: Int16? = nil
+    public static var loggedUsersAccountBalance: String? = nil
+    
+    // initialized database listeners
+    public static var initializedListeners: [DatabaseListener] = []
 }

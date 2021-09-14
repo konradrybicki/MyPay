@@ -19,6 +19,8 @@ class HomeScreenViewController: UIViewController {
     
     public var delegate: HomeScreenDelegate!
     
+    public var databaseListener: DatabaseListener!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,8 +42,12 @@ class HomeScreenViewController: UIViewController {
         
         // database listener initialization, for realtime account balance updates
         
-        DatabaseListener.delegate = self
-        DatabaseListener.listenForAccountBalanceUpdate()
+        databaseListener = DatabaseListener()
+        
+        databaseListener.delegate = self
+        databaseListener.listenForAccountBalanceUpdate()
+        
+        GlobalVariables.initializedListeners.append(databaseListener)
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIButton) {
@@ -54,7 +60,7 @@ class HomeScreenViewController: UIViewController {
         
         // logged user's account balance database selection
         
-        let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
+        let loggedUsersId = GlobalVariables.loggedUsersId!
         
         let loggedUsersAccountBalance: String
         
@@ -75,7 +81,7 @@ class HomeScreenViewController: UIViewController {
         
         // selected balance "save" (global variable)
         
-        GlobalVariables.currentlyLoggedUsersAccountBalance = loggedUsersAccountBalance
+        GlobalVariables.loggedUsersAccountBalance = loggedUsersAccountBalance
     }
     
     /// Prepares logged user's account balance to display, dividing it into integer and decimal parts, according to the interface structure. After the balance has been prepared, assigns both values to responding labels 'text' properties
@@ -84,7 +90,7 @@ class HomeScreenViewController: UIViewController {
         
         // balance display preparation
         
-        let loggedUsersBalance: String = GlobalVariables.currentlyLoggedUsersAccountBalance!
+        let loggedUsersBalance: String = GlobalVariables.loggedUsersAccountBalance!
         
         // (integer part)
         
@@ -128,7 +134,7 @@ extension HomeScreenViewController: DatabaseListenerDelegate {
         AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) {}
         
         // balance update
-        GlobalVariables.currentlyLoggedUsersAccountBalance = updatedBalance
+        GlobalVariables.loggedUsersAccountBalance = updatedBalance
         
         // updated balance display
         displayLoggedUsersAccountBalance()

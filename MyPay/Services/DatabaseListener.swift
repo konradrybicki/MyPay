@@ -13,11 +13,12 @@ import MySQL
 
 public class DatabaseListener {
     
-    public let delegate: DatabaseListenerDelegate!
+    public var delegate: DatabaseListenerDelegate!
     
-    private var shouldListen: Bool! // controlls listening loops
-    
-    public init() {}
+    private var shouldListen: Bool! // controlls all listening loops
+}
+
+extension DatabaseListener {
     
     /// Moves to the background thread, connects with the database and launches an account balance selection loop to capture a balance update event. In such case, moves back to a main thread to inform the delegate and continues listening on the background thread
     
@@ -29,11 +30,11 @@ public class DatabaseListener {
             self.shouldListen = true
             
             // (client and database stored account balance)
-            var accountBalance_client = GlobalVariables.currentlyLoggedUsersAccountBalance!
+            var accountBalance_client = GlobalVariables.loggedUsersAccountBalance!
             var accountBalance_database: String = ""
             
             // (logged user's id, needed for account balance selection)
-            let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
+            let loggedUsersId = GlobalVariables.loggedUsersId!
             
             do {
                 
@@ -46,16 +47,18 @@ public class DatabaseListener {
                     accountBalance_database = try self.selectAccountBalance(forUserWith: loggedUsersId, usingConnection: connection)
                     
                     if accountBalance_database != accountBalance_client {
-                        
+                    
                         // main thread delegation (update captured)
                         DispatchQueue.main.async {
                             self.delegate.databaseListener(capturedAccountBalanceUpdateEvent: accountBalance_database)
                         }
                         
-                        // background thread listening continuation
+                        // variable update
                         accountBalance_client = accountBalance_database
-                        continue
                     }
+                    
+                    // interval between iterations (1 second)
+                    sleep(1)
                 }
                 
                 // database connection closing
@@ -78,10 +81,6 @@ public class DatabaseListener {
                 }
             }
         }
-    }
-    
-    public func stopListeningForAccountBalanceUpdate() -> Void {
-        shouldListen = false
     }
     
     /// Selects specified user's account balance from the database, using existing database connection
@@ -124,6 +123,18 @@ public class DatabaseListener {
         
         return balance
     }
+}
+
+extension DatabaseListener {
+    
+    /// Stops all listening loops
+    
+    public func stopListening() -> Void {
+        shouldListen = false
+    }
+}
+
+extension DatabaseListener {
     
     /// Establishes a database connection, returning an appropriate object
     
@@ -162,16 +173,11 @@ public class DatabaseListener {
             throw DatabaseError.connectionFailure
         }
     }
+}
     
+extension DatabaseListener {
     
-    
-    
-    
-    
-    
-    
-    
-    
+    /// Identifies the top (last presented) view controller and uses it to display an error message
     
     private func handleErrorFromAnyController(_ error: Error) {
         
