@@ -27,6 +27,7 @@
 		78BC6F8226C1672400706611 /* SystemTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */; };
 		78BC6F8426C191CA00706611 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F8326C191CA00706611 /* Account.swift */; };
 		78D0886A26B1DC22008A7B5A /* SCConfigScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */; };
+		78D0A8AA26EF920200DA32D7 /* DatabaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0A8A926EF920200DA32D7 /* DatabaseListener.swift */; };
 		78E975E726C9A4CC00153A75 /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E975E626C9A4CC00153A75 /* CustomErrors.swift */; };
 		78EEC84626EA42AC00C55A1C /* AccountAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EEC84526EA42AC00C55A1C /* AccountAccessManager.swift */; };
 		78F382BD26E7BB52000B3284 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F382BC26E7BB52000B3284 /* GlobalVariables.swift */; };
@@ -58,6 +59,7 @@
 		78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemTypeExtensions.swift; sourceTree = "<group>"; };
 		78BC6F8326C191CA00706611 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SCConfigScreenViewController.swift; path = MyPay/Controller/SCConfigScreenViewController.swift; sourceTree = SOURCE_ROOT; };
+		78D0A8A926EF920200DA32D7 /* DatabaseListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseListener.swift; sourceTree = "<group>"; };
 		78E6C6B926C06FDD005D94EB /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		78E975E626C9A4CC00153A75 /* CustomErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
 		78EEC84526EA42AC00C55A1C /* AccountAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAccessManager.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				784B9F3526C55FFE00C740C0 /* MySQLManager.swift */,
 				7861439026D0427200E406D5 /* ValidationService.swift */,
 				78EEC84526EA42AC00C55A1C /* AccountAccessManager.swift */,
+				78D0A8A926EF920200DA32D7 /* DatabaseListener.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				78B136D4269F10740038FCD2 /* AppDelegate.swift in Sources */,
 				7843930426E2CAF400981D08 /* LoginFormViewController.swift in Sources */,
 				78B136D6269F10740038FCD2 /* SceneDelegate.swift in Sources */,
+				78D0A8AA26EF920200DA32D7 /* DatabaseListener.swift in Sources */,
 				78BC6F7C26C142F600706611 /* User.swift in Sources */,
 				78EEC84626EA42AC00C55A1C /* AccountAccessManager.swift in Sources */,
 			);

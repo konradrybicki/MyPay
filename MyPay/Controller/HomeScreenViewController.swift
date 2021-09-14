@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class HomeScreenViewController: UIViewController {
     
@@ -32,17 +33,15 @@ class HomeScreenViewController: UIViewController {
         topUpButton.layer.cornerRadius = 10
         topUpButton.clipsToBounds = true
         
-        // logged user's account balance load (login scenario only)
+        // logged user's account balance load and display
         
-        let loginScenario: Bool = GlobalVariables.currentlyLoggedUsersAccountBalance == nil
-        
-        if loginScenario {
-            loadLoggedUsersAccountBalance()
-        }
-        
-        // logged user's account balance display
-        
+        loadLoggedUsersAccountBalance()
         displayLoggedUsersAccountBalance()
+        
+        // database listener initialization, for realtime account balance updates
+        
+        DatabaseListener.delegate = self
+        DatabaseListener.listenFor_loggedUsersAccountBalanceUpdate()
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIButton) {
@@ -119,4 +118,19 @@ class HomeScreenViewController: UIViewController {
 
 public protocol HomeScreenDelegate {
     func homeScreen(viewLoadingDidAbortWith error: Error) -> Void
+}
+
+extension HomeScreenViewController: DatabaseListenerDelegate {
+    
+    func databaseListener(noticedLoggedUsersAccountBalanceUpdate updatedBalance: String) {
+        
+        // vibration (temp)
+        AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) {}
+        
+        // balance update
+        GlobalVariables.currentlyLoggedUsersAccountBalance = updatedBalance
+        
+        // updated balance display
+        displayLoggedUsersAccountBalance()
+    }
 }
