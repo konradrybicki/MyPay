@@ -221,6 +221,8 @@ extension MySQLManager {
             throw DatabaseError.dataLoadingFailure
         }
         
+        try closeConnection(connection)
+        
         return (scHash, scSalt)
     }
     
@@ -321,6 +323,8 @@ extension MySQLManager {
                 print(error)
                 throw DatabaseError.interactionError
             }
+            
+            try closeConnection(connection)
             
             return userId
         }

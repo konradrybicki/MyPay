@@ -164,7 +164,7 @@ extension SCEntranceScreenViewController {
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                             
                             // logging user's id "save" (global variable)
-                            GlobalVariables.currentlyLoggedUsersId = self.loggingUsersId
+                            GlobalVariables.loggedUsersId = self.loggingUsersId
                             
                             // forward view change (home screen)
                             self.performSegue(withIdentifier: "presentHomeScreen", sender: self)
@@ -377,7 +377,7 @@ extension SCEntranceScreenViewController: HomeScreenDelegate {
         
         // logged user's id "deletion"
         
-        GlobalVariables.currentlyLoggedUsersId = nil
+        GlobalVariables.loggedUsersId = nil
         
         // error communicate preparation
         

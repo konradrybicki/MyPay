@@ -33,7 +33,7 @@ public class AccountAccessManager {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let scEntranceScreenVC = storyboard.instantiateViewController(withIdentifier: "SCEntranceScreenViewController") as! SCEntranceScreenViewController
         
-        scEntranceScreenVC.loggingUsersId = GlobalVariables.currentlyLoggedUsersId
+        scEntranceScreenVC.loggingUsersId = GlobalVariables.loggedUsersId
         
         // SC entrance screen vc presentation
         

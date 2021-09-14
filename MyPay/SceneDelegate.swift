@@ -53,7 +53,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // account access lock
         
-        let userLogged: Bool = GlobalVariables.currentlyLoggedUsersId != nil
+        let userLogged: Bool = GlobalVariables.loggedUsersId != nil
         let accountUnlocked: Bool = AccountAccessManager.accountAccessState == .unlocked
         
         if (userLogged == true) && (accountUnlocked == true) {
