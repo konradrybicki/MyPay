@@ -41,7 +41,7 @@ class HomeScreenViewController: UIViewController {
         // database listener initialization, for realtime account balance updates
         
         DatabaseListener.delegate = self
-        DatabaseListener.listenFor_loggedUsersAccountBalanceUpdate()
+        DatabaseListener.listenForAccountBalanceUpdate()
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIButton) {
@@ -122,7 +122,7 @@ public protocol HomeScreenDelegate {
 
 extension HomeScreenViewController: DatabaseListenerDelegate {
     
-    func databaseListener(noticedLoggedUsersAccountBalanceUpdate updatedBalance: String) {
+    func databaseListener(capturedAccountBalanceUpdateEvent updatedBalance: String) {
         
         // vibration (temp)
         AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) {}

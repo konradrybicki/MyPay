@@ -7,93 +7,173 @@
 
 import Foundation
 import UIKit
+import MySQL
 
 /// Listens for database events, such as an account balance update and informs the delegate upon them
 
 public class DatabaseListener {
     
-    public static var delegate: DatabaseListenerDelegate!
+    public let delegate: DatabaseListenerDelegate!
     
-    private static var isListeningFor_accountBalanceUpdate: Bool!
+    private var shouldListen: Bool! // controlls listening loops
     
-    /// Launches an infinite while loop on the background thread, that uses the MySQLManager's selectAccountBalance() method to check for potential balance updates. In case of capturing an update, moves back to a main thread to inform the delegate
+    public init() {}
     
-    public static func listenFor_loggedUsersAccountBalanceUpdate() -> Void {
-        
-        isListeningFor_accountBalanceUpdate = true
+    /// Moves to the background thread, connects with the database and launches an account balance selection loop to capture a balance update event. In such case, moves back to a main thread to inform the delegate and continues listening on the background thread
+    
+    public func listenForAccountBalanceUpdate() -> Void {
         
         // launching code on a background thread
         DispatchQueue.global(qos: .userInitiated).async {
             
-            // client and database stored account balance
+            self.shouldListen = true
+            
+            // (client and database stored account balance)
             var accountBalance_client = GlobalVariables.currentlyLoggedUsersAccountBalance!
             var accountBalance_database: String = ""
             
-            // logged user's id, needed for account balance selection
+            // (logged user's id, needed for account balance selection)
             let loggedUsersId = GlobalVariables.currentlyLoggedUsersId!
             
-            // connection error "locker", the error is meant to be displayed only once
-            var connectionErrorDisplayed = false
-            
-            // account balance update check loop
-            
-            repeat {
+            do {
                 
-                // balance selection
+                // database connection establishment
+                let connection = try self.establishConnection()
                 
-                do {
-                    accountBalance_database = try MySQLManager.selectAccountBalance(forUserWithId: loggedUsersId)
-                }
-                catch {
+                // account balance update checking loop
+                while self.shouldListen {
                     
-                    if error as! DatabaseError == .connectionFailure {
+                    accountBalance_database = try self.selectAccountBalance(forUserWith: loggedUsersId, usingConnection: connection)
+                    
+                    if accountBalance_database != accountBalance_client {
                         
-                        if connectionErrorDisplayed == false {
-                            
-                            DispatchQueue.main.async {
-                                handleErrorFromAnyController(error)
-                            }
-                            
-                            connectionErrorDisplayed = true
-                            
-                            sleep(4)
-                            continue
-                        }
-                    }
-                    else if error as! DatabaseError == .dataLoadingFailure {
-                        
+                        // main thread delegation (update captured)
                         DispatchQueue.main.async {
-                            handleErrorFromAnyController(error)
+                            self.delegate.databaseListener(capturedAccountBalanceUpdateEvent: accountBalance_database)
                         }
                         
-                        isListeningFor_accountBalanceUpdate = false
-                        return
+                        // background thread listening continuation
+                        accountBalance_client = accountBalance_database
+                        continue
                     }
                 }
                 
-                // balance comparison
+                // database connection closing
+                try self.closeConnection(connection)
+            }
+            catch {
                 
-                if accountBalance_database != accountBalance_client {
+                if error as! DatabaseError == .connectionFailure {
+                    
+                    // moving back to a main thread (UI interaction)
+                    DispatchQueue.main.async {
+                        self.handleErrorFromAnyController(error)
+                    }
+                }
+                else if error as! DatabaseError == .dataLoadingFailure {
                     
                     DispatchQueue.main.async {
-                        self.delegate.databaseListener(noticedLoggedUsersAccountBalanceUpdate: accountBalance_database)
+                        self.handleErrorFromAnyController(error)
                     }
-                    
-                    accountBalance_client = accountBalance_database
                 }
-                
-                sleep(4)
-                
-            } while isListeningFor_accountBalanceUpdate == true
+            }
         }
     }
     
-    public static func stopListeningFor_loggedUsersAccountBalanceUpdate() -> Void {
-        isListeningFor_accountBalanceUpdate = false
+    public func stopListeningForAccountBalanceUpdate() -> Void {
+        shouldListen = false
+    }
+    
+    /// Selects specified user's account balance from the database, using existing database connection
+    
+    private func selectAccountBalance(forUserWith loggedUsersId: Int16, usingConnection connection: MySQL.Connection) throws -> String {
+        
+        let balance: String
+        
+        do {
+            
+            let preparedStatement = try connection.prepare("select Balance from Accounts where UserID = ?;")
+            
+            let result = try preparedStatement.query([loggedUsersId])
+            
+            let mysqlRow = result.rows[0]
+            
+            let swiftRow: [String : Any] = mysqlRow.values
+            
+            let key = "Balance"
+            
+            guard let value = swiftRow[key] else {
+                print("Error inside DatabaseListener.selectAccountBalance() - dict value access failure for key '\(key)'")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            guard let _balance = value as? String else {
+                print("Error inside DatabaseListener.selectAccountBalance() - Any->String downcasting failure")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            balance = _balance
+        }
+        catch DatabaseError.dataLoadingFailure {
+            throw DatabaseError.dataLoadingFailure
+        }
+        catch {
+            print(error)
+            throw DatabaseError.dataLoadingFailure
+        }
+        
+        return balance
+    }
+    
+    /// Establishes a database connection, returning an appropriate object
+    
+    private func establishConnection() throws -> MySQL.Connection {
+        
+        let connection: MySQL.Connection
+        
+        do {
+            connection = try MySQL.Connection(
+                host: "mypay.cba.pl",
+                user: "konradrybicki",
+                password: "MySQLPass123!",
+                database: "konradrybicki",
+                port: 3306
+            )
+            
+            try connection.open()
+        }
+        catch {
+            print(error)
+            throw DatabaseError.connectionFailure
+        }
+        
+        return connection
+    }
+    
+    /// Closes a database connection via object reference
+    
+    private func closeConnection(_ connection: MySQL.Connection) throws {
+        
+        do {
+            try connection.close()
+        }
+        catch {
+            print(error)
+            throw DatabaseError.connectionFailure
+        }
     }
     
     
-    private static func handleErrorFromAnyController(_ error: Error) {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private func handleErrorFromAnyController(_ error: Error) {
         
         // error communicate preparation
         
@@ -126,5 +206,5 @@ public class DatabaseListener {
 /// Informs the delegate about an event captured by a DatabaseListener, such as an account balance update
 
 public protocol DatabaseListenerDelegate {
-    func databaseListener(noticedLoggedUsersAccountBalanceUpdate updatedBalance: String)
+    func databaseListener(capturedAccountBalanceUpdateEvent updatedBalance: String)
 }
