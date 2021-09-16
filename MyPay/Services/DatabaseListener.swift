@@ -35,17 +35,20 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
             // logged user's id, needed for account balance selection
             let loggedUsersId = GlobalVariables.loggedUsersId!
             
+            // database connection object
+            var connection: MySQL.Connection? = nil
+            
             do {
                 
-                // database connection establishment
+                // connection establishment
                 
-                let connection = try self.establishConnection()
+                connection = try self.establishConnection()
                 
                 // account balance update checking loop
                 
                 while self.shouldListen {
                     
-                    accountBalance_database = try self.selectAccountBalance(forUserWith: loggedUsersId, usingConnection: connection)
+                    accountBalance_database = try self.selectAccountBalance(forUserWith: loggedUsersId, usingConnection: connection!)
                     
                     if accountBalance_database != accountBalance_client {
                     
@@ -64,7 +67,7 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
                 
                 // database connection closing
                 
-                try self.closeConnection(connection)
+                try self.closeConnection(connection!)
             }
             catch {
                 
@@ -91,6 +94,12 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
                     
                     self.errorDisplayed = true
                     
+                }
+                
+                // optional database connection closing (might not have been established)
+                
+                if let _connection = connection {
+                    try? self.closeConnection(_connection)
                 }
                 
                 // listening relaunch attempt (the aim of below solution is to avoid method call reccurence)
