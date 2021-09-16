@@ -34,7 +34,6 @@ class LogoutScreenViewController: UIViewController {
     @IBAction func yesButtonPressed(_ sender: UIButton) {
         
         // account balance updates listening stop
-        
         DatabaseListener.delegate = self
         DatabaseListener.stopListening()
     }
@@ -43,6 +42,10 @@ class LogoutScreenViewController: UIViewController {
 extension LogoutScreenViewController: DatabaseListenerDelegate {
     
     func databaseListenerDidEndListening() {
+        
+        // DatabaseListener error display permit (will be able to display errors again, after the user logs in)
+        
+        DatabaseListener.displayErrors()
         
         // view change (welcome screen)
         

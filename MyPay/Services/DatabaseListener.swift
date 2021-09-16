@@ -17,6 +17,8 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
     
     private static var shouldListen: Bool! // controlls listening loop
     
+    public static var errorDisplayed = false // controlls error display (the error is meant to be displayed only once after the user has logged in)
+    
     /// Moves to the background thread, connects to the database and launches an account balance selection loop, to capture an account balance change. In such case, moves back to the main thread, informs the delegate about the change and continues listening on the background thread
     
     public static func listenForAccountBalanceUpdates() -> Void {
@@ -66,21 +68,29 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
             }
             catch {
                 
-                // error communicate preparation
+                // error display (only once after user has logged in)
                 
-                var errorCommunicate = ""
-                
-                if error as! DatabaseError == .connectionFailure {
-                    errorCommunicate = "We're having problems with the connection\n\nYour account's balance might not refresh automatically"
-                }
-                else if error as! DatabaseError == .dataLoadingFailure {
-                    errorCommunicate = "We're having problems\n\nYour account's balance might not refresh automatically"
-                }
-                
-                // main thread error display (UI interaction)
-                
-                DispatchQueue.main.async {
-                    self.displayErrorFromTopController(errorCommunicate)
+                if errorDisplayed == false {
+                    
+                    // error communicate preparation
+                    
+                    var errorCommunicate = ""
+                    
+                    if error as! DatabaseError == .connectionFailure {
+                        errorCommunicate = "We're having problems with the connection\n\nYour account's balance might not refresh automatically"
+                    }
+                    else if error as! DatabaseError == .dataLoadingFailure {
+                        errorCommunicate = "We're having problems\n\nYour account's balance might not refresh automatically"
+                    }
+                    
+                    // main thread error display (UI interaction)
+                    
+                    DispatchQueue.main.async {
+                        self.displayErrorFromTopController(errorCommunicate)
+                    }
+                    
+                    self.errorDisplayed = true
+                    
                 }
                 
                 // listening relaunch attempt (the aim of below solution is to avoid method call reccurence)
@@ -104,6 +114,14 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
     
     public static func stopListening() -> Void {
         shouldListen = false
+    }
+    
+    /// Allows DatabaseListener to display the errors again
+    
+    public static func displayErrors() -> Void {
+        if errorDisplayed == true {
+           errorDisplayed = false
+        }
     }
 }
 
