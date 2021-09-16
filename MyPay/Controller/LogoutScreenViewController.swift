@@ -33,6 +33,17 @@ class LogoutScreenViewController: UIViewController {
     
     @IBAction func yesButtonPressed(_ sender: UIButton) {
         
+        // account balance updates listening stop
+        
+        DatabaseListener.delegate = self
+        DatabaseListener.stopListening()
+    }
+}
+
+extension LogoutScreenViewController: DatabaseListenerDelegate {
+    
+    func databaseListenerDidEndListening() {
+        
         // view change (welcome screen)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -44,13 +55,10 @@ class LogoutScreenViewController: UIViewController {
         
         present(welcomeScreenVC, animated: true) {
             
-            // initialized database listeners stop
-            for listener in GlobalVariables.initializedListeners {
-                listener.stopListening()
-            }
+            // logged user's data "deletion"
             
-            // logged user's id "deletion"
             GlobalVariables.loggedUsersId = nil
+            GlobalVariables.loggedUsersAccountBalance = nil
         }
     }
 }

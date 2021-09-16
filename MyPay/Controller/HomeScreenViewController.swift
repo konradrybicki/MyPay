@@ -19,8 +19,6 @@ class HomeScreenViewController: UIViewController {
     
     public var delegate: HomeScreenDelegate!
     
-    public var databaseListener: DatabaseListener!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,14 +38,10 @@ class HomeScreenViewController: UIViewController {
         loadLoggedUsersAccountBalance()
         displayLoggedUsersAccountBalance()
         
-        // database listener initialization, for realtime account balance updates
+        // database listening initialization, for realtime account balance updates
         
-        databaseListener = DatabaseListener()
-        
-        databaseListener.delegate = self
-        databaseListener.listenForAccountBalanceUpdate()
-        
-        GlobalVariables.initializedListeners.append(databaseListener)
+        DatabaseListener.delegate = self
+        DatabaseListener.listenForAccountBalanceUpdates()
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIButton) {
@@ -122,15 +116,11 @@ class HomeScreenViewController: UIViewController {
     }
 }
 
-public protocol HomeScreenDelegate {
-    func homeScreen(viewLoadingDidAbortWith error: Error) -> Void
-}
-
 extension HomeScreenViewController: DatabaseListenerDelegate {
     
-    func databaseListener(capturedAccountBalanceUpdateEvent updatedBalance: String) {
+    func databaseListener(capturedAccountBalanceUpdate updatedBalance: String) {
         
-        // vibration (temp)
+        // vibration
         AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(kSystemSoundID_Vibrate)) {}
         
         // balance update
@@ -139,4 +129,8 @@ extension HomeScreenViewController: DatabaseListenerDelegate {
         // updated balance display
         displayLoggedUsersAccountBalance()
     }
+}
+
+public protocol HomeScreenDelegate {
+    func homeScreen(viewLoadingDidAbortWith error: Error) -> Void
 }

@@ -9,18 +9,15 @@ import Foundation
 import UIKit
 import MySQL
 
-/// Listens for an account balance change database event and informs the delegate (home screen vc) upon it. The main goal of that functionality is to provide realtime account balance updates, without using any external mechanisms
+/// Listens for an account balance change database event and informs the delegate upon it. The main goal of that functionality is to provide realtime account balance updates, without using any external mechanisms
 
-public class DatabaseListener {
+public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dicted by a need of reusing the code, provided by establishConnection() and closeConnection() methods
     
-    // delegates
-    public static var delegate_eventCapture: DatabaseListenerDelegate! // (home screen vc)
-    public static var delegate_listeningEnd: DatabaseListenerDelegate! // (logout screen vc)
+    public static var delegate: DatabaseListenerDelegate!
     
-    // listening loop control variable
-    private static var shouldListen: Bool!
+    private static var shouldListen: Bool! // controlls listening loop
     
-    /// Moves to the background thread, connects to the database and launches an account balance selection loop, to capture an account balance change event. In such case, moves back to the main thread, informs the delegate and continues listening on the background thread
+    /// Moves to the background thread, connects to the database and launches an account balance selection loop, to capture an account balance change. In such case, moves back to the main thread, informs the delegate about the change and continues listening on the background thread
     
     public static func listenForAccountBalanceUpdates() -> Void {
         
@@ -29,19 +26,21 @@ public class DatabaseListener {
             
             self.shouldListen = true
             
-            // (client and database stored account balance)
+            // client and database stored account balance
             var accountBalance_client = GlobalVariables.loggedUsersAccountBalance!
             var accountBalance_database: String = ""
             
-            // (logged user's id, needed for account balance selection)
+            // logged user's id, needed for account balance selection
             let loggedUsersId = GlobalVariables.loggedUsersId!
             
             do {
                 
                 // database connection establishment
+                
                 let connection = try self.establishConnection()
                 
                 // account balance update checking loop
+                
                 while self.shouldListen {
                     
                     accountBalance_database = try self.selectAccountBalance(forUserWith: loggedUsersId, usingConnection: connection)
@@ -50,7 +49,7 @@ public class DatabaseListener {
                     
                         // main thread delegation (update captured)
                         DispatchQueue.main.async {
-                            self.delegate_eventCapture.databaseListener(capturedAccountBalanceUpdateEvent: accountBalance_database)
+                            self.delegate.databaseListener(capturedAccountBalanceUpdate: accountBalance_database)
                         }
                         
                         // client balance variable update
@@ -62,6 +61,7 @@ public class DatabaseListener {
                 }
                 
                 // database connection closing
+                
                 try self.closeConnection(connection)
             }
             catch {
@@ -77,13 +77,13 @@ public class DatabaseListener {
                     errorCommunicate = "We're having problems\n\nYour account's balance might not refresh automatically"
                 }
                 
-                // main thread error communicate display (UI interaction)
+                // main thread error display (UI interaction)
                 
                 DispatchQueue.main.async {
-                    self.displayErrorCommunicate(errorCommunicate)
+                    self.displayErrorFromTopController(errorCommunicate)
                 }
                 
-                // listening relaunch attempt (the aim of below solution was to avoid method reccurence)
+                // listening relaunch attempt (the aim of below solution is to avoid method call reccurence)
                 
                 DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .seconds(1)) {
                     self.listenForAccountBalanceUpdates()
@@ -93,12 +93,21 @@ public class DatabaseListener {
             }
             
             // main thread delegation (listening finished)
-            DispatchQueue.main.async {
-                self.delegate_listeningEnd.databaseListenerDidEndListening()
-            }
             
+            DispatchQueue.main.async {
+                self.delegate.databaseListenerDidEndListening()
+            }
         }
     }
+    
+    /// Stops a listening loop
+    
+    public static func stopListening() -> Void {
+        shouldListen = false
+    }
+}
+
+extension DatabaseListener {
     
     /// Selects specified user's account balance from the database, using existing database connection
     
@@ -144,61 +153,11 @@ public class DatabaseListener {
 
 extension DatabaseListener {
     
-    /// Stops a listening loop
-    
-    public static func stopListening() -> Void {
-        shouldListen = false
-    }
-}
-
-extension DatabaseListener {
-    
-    /// Establishes a database connection, returning an appropriate object
-    
-    private static func establishConnection() throws -> MySQL.Connection {
-        
-        let connection: MySQL.Connection
-        
-        do {
-            connection = try MySQL.Connection(
-                host: "mypay.cba.pl",
-                user: "konradrybicki",
-                password: "MySQLPass123!",
-                database: "konradrybicki",
-                port: 3306
-            )
-            
-            try connection.open()
-        }
-        catch {
-            print(error)
-            throw DatabaseError.connectionFailure
-        }
-        
-        return connection
-    }
-    
-    /// Closes a database connection via object reference
-    
-    private static func closeConnection(_ connection: MySQL.Connection) throws {
-        
-        do {
-            try connection.close()
-        }
-        catch {
-            print(error)
-            throw DatabaseError.connectionFailure
-        }
-    }
-}
-    
-extension DatabaseListener {
-    
     /// Identifies the top (last presented) view controller and uses it to display an error communicate
     
-    private static func displayErrorCommunicate(_ errorCommunicate: String) {
+    private static func displayErrorFromTopController(_ errorCommunicate: String) {
         
-        // top vc identification
+        // top controller identification
         
         var currentVC = UIApplication.shared.keyWindow!.rootViewController!
         
@@ -216,6 +175,13 @@ extension DatabaseListener {
 }
 
 public protocol DatabaseListenerDelegate {
-    func databaseListener(capturedAccountBalanceUpdateEvent updatedBalance: String)
+    func databaseListener(capturedAccountBalanceUpdate updatedBalance: String)
     func databaseListenerDidEndListening()
+}
+
+// below solution is the workaround for declaring optional methods in protocols (methods that can, but not neccesarily have to be defined in classes, that implement the protocol)
+
+extension DatabaseListenerDelegate {
+    func databaseListener(capturedAccountBalanceUpdate updatedBalance: String) {}
+    func databaseListenerDidEndListening() {}
 }

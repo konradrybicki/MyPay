@@ -583,7 +583,7 @@ extension MySQLManager {
     
     /// Establishes a database connection, returning an appropriate object
     
-    private static func establishConnection() throws -> MySQL.Connection {
+    public static func establishConnection() throws -> MySQL.Connection {
         
         let connection: MySQL.Connection
         
@@ -608,7 +608,7 @@ extension MySQLManager {
     
     /// Closes a database connection via object reference
     
-    private static func closeConnection(_ connection: MySQL.Connection) throws {
+    public static func closeConnection(_ connection: MySQL.Connection) throws {
         
         do {
             try connection.close()
