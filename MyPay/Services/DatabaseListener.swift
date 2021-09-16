@@ -9,20 +9,20 @@ import Foundation
 import UIKit
 import MySQL
 
-/// Listens for database events, such as an account balance update and informs the delegate upon them
+/// Listens for an account balance change database event and informs the delegate (home screen vc) upon it. The main goal of that functionality is to provide realtime account balance updates, without using any external mechanisms
 
 public class DatabaseListener {
     
-    public var delegate: DatabaseListenerDelegate!
+    // delegates
+    public static var delegate_eventCapture: DatabaseListenerDelegate! // (home screen vc)
+    public static var delegate_listeningEnd: DatabaseListenerDelegate! // (logout screen vc)
     
-    private var shouldListen: Bool! // controlls all listening loops
-}
-
-extension DatabaseListener {
+    // listening loop control variable
+    private static var shouldListen: Bool!
     
-    /// Moves to the background thread, connects with the database and launches an account balance selection loop to capture a balance update event. In such case, moves back to a main thread to inform the delegate and continues listening on the background thread
+    /// Moves to the background thread, connects to the database and launches an account balance selection loop, to capture an account balance change event. In such case, moves back to the main thread, informs the delegate and continues listening on the background thread
     
-    public func listenForAccountBalanceUpdate() -> Void {
+    public static func listenForAccountBalanceUpdates() -> Void {
         
         // launching code on a background thread
         DispatchQueue.global(qos: .userInitiated).async {
@@ -50,10 +50,10 @@ extension DatabaseListener {
                     
                         // main thread delegation (update captured)
                         DispatchQueue.main.async {
-                            self.delegate.databaseListener(capturedAccountBalanceUpdateEvent: accountBalance_database)
+                            self.delegate_eventCapture.databaseListener(capturedAccountBalanceUpdateEvent: accountBalance_database)
                         }
                         
-                        // variable update
+                        // client balance variable update
                         accountBalance_client = accountBalance_database
                     }
                     
@@ -66,26 +66,43 @@ extension DatabaseListener {
             }
             catch {
                 
+                // error communicate preparation
+                
+                var errorCommunicate = ""
+                
                 if error as! DatabaseError == .connectionFailure {
-                    
-                    // moving back to a main thread (UI interaction)
-                    DispatchQueue.main.async {
-                        self.handleErrorFromAnyController(error)
-                    }
+                    errorCommunicate = "We're having problems with the connection\n\nYour account's balance might not refresh automatically"
                 }
                 else if error as! DatabaseError == .dataLoadingFailure {
-                    
-                    DispatchQueue.main.async {
-                        self.handleErrorFromAnyController(error)
-                    }
+                    errorCommunicate = "We're having problems\n\nYour account's balance might not refresh automatically"
                 }
+                
+                // main thread error communicate display (UI interaction)
+                
+                DispatchQueue.main.async {
+                    self.displayErrorCommunicate(errorCommunicate)
+                }
+                
+                // listening relaunch attempt (the aim of below solution was to avoid method reccurence)
+                
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .seconds(1)) {
+                    self.listenForAccountBalanceUpdates()
+                }
+                
+                return
             }
+            
+            // main thread delegation (listening finished)
+            DispatchQueue.main.async {
+                self.delegate_listeningEnd.databaseListenerDidEndListening()
+            }
+            
         }
     }
     
     /// Selects specified user's account balance from the database, using existing database connection
     
-    private func selectAccountBalance(forUserWith loggedUsersId: Int16, usingConnection connection: MySQL.Connection) throws -> String {
+    private static func selectAccountBalance(forUserWith loggedUsersId: Int16, usingConnection connection: MySQL.Connection) throws -> String {
         
         let balance: String
         
@@ -127,9 +144,9 @@ extension DatabaseListener {
 
 extension DatabaseListener {
     
-    /// Stops all listening loops
+    /// Stops a listening loop
     
-    public func stopListening() -> Void {
+    public static func stopListening() -> Void {
         shouldListen = false
     }
 }
@@ -138,7 +155,7 @@ extension DatabaseListener {
     
     /// Establishes a database connection, returning an appropriate object
     
-    private func establishConnection() throws -> MySQL.Connection {
+    private static func establishConnection() throws -> MySQL.Connection {
         
         let connection: MySQL.Connection
         
@@ -163,7 +180,7 @@ extension DatabaseListener {
     
     /// Closes a database connection via object reference
     
-    private func closeConnection(_ connection: MySQL.Connection) throws {
+    private static func closeConnection(_ connection: MySQL.Connection) throws {
         
         do {
             try connection.close()
@@ -177,20 +194,9 @@ extension DatabaseListener {
     
 extension DatabaseListener {
     
-    /// Identifies the top (last presented) view controller and uses it to display an error message
+    /// Identifies the top (last presented) view controller and uses it to display an error communicate
     
-    private func handleErrorFromAnyController(_ error: Error) {
-        
-        // error communicate preparation
-        
-        var errorCommunicate = ""
-        
-        if error as! DatabaseError == .connectionFailure {
-            errorCommunicate = "We're having problems with the connection\n\nYour account's balance might not refresh automatically"
-        }
-        else if error as! DatabaseError == .dataLoadingFailure {
-            errorCommunicate = "We're having problems\n\nYour account's balance will most probably not refresh automatically\n\nPlease be patient while we attempt to resolve the issue"
-        }
+    private static func displayErrorCommunicate(_ errorCommunicate: String) {
         
         // top vc identification
         
@@ -209,8 +215,7 @@ extension DatabaseListener {
     }
 }
 
-/// Informs the delegate about an event captured by a DatabaseListener, such as an account balance update
-
 public protocol DatabaseListenerDelegate {
     func databaseListener(capturedAccountBalanceUpdateEvent updatedBalance: String)
+    func databaseListenerDidEndListening()
 }
