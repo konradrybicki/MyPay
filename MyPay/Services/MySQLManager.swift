@@ -270,6 +270,47 @@ extension MySQLManager {
         
         return balance
     }
+    
+    /// Selects specified user's account balance from the database, using existing database connection (designed specifically for the DatabaseListener class)
+    
+    public static func selectAccountBalance(forUserWith loggedUsersId: Int16, usingConnection connection: MySQL.Connection) throws -> String {
+        
+        let balance: String
+        
+        do {
+            
+            let preparedStatement = try connection.prepare("select Balance from Accounts where UserID = ?;")
+            
+            let result = try preparedStatement.query([loggedUsersId])
+            
+            let mysqlRow = result.rows[0]
+            
+            let swiftRow: [String : Any] = mysqlRow.values
+            
+            let key = "Balance"
+            
+            guard let value = swiftRow[key] else {
+                print("Error inside DatabaseListener.selectAccountBalance() - dict value access failure for key '\(key)'")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            guard let _balance = value as? String else {
+                print("Error inside DatabaseListener.selectAccountBalance() - Any->String downcasting failure")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            balance = _balance
+        }
+        catch DatabaseError.dataLoadingFailure {
+            throw DatabaseError.dataLoadingFailure
+        }
+        catch {
+            print(error)
+            throw DatabaseError.dataLoadingFailure
+        }
+        
+        return balance
+    }
 }
 
 extension MySQLManager {
@@ -579,7 +620,7 @@ extension MySQLManager {
     }
 }
 
-extension MySQLManager {
+extension MySQLManager { // ('public' access modifier usage is dicted by a need of using below methods inside the DatabaseListener class)
     
     /// Establishes a database connection, returning an appropriate object
     

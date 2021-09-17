@@ -11,7 +11,7 @@ import MySQL
 
 /// Listens for an account balance change database event and informs the delegate upon it. The main goal of that functionality is to provide realtime account balance updates, without using any external mechanisms
 
-public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dicted by a need of reusing the code, provided by establishConnection() and closeConnection() methods
+public class DatabaseListener {
     
     public static var delegate: DatabaseListenerDelegate!
     
@@ -42,13 +42,13 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
                 
                 // connection establishment
                 
-                connection = try self.establishConnection()
+                connection = try MySQLManager.establishConnection()
                 
                 // account balance update checking loop
                 
                 while self.shouldListen {
                     
-                    accountBalance_database = try self.selectAccountBalance(forUserWith: loggedUsersId, usingConnection: connection!)
+                    accountBalance_database = try MySQLManager.selectAccountBalance(forUserWith: loggedUsersId, usingConnection: connection!)
                     
                     if accountBalance_database != accountBalance_client {
                     
@@ -67,7 +67,7 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
                 
                 // database connection closing
                 
-                try self.closeConnection(connection!)
+                try MySQLManager.closeConnection(connection!)
             }
             catch {
                 
@@ -99,7 +99,7 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
                 // optional database connection closing (might not have been established)
                 
                 if let _connection = connection {
-                    try? self.closeConnection(_connection)
+                    try? MySQLManager.closeConnection(_connection)
                 }
                 
                 // listening relaunch attempt (the aim of below solution is to avoid method call reccurence)
@@ -136,50 +136,6 @@ public class DatabaseListener: MySQLManager { // MySQLManager subclassing is dic
 
 extension DatabaseListener {
     
-    /// Selects specified user's account balance from the database, using existing database connection
-    
-    private static func selectAccountBalance(forUserWith loggedUsersId: Int16, usingConnection connection: MySQL.Connection) throws -> String {
-        
-        let balance: String
-        
-        do {
-            
-            let preparedStatement = try connection.prepare("select Balance from Accounts where UserID = ?;")
-            
-            let result = try preparedStatement.query([loggedUsersId])
-            
-            let mysqlRow = result.rows[0]
-            
-            let swiftRow: [String : Any] = mysqlRow.values
-            
-            let key = "Balance"
-            
-            guard let value = swiftRow[key] else {
-                print("Error inside DatabaseListener.selectAccountBalance() - dict value access failure for key '\(key)'")
-                throw DatabaseError.dataLoadingFailure
-            }
-            
-            guard let _balance = value as? String else {
-                print("Error inside DatabaseListener.selectAccountBalance() - Any->String downcasting failure")
-                throw DatabaseError.dataLoadingFailure
-            }
-            
-            balance = _balance
-        }
-        catch DatabaseError.dataLoadingFailure {
-            throw DatabaseError.dataLoadingFailure
-        }
-        catch {
-            print(error)
-            throw DatabaseError.dataLoadingFailure
-        }
-        
-        return balance
-    }
-}
-
-extension DatabaseListener {
-    
     /// Identifies the top (last presented) view controller and uses it to display an error communicate
     
     private static func displayErrorFromTopController(_ errorCommunicate: String) {
@@ -206,7 +162,7 @@ public protocol DatabaseListenerDelegate {
     func databaseListenerDidEndListening()
 }
 
-// below solution is the workaround for declaring optional methods in protocols (methods that can, but not neccesarily have to be defined in classes, that implement the protocol)
+// below solution is the workaround for declaring optional methods in protocols (methods that can, but not neccesarily have to be defined in entities, that implement the protocol)
 
 extension DatabaseListenerDelegate {
     func databaseListener(capturedAccountBalanceUpdate updatedBalance: String) {}
