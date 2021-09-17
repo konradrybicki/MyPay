@@ -17,6 +17,10 @@ public class AccountAccessManager {
     
     public static func lockAccess() {
         
+        // account balance updates listening stop
+        
+        DatabaseListener.stopListening()
+        
         // top view controller identification
         
         var currentVC: UIViewController = UIApplication.shared.keyWindow!.rootViewController!
@@ -73,6 +77,9 @@ public class AccountAccessManager {
             
             // account access state change
             self.accountAccessState = .unlocked
+            
+            // account balance updates listening reinitialization
+            DatabaseListener.listenForAccountBalanceUpdates()
         }
     }
 }
