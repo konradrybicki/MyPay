@@ -15,9 +15,11 @@ public class DatabaseListener {
     
     public static var delegate: DatabaseListenerDelegate!
     
-    private static var shouldListen: Bool! // controlls listening loop
+    /// Controlls listening loop
+    private static var shouldListen: Bool!
     
-    public static var errorDisplayed = false // controlls error display (the error is meant to be displayed only once after the user has logged in)
+    /// Controlls error display (the error is meant to be displayed only once after the user has logged in)
+    public static var errorDisplayed = false
     
     /// Moves to the background thread, connects to the database and launches an account balance selection loop, to capture an account balance change. In such case, moves back to the main thread, informs the delegate about the change and continues listening on the background thread
     
@@ -71,7 +73,7 @@ public class DatabaseListener {
             }
             catch {
                 
-                // error display (only once after user has logged in)
+                // error display (only once after the user has logged in)
                 
                 if errorDisplayed == false {
                     
@@ -87,13 +89,12 @@ public class DatabaseListener {
                     }
                     
                     // main thread error display (UI interaction)
-                    
                     DispatchQueue.main.async {
                         self.displayErrorFromTopController(errorCommunicate)
                     }
                     
+                    // error display "lock"
                     self.errorDisplayed = true
-                    
                 }
                 
                 // optional database connection closing (might not have been established)
