@@ -33,6 +33,9 @@ class LogoutScreenViewController: UIViewController {
     
     @IBAction func yesButtonPressed(_ sender: UIButton) {
         
+        // loading animation display
+        displayLoadingAnimation()
+        
         // account balance updates listening stop
         DatabaseListener.delegate = self
         DatabaseListener.stopListening()
@@ -59,9 +62,11 @@ extension LogoutScreenViewController: DatabaseListenerDelegate {
         present(welcomeScreenVC, animated: true) {
             
             // logged user's data "deletion"
-            
             GlobalVariables.loggedUsersId = nil
             GlobalVariables.loggedUsersAccountBalance = nil
+            
+            // loading animation hide
+            self.hideLoadingAnimation()
         }
     }
 }
