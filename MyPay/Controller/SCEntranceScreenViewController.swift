@@ -37,7 +37,7 @@ class SCEntranceScreenViewController: UIViewController {
     @IBOutlet weak var zeroKey: UIButton!
     @IBOutlet weak var backspaceKey: UIButton!
     @IBOutlet weak var backspaceKeyArrow: UIImageView!
-    
+
     // logging user's id
     public var loggingUsersId: Int16!
     
@@ -57,24 +57,38 @@ class SCEntranceScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // logging user's security code data load
         
-        do {
+        // security code data load/read (depending on the scenario)
+        
+        let userLogged: Bool = GlobalVariables.loggedUsersId != nil
+        
+        if userLogged == false { // (login scenario)
             
-            let loggingUsersSecurityCodeData = try MySQLManager.selectSecurityCodeData(forUserWith: loggingUsersId)
+            // logging user's security code data load
             
-            loggingUsersSCHash = loggingUsersSecurityCodeData.hash
-            loggingUsersSCSalt = loggingUsersSecurityCodeData.salt
-        }
-        catch {
-            
-            // view loading cancellation
-            dismiss(animated: false) {
+            do {
                 
-                // error handling delegation
-                self.delegate.scEntranceScreen(viewLoadingDidAbortWith: error)
+                let loggingUsersSecurityCodeData = try MySQLManager.selectSecurityCodeData(forUserWith: loggingUsersId)
+                
+                loggingUsersSCHash = loggingUsersSecurityCodeData.hash
+                loggingUsersSCSalt = loggingUsersSecurityCodeData.salt
             }
+            catch {
+                
+                // view loading cancellation
+                dismiss(animated: false) {
+                    
+                    // error handling delegation
+                    self.delegate.scEntranceScreen(viewLoadingDidAbortWith: error)
+                }
+            }
+        }
+        else { // (account access lock scenario)
+            
+            // logged user's security code data read
+            
+            self.loggingUsersSCHash = GlobalVariables.loggedUsersSCHash
+            self.loggingUsersSCSalt = GlobalVariables.loggedUsersSCSalt
         }
         
         // backspace key lock
@@ -145,8 +159,10 @@ extension SCEntranceScreenViewController {
                         self.displayLoadingAnimation()
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                             
-                            // logging user's id "save" (global variable)
+                            // logging user's data save (id, security code data)
                             GlobalVariables.loggedUsersId = self.loggingUsersId
+                            GlobalVariables.loggedUsersSCHash = self.loggingUsersSCHash
+                            GlobalVariables.loggedUsersSCSalt = self.loggingUsersSCSalt
                             
                             // forward view change (home screen)
                             self.performSegue(withIdentifier: "presentHomeScreen", sender: self)

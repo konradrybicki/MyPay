@@ -61,8 +61,10 @@ extension LogoutScreenViewController: DatabaseListenerDelegate {
         
         present(welcomeScreenVC, animated: true) {
             
-            // logged user's data "deletion"
+            // logged user's data cleanup
             GlobalVariables.loggedUsersId = nil
+            GlobalVariables.loggedUsersSCHash = nil
+            GlobalVariables.loggedUsersSCSalt = nil
             GlobalVariables.loggedUsersAccountBalance = nil
             
             // loading animation hide
