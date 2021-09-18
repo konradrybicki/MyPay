@@ -13,7 +13,7 @@ import CryptoSwift
 /// 2) Upon the account access lock (so when the scene enters the background, while the user is logged in)
 
 class SCEntranceScreenViewController: UIViewController {
-
+    
     // unwind button
     @IBOutlet weak var unwindButton: UIButton!
     @IBOutlet weak var unwindButtonArrow: UIImageView!
@@ -49,11 +49,11 @@ class SCEntranceScreenViewController: UIViewController {
     private var enteredSecurityCode: String!
     private var enteredDigits: Int!
     
-    // Home screen vc instance, initialized upon the prepare(for segue:) method call, with the segue.destination property value.
-    // This is done in purpose of setting up a delegate for the HomeScreenViewController, so that our SCEntranceViewController
-    // can be informed about any errors, that might occur while the segue performs.
+    // the delegate
+    public var delegate: SCEntranceScreenDelegate!
     
-    public var homeScreenVC: HomeScreenViewController!
+    // segue destination (home screen) vc instance, initialized before performing the segue to set-up the delegate for potential errors
+    private var segueDestinationVC: HomeScreenViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,30 +69,12 @@ class SCEntranceScreenViewController: UIViewController {
         }
         catch {
             
-            // error communicate preparation
-            
-            var errorCommunicate = ""
-            
-            if error as! DatabaseError == .connectionFailure {
-                errorCommunicate = "Database connection failure, please try again in a moment"
-            }
-            else if error as! DatabaseError == .dataLoadingFailure {
-                errorCommunicate = "Data loading failure, please try again in a moment"
-            }
-            
-            // error communicate display
-            
-            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
-            
-            self.present(communicateVC, animated: true) {
+            // view loading cancellation
+            dismiss(animated: false) {
                 
-                // login form view controller loading animation hide (before the dismiss)
-                
-                let loginFormVC = self.presentingViewController as! LoginFormViewController
-                loginFormVC.hideLoadingAnimation()
+                // error handling delegation
+                self.delegate.scEntranceScreen(viewLoadingDidAbortWith: error)
             }
-            
-            return
         }
         
         // backspace key lock
@@ -221,6 +203,14 @@ extension SCEntranceScreenViewController {
             firstPinDot.tintColor = #colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1)
             lockBackspace()
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // segue destination (home screen) vc instantiation and delegate setup
+        
+        segueDestinationVC = segue.destination as? HomeScreenViewController
+        segueDestinationVC.delegate = self
     }
 }
 
@@ -358,18 +348,7 @@ extension SCEntranceScreenViewController {
     }
 }
 
-//MARK: - Home screen segue perform related methods
-
-extension SCEntranceScreenViewController {
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        // home screen instance initialization and delegate setup
-        
-        homeScreenVC = segue.destination as? HomeScreenViewController
-        homeScreenVC.delegate = self
-    }
-}
+//MARK: - HomeScreenDelegate
 
 extension SCEntranceScreenViewController: HomeScreenDelegate {
     
@@ -399,4 +378,10 @@ extension SCEntranceScreenViewController: HomeScreenDelegate {
             self.hideLoadingAnimation()
         }
     }
+}
+
+//MARK: - Delegate protocol
+
+public protocol SCEntranceScreenDelegate {
+    func scEntranceScreen(viewLoadingDidAbortWith error: Error)
 }

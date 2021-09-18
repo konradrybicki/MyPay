@@ -37,6 +37,9 @@ class LoginFormViewController: UIViewController {
     // an id of the user, identified by the phone number (passed to the SCEntranceScreenViewController, upon view change)
     private var identifiedUsersId: Int16?
     
+    // segue destination (SC entrance screen) vc instance, initialized before performing the segue to set-up the delegate for potential errors
+    private var segueDestinationVC: SCEntranceScreenViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -150,10 +153,14 @@ class LoginFormViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // identified user's id pass
+        // segue destination (SC entrance screen) vc instantiation
+        segueDestinationVC = segue.destination as? SCEntranceScreenViewController
         
-        let scEntranceScreenVC = segue.destination as! SCEntranceScreenViewController
-        scEntranceScreenVC.loggingUsersId = self.identifiedUsersId
+        // delegate setup
+        segueDestinationVC.delegate = self
+        
+        // identified user's id pass
+        segueDestinationVC.loggingUsersId = self.identifiedUsersId
     }
 }
 
@@ -499,5 +506,32 @@ extension LoginFormViewController {
         proceedButton.backgroundColor = #colorLiteral(red: 0.1607843137, green: 0.5019607843, blue: 0.7254901961, alpha: 1)
         proceedButton.setTitleColor(#colorLiteral(red: 0.7411764706, green: 0.7647058824, blue: 0.7803921569, alpha: 1), for: .normal)
         proceedButton.isUserInteractionEnabled = false
+    }
+}
+
+//MARK: - SCEntranceScreenDelegate
+
+extension LoginFormViewController: SCEntranceScreenDelegate {
+    
+    func scEntranceScreen(viewLoadingDidAbortWith error: Error) {
+        
+        // error communicate preparation
+        
+        var errorCommunicate = ""
+        
+        if error as! DatabaseError == .connectionFailure {
+            errorCommunicate = "Database connection failure, please try again in a moment"
+        }
+        else if error as! DatabaseError == .dataLoadingFailure {
+            errorCommunicate = "Data loading failure, please try again in a moment"
+        }
+        
+        // error communicate display
+        
+        let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+        
+        present(communicateVC, animated: true) {
+            self.hideLoadingAnimation()
+        }
     }
 }
