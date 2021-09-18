@@ -66,7 +66,7 @@ class HomeScreenViewController: UIViewController {
             // view loading cancellation
             dismiss(animated: false) {
                 
-                // presenting vc error handling (delegation)
+                // error handling delegation
                 self.delegate.homeScreen(viewLoadingDidAbortWith: error)
             }
             
