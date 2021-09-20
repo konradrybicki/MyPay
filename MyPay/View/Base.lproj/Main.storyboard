@@ -2394,10 +2394,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ilp-mW-8FU" userLabel="Amount general area">
-                                        <rect key="frame" x="0.0" y="113" width="414" height="103"/>
+                                        <rect key="frame" x="0.0" y="113" width="414" height="99"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IBw-On-rGS" userLabel="Amount precise area">
-                                                <rect key="frame" x="20" y="21.5" width="374" height="60"/>
+                                                <rect key="frame" x="20" y="19.5" width="374" height="60"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dga-kX-2td">
                                                         <rect key="frame" x="305.5" y="10" width="48.5" height="16"/>
@@ -2428,12 +2428,12 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="IBw-On-rGS" firstAttribute="centerX" secondItem="Ilp-mW-8FU" secondAttribute="centerX" id="55Z-Xr-jh2"/>
-                                            <constraint firstAttribute="height" constant="103" id="Oms-z0-clo"/>
+                                            <constraint firstAttribute="height" constant="99" id="Oms-z0-clo"/>
                                             <constraint firstItem="IBw-On-rGS" firstAttribute="centerY" secondItem="Ilp-mW-8FU" secondAttribute="centerY" id="Xd1-yT-ThZ"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrW-0d-TKP" userLabel="Empty area">
-                                        <rect key="frame" x="0.0" y="216" width="414" height="490"/>
+                                        <rect key="frame" x="0.0" y="212" width="414" height="494"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JN9-JZ-ysT" userLabel="Proceed button area">
                                         <rect key="frame" x="0.0" y="706" width="414" height="112"/>
@@ -2476,7 +2476,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ioi-Gs-20K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6648" y="438"/>
+            <point key="canvasLocation" x="6647.826086956522" y="437.94642857142856"/>
         </scene>
     </scenes>
     <resources>
