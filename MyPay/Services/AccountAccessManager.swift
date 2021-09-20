@@ -37,8 +37,6 @@ public class AccountAccessManager {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let scEntranceScreenVC = storyboard.instantiateViewController(withIdentifier: "SCEntranceScreenViewController") as! SCEntranceScreenViewController
         
-        scEntranceScreenVC.loggingUsersId = GlobalVariables.loggedUsersId
-        
         // SC entrance screen vc presentation
         
         scEntranceScreenVC.modalTransitionStyle = .crossDissolve
@@ -55,25 +53,11 @@ public class AccountAccessManager {
         }
     }
     
-    /// Unlocks account access by dismissing the SC entrance screen, displayed upon the lockAccess() method call
+    /// Unlocks account access by dismissing the lock screen (SC entrance screen), displayed upon the lockAccess() method call
     
-    public static func unlockAccess() {
+    internal static func unlockAccess(dismissing lockScreen: SCEntranceScreenViewController) {
         
-        // SC entrance screen (top) vc identification
-        
-        var currentVC = UIApplication.shared.keyWindow!.rootViewController!
-        
-        while let presentedVC = currentVC.presentedViewController {
-            currentVC = presentedVC
-        }
-        
-        let scEntranceScreenVC = currentVC
-        
-        // SC entrance screen dismiss (back to the presenting view)
-        
-        scEntranceScreenVC.modalTransitionStyle = .crossDissolve
-        
-        scEntranceScreenVC.dismiss(animated: true) {
+        lockScreen.dismiss(animated: true) {
             
             // account access state change
             self.accountAccessState = .unlocked

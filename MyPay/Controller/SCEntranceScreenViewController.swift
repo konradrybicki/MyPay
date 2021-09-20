@@ -173,7 +173,7 @@ extension SCEntranceScreenViewController {
                     }
                     else { // (account access unlock scenario)
                         
-                        AccountAccessManager.unlockAccess()
+                        AccountAccessManager.unlockAccess(dismissing: self)
                     }
                 }
                 else {
