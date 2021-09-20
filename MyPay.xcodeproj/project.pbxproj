@@ -26,6 +26,7 @@
 		78BC6F7E26C1552D00706611 /* CryptoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F7D26C1552D00706611 /* CryptoService.swift */; };
 		78BC6F8226C1672400706611 /* SystemTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */; };
 		78BC6F8426C191CA00706611 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC6F8326C191CA00706611 /* Account.swift */; };
+		78CF801826F8D3C000D2DB10 /* TopUpFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CF801726F8D3C000D2DB10 /* TopUpFormViewController.swift */; };
 		78D0886A26B1DC22008A7B5A /* SCConfigScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */; };
 		78D0A8AA26EF920200DA32D7 /* DatabaseListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D0A8A926EF920200DA32D7 /* DatabaseListener.swift */; };
 		78E975E726C9A4CC00153A75 /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E975E626C9A4CC00153A75 /* CustomErrors.swift */; };
@@ -58,6 +59,7 @@
 		78BC6F7D26C1552D00706611 /* CryptoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoService.swift; sourceTree = "<group>"; };
 		78BC6F8126C1672400706611 /* SystemTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemTypeExtensions.swift; sourceTree = "<group>"; };
 		78BC6F8326C191CA00706611 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		78CF801726F8D3C000D2DB10 /* TopUpFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUpFormViewController.swift; sourceTree = "<group>"; };
 		78D0886926B1DC22008A7B5A /* SCConfigScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SCConfigScreenViewController.swift; path = MyPay/Controller/SCConfigScreenViewController.swift; sourceTree = SOURCE_ROOT; };
 		78D0A8A926EF920200DA32D7 /* DatabaseListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseListener.swift; sourceTree = "<group>"; };
 		78E6C6B926C06FDD005D94EB /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -110,6 +112,7 @@
 				7843930526E3D6A900981D08 /* SCEntranceScreenViewController.swift */,
 				7843930926E3FA2300981D08 /* HomeScreenViewController.swift */,
 				7843930726E3DC5800981D08 /* LogoutScreenViewController.swift */,
+				78CF801726F8D3C000D2DB10 /* TopUpFormViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				7843930426E2CAF400981D08 /* LoginFormViewController.swift in Sources */,
 				78B136D6269F10740038FCD2 /* SceneDelegate.swift in Sources */,
 				78D0A8AA26EF920200DA32D7 /* DatabaseListener.swift in Sources */,
+				78CF801826F8D3C000D2DB10 /* TopUpFormViewController.swift in Sources */,
 				78BC6F7C26C142F600706611 /* User.swift in Sources */,
 				78EEC84626EA42AC00C55A1C /* AccountAccessManager.swift in Sources */,
 			);
