@@ -2425,11 +2425,35 @@
                                                     <constraint firstAttribute="width" constant="374" id="foO-YA-hJR"/>
                                                 </constraints>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account balance: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYz-nr-lep" userLabel="Account balance">
+                                                <rect key="frame" x="40" y="89.5" width="111.5" height="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="16" id="d8f-sP-4KE"/>
+                                                    <constraint firstAttribute="width" constant="111.5" id="kIw-bO-TbM"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
+                                                <color key="textColor" red="0.49803921569999998" green="0.54901960780000003" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fF1-de-N3q" userLabel="Balance">
+                                                <rect key="frame" x="151.5" y="89.5" width="27.5" height="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="27.5" id="4br-ah-f1t"/>
+                                                    <constraint firstAttribute="height" constant="16" id="PyQ-27-TTG"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
+                                                <color key="textColor" red="0.49803921569999998" green="0.54901960780000003" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="gYz-nr-lep" firstAttribute="top" secondItem="IBw-On-rGS" secondAttribute="bottom" constant="10" id="2CF-D3-rtf"/>
                                             <constraint firstItem="IBw-On-rGS" firstAttribute="centerX" secondItem="Ilp-mW-8FU" secondAttribute="centerX" id="55Z-Xr-jh2"/>
+                                            <constraint firstItem="fF1-de-N3q" firstAttribute="top" secondItem="IBw-On-rGS" secondAttribute="bottom" constant="10" id="F9H-X5-wwV"/>
                                             <constraint firstAttribute="height" constant="99" id="Oms-z0-clo"/>
                                             <constraint firstItem="IBw-On-rGS" firstAttribute="centerY" secondItem="Ilp-mW-8FU" secondAttribute="centerY" id="Xd1-yT-ThZ"/>
+                                            <constraint firstItem="fF1-de-N3q" firstAttribute="leading" secondItem="gYz-nr-lep" secondAttribute="trailing" id="ga9-x3-3Dh"/>
+                                            <constraint firstItem="gYz-nr-lep" firstAttribute="leading" secondItem="Ilp-mW-8FU" secondAttribute="leading" constant="40" id="gvx-l1-3ow"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrW-0d-TKP" userLabel="Empty area">
@@ -2473,6 +2497,9 @@
                             <constraint firstItem="aSV-FL-3EG" firstAttribute="leading" secondItem="QWa-ou-L8K" secondAttribute="leading" id="scN-iW-ubX"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="amountPreciseArea" destination="IBw-On-rGS" id="RDo-Mx-yNU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ioi-Gs-20K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

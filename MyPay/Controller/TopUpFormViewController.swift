@@ -9,9 +9,12 @@ import UIKit
 
 class TopUpFormViewController: UIViewController {
     
+    @IBOutlet weak var amountPreciseArea: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        amountPreciseArea.layer.cornerRadius = 15
+        amountPreciseArea.clipsToBounds = true
     }
 }
