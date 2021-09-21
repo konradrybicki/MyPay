@@ -106,3 +106,12 @@ public class ValidationService {
         [7, 9].contains(phoneNumber.count)
     }
 }
+
+extension ValidationService {
+    
+    /// Checks if top-up's amount is anywhere between 50 and 1 000 000
+    
+    public static func isTopUpAmountValid(_ amount: Double) -> Bool {
+        (50.00...1_000_000.00).contains(amount)
+    }
+}
