@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// Defines a database-related account top-up structure
+
 public class TopUp: Transaction {
     
     public var accountNumber: String
@@ -20,8 +22,6 @@ public class TopUp: Transaction {
     }
     
     public func register() throws {
-        
-        // ..
-        
+        try MySQLManager.insert(topUp: self)
     }
 }

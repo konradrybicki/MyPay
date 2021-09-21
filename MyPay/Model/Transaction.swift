@@ -11,8 +11,8 @@ import Foundation
 
 public protocol Transaction {
     
-    var amount: Double { get set }
-    var transactionDate: Date { get set }
+    var amount: Double { get }
+    var transactionDate: Date { get }
     
     func register() throws
 }

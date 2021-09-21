@@ -107,7 +107,7 @@ public class MySQLManager {
     
     /// Inserts all 'account' object's field values into the database
     
-    public static func insert(_ account: Account) throws {
+    public static func insert(account: Account) throws {
         
         let connection = try establishConnection()
         
@@ -129,7 +129,7 @@ public class MySQLManager {
     
     /// Inserts all 'virtualCard' object's field values into the database
     
-    public static func insert(_ virtualCard: VirtualCard) throws {
+    public static func insert(virtualCard: VirtualCard) throws {
         
         let connection = try establishConnection()
         
@@ -151,7 +151,54 @@ public class MySQLManager {
         try closeConnection(connection)
     }
     
+    /// Inserts all 'topUp' object's field values into the database and updates user's account balance, using the 'updateBalance()' method
     
+    public static func insert(topUp: TopUp) throws {
+        
+        let connection = try establishConnection()
+        
+        let targetAccountNumber = topUp.accountNumber
+        let topUpAmount = topUp.amount
+        let transactionDate = topUp.transactionDate
+        
+        // top-up insertion
+        
+        do {
+            let preparedStatement = try connection.prepare("insert into TopUps(AccountNumber, Amount, TransactionDate) values (?, ?, ?);")
+            try preparedStatement.exec([targetAccountNumber, topUpAmount, transactionDate])
+        }
+        catch {
+            print(error)
+            throw DatabaseError.dataSavingFailure
+        }
+        
+        // balance update
+        
+        try updateBalance(ofAccountWith: targetAccountNumber, by: topUpAmount, using: connection)
+        
+        try closeConnection(connection)
+    }
+}
+
+extension MySQLManager {
+    
+    /// Updates the database, changing specified account's balance by a given amount (uses external connection)
+    
+    private static func updateBalance(ofAccountWith accountNumber: String, by amount: Double, using connection: MySQL.Connection) throws {
+        
+        do {
+            let preparedStatement = try connection.prepare("""
+                update Accounts
+                set Balance = Balance + ?
+                where AccountNumber = ?;
+            """)
+            try preparedStatement.exec([amount, accountNumber])
+        }
+        catch {
+            print(error)
+            throw DatabaseError.dataUpdateFailure
+        }
+    }
 }
 
 extension MySQLManager {
