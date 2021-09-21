@@ -43,7 +43,7 @@ public class User {
         let virtualCard = try VirtualCard(forAccountWithNumber: account.accountNumber)
         
         // account and virtual card database insertion
-        try MySQLManager.insert(account)
-        try MySQLManager.insert(virtualCard)
+        try MySQLManager.insert(account: account)
+        try MySQLManager.insert(virtualCard: virtualCard)
     }
 }
