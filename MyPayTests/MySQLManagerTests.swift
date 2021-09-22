@@ -7,19 +7,26 @@
 
 import XCTest
 
-class MySQLManagerTests: XCTestCase {
+@testable import MyPay
 
+class MySQLManagerTests: XCTestCase {
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        try super.setUpWithError()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        try super.setUpWithError()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testInsertTopUp() throws {
+        
+        let accountNumber = "58525434552955252827743282"
+        let amount: Double = 200000.00
+        
+        let topUp = TopUp(target: accountNumber, amount)
+        
+        XCTAssertNoThrow(try MySQLManager.insert(topUp: topUp))
     }
 
     func testPerformanceExample() throws {
