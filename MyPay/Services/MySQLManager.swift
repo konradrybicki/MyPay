@@ -165,7 +165,7 @@ public class MySQLManager {
         
         do {
             let preparedStatement = try connection.prepare("insert into TopUps(AccountNumber, Amount, TransactionDate) values (?, ?, ?);")
-            try preparedStatement.exec([targetAccountNumber, topUpAmount, transactionDate])
+            try preparedStatement.exec([targetAccountNumber, String(topUpAmount), transactionDate])
         }
         catch {
             print(error)
@@ -192,7 +192,7 @@ extension MySQLManager {
                 set Balance = Balance + ?
                 where AccountNumber = ?;
             """)
-            try preparedStatement.exec([amount, accountNumber])
+            try preparedStatement.exec([String(amount), accountNumber])
         }
         catch {
             print(error)

@@ -16,24 +16,20 @@ class MySQLManagerTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        try super.setUpWithError()
+        try super.tearDownWithError()
     }
-
+    
     func testInsertTopUp() throws {
         
+        // given
+        
         let accountNumber = "58525434552955252827743282"
-        let amount: Double = 200000.00
+        let amount: Double = 200_000
         
         let topUp = TopUp(target: accountNumber, amount)
         
+        // when, then
+        
         XCTAssertNoThrow(try MySQLManager.insert(topUp: topUp))
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
