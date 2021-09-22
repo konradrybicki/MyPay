@@ -21,6 +21,8 @@ public class TopUp: Transaction {
         self.transactionDate = Date()
     }
     
+    /// Calls MySQLManager's insert(topUp) method, passing current instance as an argument to the function
+    
     public func register() throws {
         try MySQLManager.insert(topUp: self)
     }
