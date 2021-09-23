@@ -33,6 +33,10 @@ class HomeScreenViewController: UIViewController {
         topUpButton.layer.cornerRadius = 10
         topUpButton.clipsToBounds = true
         
+        // logged user's account number load (used while performing top-ups)
+        
+        loadLoggedUsersAccountNumber()
+        
         // logged user's account balance load and display
         
         loadLoggedUsersAccountBalance()
@@ -46,6 +50,36 @@ class HomeScreenViewController: UIViewController {
     
     @IBAction func logoutButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "presentLogoutScreen", sender: self)
+    }
+    
+    /// Uses MySQLManager's selectAccountNumber() method to select logged user's account number from the database. After the number has been selected, saves it in a global variable. In case of an error, aborts view loading and informs the delegate about the circumstances
+    
+    func loadLoggedUsersAccountNumber() -> Void {
+        
+        // logged user's account number database selection
+        
+        let loggedUsersId = GlobalVariables.loggedUsersId!
+        
+        let loggedUsersAccountNumber: String
+        
+        do {
+            loggedUsersAccountNumber = try MySQLManager.selectAccountNumber(forUserWith: loggedUsersId)
+        }
+        catch {
+            
+            // view loading cancellation
+            dismiss(animated: false) {
+                
+                // error handling delegation
+                self.delegate.homeScreen(viewLoadingDidAbortWith: error)
+            }
+            
+            return
+        }
+        
+        // selected number "save" (global variable)
+        
+        GlobalVariables.loggedUsersAccountNumber = loggedUsersAccountNumber
     }
     
     /// Uses MySQLManager's selectAccountBalance() method to select logged user's account balance from the database. After the balance has been selected, saves it in a global variable. In case of an error, aborts view loading and informs the delegate about the circumstances

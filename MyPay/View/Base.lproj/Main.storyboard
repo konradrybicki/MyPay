@@ -2353,6 +2353,9 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTr-Qk-O4h" userLabel="Unwind button">
                                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                        <connections>
+                                                            <action selector="unwindButtonPressed:" destination="bEb-QA-ere" eventType="touchUpInside" id="l5c-Gt-Hwl"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -2473,6 +2476,9 @@
                                                 <state key="normal" title="Proceed">
                                                     <color key="titleColor" red="0.74117647060000003" green="0.76470588240000004" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="proceedButtonPressed:" destination="bEb-QA-ere" eventType="touchUpInside" id="9Yh-0P-1IM"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>

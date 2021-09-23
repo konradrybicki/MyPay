@@ -11,5 +11,6 @@ struct GlobalVariables {
     public static var loggedUsersId: Int16? = nil
     public static var loggedUsersSCHash: String? = nil
     public static var loggedUsersSCSalt: String? = nil
+    public static var loggedUsersAccountNumber: String? = nil
     public static var loggedUsersAccountBalance: String? = nil
 }

@@ -39,16 +39,16 @@ class TopUpFormViewController: UIViewController {
         proceedButton.layer.cornerRadius = 15
         proceedButton.clipsToBounds = true
         
-        // amount text field configuration
-        /*
+        // amount text field set-up
+        
         amountTextField.delegate = self
         amountTextField.addTarget(self, action: #selector(<#T##@objc method#>), for: .editingChanged)
-        */
+        
         // users account balance display
         
         balance.text = GlobalVariables.loggedUsersAccountBalance!
         
-        // "keyboard will show" notification capture, needed to get keyboard height, before lifting the proceed button up above it
+        // proceed button "lift-up", right after the 'keyboardWillShow' notification capture (before we "lift" the proceed button up above the keyboard, we need to know its height to set-up the distance between the proceed button container and the bottom side of the screen)
         
         NotificationCenter.default.addObserver(
             self,
@@ -68,6 +68,7 @@ class TopUpFormViewController: UIViewController {
         
         let keyboardFrame: NSValue = keyboardWillShowNotification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         let keyboardRectangle = keyboardFrame.cgRectValue
+        
         let keyboardHeight = keyboardRectangle.height
         
         // "lifting" view creation
@@ -81,5 +82,37 @@ class TopUpFormViewController: UIViewController {
         // proceed button "lift-up"
         
         mainStackView.addSubview(liftingView)
+    }
+    
+    // navigation
+    
+    @IBAction func unwindButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func proceedButtonPressed(_ sender: UIButton) {
+        
+        // loading animation display
+        displayLoadingAnimation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+            
+            // SC entrance screen vc instantiation
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let scEntranceScreenVC = storyboard.instantiateViewController(withIdentifier: "SCEntranceScreenViewController") as! SCEntranceScreenViewController
+            
+            // passed top-up amount preparation
+            let passedTopUpAmount_str = self.amountTextField.text!
+            let passedTopUpAmount_dbl = Double(passedTopUpAmount_str)
+            
+            // SC entrance screen vc setup
+            scEntranceScreenVC.modalTransitionStyle = .coverVertical
+            scEntranceScreenVC.modalPresentationStyle = .fullScreen
+            scEntranceScreenVC.topUpAmount = passedTopUpAmount_dbl
+            
+            // SC entrance screen vc presentation
+            self.present(scEntranceScreenVC, animated: true) {
+                self.hideLoadingAnimation()
+            }
+        }
     }
 }

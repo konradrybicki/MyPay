@@ -10,7 +10,8 @@ import CryptoSwift
 
 /// Controlls the Security Code entrance screen, displayed:
 /// 1) After entering an identified phone number, in the login form
-/// 2) Upon the account access lock (so when the scene enters the background, while the user is logged in)
+/// 2) Upon an account access lock
+/// 3) Upon a top-up confirmation
 
 class SCEntranceScreenViewController: UIViewController {
     
@@ -55,6 +56,9 @@ class SCEntranceScreenViewController: UIViewController {
     // segue destination (home screen) vc instance, initialized before performing the segue to set-up the delegate for potential errors
     private var segueDestinationVC: HomeScreenViewController!
     
+    // top-up amount (top-up confirmation scenario)
+    public var topUpAmount: Double!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,7 +87,7 @@ class SCEntranceScreenViewController: UIViewController {
                 }
             }
         }
-        else { // (account access lock scenario)
+        else { // (all other scenarios)
             
             // logged user's security code data read
             
@@ -171,8 +175,69 @@ extension SCEntranceScreenViewController {
                             self.hideLoadingAnimation()
                         }
                     }
-                    else { // (account access unlock scenario)
+                    else if self.presentingViewController as? TopUpFormViewController != nil && self.topUpAmount != nil { // (top-up confirmation scenario)
                         
+                        // loading animation display
+                        self.displayLoadingAnimation()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+                        
+                            // top-up data gathering
+                            let accountNumber = GlobalVariables.loggedUsersAccountNumber!
+                            let amount = self.topUpAmount
+                            
+                            // top-up instance creation
+                            let confirmedTopUp = TopUp(target: accountNumber, amount!)
+                            
+                            do {
+                                // top-up registration attempt
+                                try confirmedTopUp.register()
+                            }
+                            catch {
+                                
+                                // error communicate
+                                
+                                var errorCommunicate = ""
+                                
+                                if error as! DatabaseError == .connectionFailure {
+                                    errorCommunicate = "Database connection failure, please try again in a moment"
+                                }
+                                else if error as! DatabaseError == .dataSavingFailure {
+                                    errorCommunicate = "Data saving failure, please try again in a moment"
+                                }
+                                else if error as! DatabaseError == .dataUpdateFailure {
+                                    errorCommunicate = "Data update failure, please try again in a moment"
+                                }
+                                
+                                // error display
+                                
+                                let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
+                                
+                                self.present(communicateVC, animated: true) {
+                                    
+                                    // self dismiss, so that after pressing an 'ok' button in the communicate screen, the user will get back to the Top-up form
+                                    self.dismiss(animated: false, completion: nil)
+                                }
+                            }
+                            
+                            // top-up registered successfully
+                            
+                            let successCommunicate = "We're processing Your transaction ⏱"
+                            let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: successCommunicate)
+                            
+                            self.present(communicateVC, animated: true) {
+                                
+                                // previous controllers dismiss (instead of presenting a brand new home screen vc)
+                                
+                                let scEntranceScreenVC = self
+                                let topUpFormVC = self.presentingViewController as! TopUpFormViewController
+                                
+                                scEntranceScreenVC.dismiss(animated: false) {
+                                    topUpFormVC.dismiss(animated: false, completion: nil)
+                                }
+                            }
+                        }
+                    }
+                    else { // account access unlock scenario
                         AccountAccessManager.unlockAccess(dismissing: self)
                     }
                 }

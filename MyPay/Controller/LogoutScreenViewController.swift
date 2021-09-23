@@ -65,6 +65,7 @@ extension LogoutScreenViewController: DatabaseListenerDelegate {
             GlobalVariables.loggedUsersId = nil
             GlobalVariables.loggedUsersSCHash = nil
             GlobalVariables.loggedUsersSCSalt = nil
+            GlobalVariables.loggedUsersAccountNumber = nil
             GlobalVariables.loggedUsersAccountBalance = nil
             
             // loading animation hide

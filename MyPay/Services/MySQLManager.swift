@@ -275,6 +275,51 @@ extension MySQLManager {
         return (scHash, scSalt)
     }
     
+    /// Selects specified user's account number from the database
+    
+    public static func selectAccountNumber(forUserWith userId: Int16) throws -> String {
+        
+        let connection = try establishConnection()
+        
+        let accountNumber: String
+        
+        do {
+            
+            let preparedStatement = try connection.prepare("select AccountNumber from Accounts where UserID = ?;")
+            
+            let result = try preparedStatement.query([userId])
+            
+            let mysqlRow = result.rows[0]
+            
+            let swiftRow: [String : Any] = mysqlRow.values
+            
+            let key = "AccountNumber"
+            
+            guard let value = swiftRow[key] else {
+                print("Error inside MySQLManager.selectAccountNumber() - dict value access failure for key '\(key)'")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            guard let _accountNumber = value as? String else {
+                print("Error inside MySQLManager.selectAccountNumber() - Any->String downcasting failure")
+                throw DatabaseError.dataLoadingFailure
+            }
+            
+            accountNumber = _accountNumber
+        }
+        catch DatabaseError.dataLoadingFailure {
+            throw DatabaseError.dataLoadingFailure
+        }
+        catch {
+            print(error)
+            throw DatabaseError.dataLoadingFailure
+        }
+        
+        try closeConnection(connection)
+        
+        return accountNumber
+    }
+    
     /// Selects specified user's account balance from the database
     
     public static func selectAccountBalance(forUserWithId userId: Int16) throws -> String {
@@ -322,7 +367,7 @@ extension MySQLManager {
     
     /// Selects specified user's account balance from the database, using existing database connection (designed specifically for the DatabaseListener class)
     
-    public static func selectAccountBalance(forUserWith loggedUsersId: Int16, usingConnection connection: MySQL.Connection) throws -> String {
+    public static func selectAccountBalance(forUserWith userId: Int16, usingConnection connection: MySQL.Connection) throws -> String {
         
         let balance: String
         
@@ -330,7 +375,7 @@ extension MySQLManager {
             
             let preparedStatement = try connection.prepare("select Balance from Accounts where UserID = ?;")
             
-            let result = try preparedStatement.query([loggedUsersId])
+            let result = try preparedStatement.query([userId])
             
             let mysqlRow = result.rows[0]
             
