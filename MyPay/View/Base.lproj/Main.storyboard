@@ -2514,7 +2514,6 @@
                         <outlet property="balance" destination="fF1-de-N3q" id="WSM-Xy-Czn"/>
                         <outlet property="mainStackView" destination="qUY-sD-r9Y" id="d5G-MT-KJe"/>
                         <outlet property="proceedButton" destination="FSE-tJ-ziv" id="vff-1O-Arj"/>
-                        <outlet property="unwindButton" destination="fTr-Qk-O4h" id="pNv-Vr-haM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ioi-Gs-20K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

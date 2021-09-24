@@ -69,7 +69,14 @@ class TopUpFormViewController: UIViewController {
         let keyboardFrame: NSValue = keyboardWillShowNotification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         let keyboardRectangle = keyboardFrame.cgRectValue
         
-        let keyboardHeight = keyboardRectangle.height
+        var keyboardHeight = keyboardRectangle.height
+        
+        // keyboard height modification (bottom padding height cutoff)
+        
+        let window = UIApplication.shared.keyWindow!
+        let bottomPaddingHeight = window.safeAreaInsets.bottom
+        
+        keyboardHeight -= bottomPaddingHeight
         
         // "lifting" view creation
         
@@ -81,7 +88,7 @@ class TopUpFormViewController: UIViewController {
         
         // proceed button "lift-up"
         
-        mainStackView.addSubview(liftingView)
+        mainStackView.addArrangedSubview(liftingView)
     }
     
     // navigation
