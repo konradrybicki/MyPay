@@ -6,7 +6,7 @@
 //
 
 /// Contains global variables, declared as static fields (ex. - currently logged user's id)
-    
+
 struct GlobalVariables {
     public static var loggedUsersId: Int16? = nil
     public static var loggedUsersSCHash: String? = nil

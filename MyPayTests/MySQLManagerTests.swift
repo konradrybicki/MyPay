@@ -21,15 +21,23 @@ class MySQLManagerTests: XCTestCase {
     
     func testInsertTopUp() throws {
         
-        // given
-        
         let accountNumber = "58525434552955252827743282"
         let amount: Double = 200_000
         
         let topUp = TopUp(target: accountNumber, amount)
         
-        // when, then
-        
         XCTAssertNoThrow(try MySQLManager.insert(topUp: topUp))
+    }
+    
+    func testSelectAccountNumber() throws {
+        
+        // given
+        let userId: Int16 = 1
+        
+        // when
+        let accountNumber = try MySQLManager.selectAccountNumber(forUserWith: userId)
+        
+        // then
+        XCTAssertEqual(accountNumber, "58525434552955252827743282")
     }
 }

@@ -194,7 +194,7 @@ extension SCEntranceScreenViewController {
                             }
                             catch {
                                 
-                                // error communicate
+                                // error communicate vc preparation
                                 
                                 var errorCommunicate = ""
                                 
@@ -208,31 +208,35 @@ extension SCEntranceScreenViewController {
                                     errorCommunicate = "Data update failure, please try again in a moment"
                                 }
                                 
-                                // error display
-                                
                                 let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: errorCommunicate)
                                 
-                                self.present(communicateVC, animated: true) {
-                                    
-                                    // self dismiss, so that after pressing an 'ok' button in the communicate screen, the user will get back to the Top-up form
-                                    self.dismiss(animated: false, completion: nil)
+                                // top up related controllers instantiation
+                                let scEntranceScreenVC = self
+                                let topUpFormVC = self.presentingViewController as! TopUpFormViewController
+                                
+                                // sc entrance screen dismiss, top up form communicate display
+                                scEntranceScreenVC.dismiss(animated: false) {
+                                    topUpFormVC.present(communicateVC, animated: true, completion: nil)
                                 }
+                                
+                                return
                             }
                             
                             // top-up registered successfully
                             
+                            // (success communicate vc preparation)
                             let successCommunicate = "We're processing Your transaction ⏱"
                             let communicateVC = CommunicateScreenViewController.instantiateVC(withCommunicate: successCommunicate)
                             
-                            self.present(communicateVC, animated: true) {
-                                
-                                // previous controllers dismiss (instead of presenting a brand new home screen vc)
-                                
-                                let scEntranceScreenVC = self
-                                let topUpFormVC = self.presentingViewController as! TopUpFormViewController
-                                
-                                scEntranceScreenVC.dismiss(animated: false) {
-                                    topUpFormVC.dismiss(animated: false, completion: nil)
+                            // (all top-up related controllers instiantiation, including the home screen)
+                            let scEntranceScreenVC = self
+                            let topUpFormVC = self.presentingViewController as! TopUpFormViewController
+                            let homeScreenVC = topUpFormVC.presentingViewController as! HomeScreenViewController
+                            
+                            // (top-up related controllers dismiss, home screen communicate presentation)
+                            scEntranceScreenVC.dismiss(animated: false) {
+                                topUpFormVC.dismiss(animated: false) {
+                                    homeScreenVC.present(communicateVC, animated: true, completion: nil)
                                 }
                             }
                         }

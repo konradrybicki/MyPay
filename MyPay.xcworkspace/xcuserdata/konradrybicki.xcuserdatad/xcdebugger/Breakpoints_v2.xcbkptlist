@@ -7,17 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "711E1967-DEAD-4241-A19E-7706605B0852"
-            shouldBeEnabled = "Yes"
+            uuid = "04776743-7EB1-49DA-8AA4-C65AC8F74347"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../../../Library/Developer/Xcode/DerivedData/MyPay-haqbpvjshruqzsfdkcgvkjdtotgc/SourcePackages/checkouts/mysql-swift/Sources/MySQL/Result.swift"
+            filePath = "MyPay/Controller/SCEntranceScreenViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "TextResult"
-            landmarkType = "3">
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "numericKeyPressed(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

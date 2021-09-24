@@ -89,6 +89,14 @@ class TopUpFormViewController: UIViewController {
         // proceed button "lift-up"
         
         mainStackView.addArrangedSubview(liftingView)
+        
+        // observer removal (so that the proceed button is lifted only once per loaded view)
+        
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
     }
     
     // navigation
@@ -99,28 +107,21 @@ class TopUpFormViewController: UIViewController {
     
     @IBAction func proceedButtonPressed(_ sender: UIButton) {
         
-        // loading animation display
-        displayLoadingAnimation()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
-            
-            // SC entrance screen vc instantiation
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let scEntranceScreenVC = storyboard.instantiateViewController(withIdentifier: "SCEntranceScreenViewController") as! SCEntranceScreenViewController
-            
-            // passed top-up amount preparation
-            let passedTopUpAmount_str = self.amountTextField.text!
-            let passedTopUpAmount_dbl = Double(passedTopUpAmount_str)
-            
-            // SC entrance screen vc setup
-            scEntranceScreenVC.modalTransitionStyle = .coverVertical
-            scEntranceScreenVC.modalPresentationStyle = .fullScreen
-            scEntranceScreenVC.topUpAmount = passedTopUpAmount_dbl
-            
-            // SC entrance screen vc presentation
-            self.present(scEntranceScreenVC, animated: true) {
-                self.hideLoadingAnimation()
-            }
-        }
+        // SC entrance screen vc instantiation
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let scEntranceScreenVC = storyboard.instantiateViewController(withIdentifier: "SCEntranceScreenViewController") as! SCEntranceScreenViewController
+        
+        // passed top-up amount preparation
+        let passedTopUpAmount_str = self.amountTextField.text!
+        let passedTopUpAmount_dbl = Double(passedTopUpAmount_str)
+        
+        // SC entrance screen vc setup
+        scEntranceScreenVC.modalTransitionStyle = .coverVertical
+        scEntranceScreenVC.modalPresentationStyle = .fullScreen
+        scEntranceScreenVC.topUpAmount = passedTopUpAmount_dbl
+        
+        // SC entrance screen vc presentation
+        self.present(scEntranceScreenVC, animated: true, completion: nil)
     }
 }
 
@@ -176,7 +177,7 @@ extension TopUpFormViewController: UITextFieldDelegate {
             
             // checking for potential unlock
             
-            if amountValid == true {
+            if amountFieldFullfilledAndValid() == true {
                 
                 unlockProceedButton()
                 proceedButtonLocked = false
@@ -192,6 +193,10 @@ extension TopUpFormViewController: UITextFieldDelegate {
                 proceedButtonLocked = true
             }
         }
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        return false
     }
 }
 
@@ -214,7 +219,22 @@ extension TopUpFormViewController {
 
 extension TopUpFormViewController {
     
-    /// Checks if the amount field is either invalid or empty
+    /// Checks whether the amount field is both fulfilled and valid
+    
+    func amountFieldFullfilledAndValid() -> Bool {
+        
+        let amountFieldFulfilled: Bool = (amountTextField.text! != "")
+        let amountFieldValid = (amountValid == true)
+        
+        if amountFieldFulfilled && amountFieldValid {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    /// Checks whether the amount field is either invalid or empty
     
     func amountFieldInvalidOrEmpty() -> Bool {
         
