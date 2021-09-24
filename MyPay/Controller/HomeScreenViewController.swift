@@ -48,8 +48,14 @@ class HomeScreenViewController: UIViewController {
         DatabaseListener.listenForAccountBalanceUpdates()
     }
     
+    // navigation
+    
     @IBAction func logoutButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "presentLogoutScreen", sender: self)
+    }
+    
+    @IBAction func topUpButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "presentTopUpForm", sender: self)
     }
     
     /// Uses MySQLManager's selectAccountNumber() method to select logged user's account number from the database. After the number has been selected, saves it in a global variable. In case of an error, aborts view loading and informs the delegate about the circumstances
