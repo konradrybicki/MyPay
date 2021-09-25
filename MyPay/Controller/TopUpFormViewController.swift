@@ -18,6 +18,11 @@ class TopUpFormViewController: UIViewController {
     @IBOutlet weak var amountTextFieldUnderline: UIView!
     var amountValid = true
     
+    // Amount text field's editing control variable (set to 'false' by default, changed to 'true' while dismissing the view).
+    // The property was implemented as a keyboard-related bug fix, to prevent the keyboard from remaining displayed after
+    // dismissing the view.
+    var amountTextFieldShouldEndEditing = false
+    
     // user's account balance
     @IBOutlet weak var balance: UILabel!
     
@@ -102,6 +107,7 @@ class TopUpFormViewController: UIViewController {
     // navigation
     
     @IBAction func unwindButtonPressed(_ sender: UIButton) {
+        amountTextFieldShouldEndEditing = true
         dismiss(animated: true, completion: nil)
     }
     
@@ -196,7 +202,7 @@ extension TopUpFormViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        return false
+        return amountTextFieldShouldEndEditing // 'false' by default, 'true' while dismissing the view
     }
 }
 
